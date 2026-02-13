@@ -1,0 +1,13 @@
+# Hugo default
+public
+resources
+.hugo_build.lock
+
+# Node
+node_modules
+.DS_Store
+dist
+.env
+
+# Tina
+tina/__generated__
