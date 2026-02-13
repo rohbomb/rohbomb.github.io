@@ -1,0 +1,30 @@
+baseURL = "https://rohbomb.github.io/"
+languageCode = "ko-kr"
+title = "My Hybrid Cash Cow"
+theme = "blowfish"
+
+[module]
+  [[module.imports]]
+    path = "github.com/nunocoracao/blowfish"
+
+[params]
+  colorScheme = "blowfish"
+  defaultTheme = "light"
+  enableSearch = true
+  
+  [params.header]
+    layout = "fixed"
+
+  [params.footer]
+    showCopyright = true
+
+  [params.homepage]
+    layout = "background"
+    showRecent = true
+
+[menu]
+  [[menu.main]]
+    identifier = "posts"
+    name = "Posts"
+    url = "/posts/"
+    weight = 10
