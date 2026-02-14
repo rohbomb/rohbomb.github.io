@@ -8,5 +8,14 @@
   },
   "keywords": [],
   "author": "",
+<<<<<<< HEAD
   "license": "ISC"
+=======
+  "license": "ISC",
+  "dependencies": {
+    "@tinacms/cli": "^2.1.5",
+    "@types/node": "^25.2.3",
+    "tinacms": "^3.4.1"
+  }
+>>>>>>> c9a1f1de68f507f0b954d886e0fc92be5499f664
 }

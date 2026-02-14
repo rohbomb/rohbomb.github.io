@@ -41,8 +41,14 @@ buildExpired = false
       { name = "Tags", url = "tags" }
     ]
 
+<<<<<<< HEAD
   [params.socialIcons]
     Github = "https://github.com/rohbomb"
+=======
+#   [[params.socialIcons]]
+#     name = "Github"
+#     url = "https://github.com/rohbomb"
+>>>>>>> c9a1f1de68f507f0b954d886e0fc92be5499f664
 
 [menu]
   [[menu.main]]
