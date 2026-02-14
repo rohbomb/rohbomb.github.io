@@ -1,23 +1,48 @@
 baseURL = "https://rohbomb.github.io/"
 languageCode = "ko-kr"
 title = "My Hybrid Cash Cow"
-theme = "blowfish"
+theme = "PaperMod"
 
+enableRobotsTXT = true
+buildDrafts = false
+buildFuture = false
+buildExpired = false
 
 [params]
-  colorScheme = "blowfish"
-  defaultTheme = "light"
-  enableSearch = true
-  
-  [params.header]
-    layout = "fixed"
+  env = "production"
+  title = "My Hybrid Cash Cow"
+  description = "IT/과학 뉴스와 인사이트"
+  keywords = ["Blog", "Portfolio", "PaperMod"]
+  author = "Rohbomb"
+  # images = ["<link or path of image for opengraph, twitter-cards>"]
+  DateFormat = "2006-01-02"
+  defaultTheme = "auto" # dark, light
+  disableThemeToggle = false
 
-  [params.footer]
-    showCopyright = true
+  ShowReadingTime = true
+  ShowShareButtons = true
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowWordCount = true
+  ShowRssButtonInSectionTermList = true
+  UseHugoToc = true
 
-  [params.homepage]
-    layout = "background"
-    showRecent = true
+  [params.profileMode]
+    enabled = false
+    title = "My Hybrid Cash Cow"
+    subtitle = "IT/과학 뉴스와 인사이트"
+    imageUrl = "<link or path of image for opengraph, twitter-cards>"
+    imageWidth = 120
+    imageHeight = 120
+    imageTitle = "my image"
+    buttons = [
+      { name = "Posts", url = "posts" },
+      { name = "Tags", url = "tags" }
+    ]
+
+  [params.socialIcons]
+    Github = "https://github.com/rohbomb"
 
 [menu]
   [[menu.main]]
@@ -25,3 +50,8 @@ theme = "blowfish"
     name = "Posts"
     url = "/posts/"
     weight = 10
+  [[menu.main]]
+    identifier = "tags"
+    name = "Tags"
+    url = "/tags/"
+    weight = 20
