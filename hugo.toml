@@ -1,4 +1,5 @@
 baseURL = "https://rohbomb.github.io/"
+# GitHub Actions Build Trigger
 languageCode = "ko-kr"
 title = "My Hybrid Cash Cow"
 theme = "PaperMod"
