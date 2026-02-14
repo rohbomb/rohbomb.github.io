@@ -1,7 +1,7 @@
 baseURL = "https://rohbomb.github.io/"
 # GitHub Actions Build Trigger
 languageCode = "ko-kr"
-title = "My Hybrid Cash Cow"
+title = "Global Market Insights"
 theme = "PaperMod"
 
 enableRobotsTXT = true
@@ -11,10 +11,10 @@ buildExpired = false
 
 [params]
   env = "production"
-  title = "My Hybrid Cash Cow"
-  description = "IT/과학 뉴스와 인사이트"
+  title = "Global Market Insights"
+  description = "In-depth Market Analysis & Tech Trends"
   keywords = ["Blog", "Portfolio", "PaperMod"]
-  author = "Rohbomb"
+  author = "Analyst Bear"
   # images = ["<link or path of image for opengraph, twitter-cards>"]
   DateFormat = "2006-01-02"
   defaultTheme = "auto" # dark, light
@@ -31,8 +31,8 @@ buildExpired = false
 
   [params.profileMode]
     enabled = false
-    title = "My Hybrid Cash Cow"
-    subtitle = "IT/과학 뉴스와 인사이트"
+    title = "Global Market Insights"
+    subtitle = "In-depth Market Analysis & Tech Trends"
     imageUrl = "<link or path of image for opengraph, twitter-cards>"
     imageWidth = 120
     imageHeight = 120
