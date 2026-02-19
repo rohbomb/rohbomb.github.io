@@ -1,4 +1,4 @@
-# 🤖 Tikkles Analyst Bot v2.4 (Korean Title Fix)
+# 🤖 Tikkles Analyst Bot v2.5 (Category Logic & Title Fix)
 import os
 import time
 import requests
@@ -102,11 +102,15 @@ class HybridBot:
             logger.error(f"❌ 뉴스 수집 실패 ({keyword}): {e}")
             return []
 
-    def generate_content(self, news_item):
+    def generate_content(self, news_item, category="Money"):
         """Gemini(Market Analyst)를 이용해 블로그 포스팅 작성 (Fallback 적용)"""
         if not self.model_candidates:
             return f"AI 요약을 사용할 수 없습니다.\n\n원문 링크: {news_item['link']}"
 
+        disclaimer = ""
+        if category == "Money":
+            disclaimer = "\n\n※ 본 분석은 글로벌 시장 뉴스 바탕으로 작성되었으며, 투자 조언이 아닙니다. 모든 투자의 책임은 투자자 본인에게 있습니다."
+            
         prompt = f"""
         당신은 20년 경력의 글로벌 매크로/기술 분석가 'Market Analyst Bear'입니다.
         아래 뉴스 기사를 전문 투자자 및 3040 직장인을 타겟으로 분석하여 브리핑해 주세요.
@@ -237,13 +241,19 @@ Analyst's Insight
         body_content = content
 
         if lines:
-             # 첫 번째 줄 또는 '제목:'으로 시작하는 줄 찾기
+             # '제목:'으로 시작하는 줄을 최우선으로 찾음
              for i, line in enumerate(lines):
-                 if '제목:' in line or i == 0:
-                     extracted_title = line.replace('제목:', '').replace('#', '').strip()
+                 clean_line = line.strip()
+                 if clean_line.startswith('제목:') or clean_line.startswith('**제목:**') or clean_line.startswith('## 제목:'):
+                     extracted_title = clean_line.replace('제목:', '').replace('**', '').replace('##', '').strip()
                      body_content = '\n'.join(lines[i+1:]).strip()
-                     if extracted_title: # 유효한 제목을 찾았으면 중단
-                         break
+                     break
+             else:
+                 # '제목:'이 없으면 첫 줄을 제목으로 하되, 원문 제목과 겹치는지 체크
+                 potential_title = lines[0].strip()
+                 if len(potential_title) > 5: # 너무 짧은 건 무시
+                     extracted_title = potential_title
+                     body_content = '\n'.join(lines[1:]).strip()
 
         # HTML Callout 박스 적용을 위한 텍스트 치환 (프롬프트에서 유도하지만 한번 더 정제)
         # Key Facts 섹션 (모델이 'Key Facts'만 출력할 경우를 대비해 매칭 문자열 축소)
@@ -303,7 +313,7 @@ tags: ["{category}", "Market Insight", "Analysis"]
             raise e
 
     def run(self):
-        logger.info("🚀 Tikkles Analyst Bot (v2.4 - Korean Title Fix) 시작")
+        logger.info("🚀 Tikkles Analyst Bot (v2.5 - Category Logic Fix) 시작")
         
         # 시간대별 타겟 설정 (KST 기준)
         kst = pytz.timezone('Asia/Seoul')
@@ -343,7 +353,7 @@ tags: ["{category}", "Market Insight", "Analysis"]
         success_count = 0
         for news in news_list:
             logger.info(f"🔍 분석 중: {news['title']}")
-            blog_content = self.generate_content(news)
+            blog_content = self.generate_content(news, category=category)
             
             # 🚨 AI 생성 실패 시(쿼터 초과 등) 쓰레기 게시물 생성 방지
             if "AI 요약을 사용할 수 없습니다" in blog_content or "모든 AI 모델이 응답하지 않습니다" in blog_content:
