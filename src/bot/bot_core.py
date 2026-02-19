@@ -1,4 +1,4 @@
-# 🤖 Tikkles Analyst Bot v2.6 (Persona & YMYL Fix)
+# 🤖 Tikkles Analyst Bot v2.7 (Dry Run API Isolation)
 import os
 import time
 import requests
@@ -315,7 +315,7 @@ tags: ["{category}", "Market Insight", "Analysis"]
             raise e
 
     def run(self):
-        logger.info("🚀 Tikkles Analyst Bot (v2.6 - Persona & YMYL Fix) 시작")
+        logger.info("🚀 Tikkles Analyst Bot (v2.7 - Dry Run API Isolation) 시작")
         
         # 시간대별 타겟 설정 (KST 기준)
         kst = pytz.timezone('Asia/Seoul')
@@ -355,10 +355,28 @@ tags: ["{category}", "Market Insight", "Analysis"]
         success_count = 0
         for news in news_list:
             logger.info(f"🔍 분석 중: {news['title']}")
-            blog_content = self.generate_content(news, category=category)
+            
+            if is_dry_run:
+                logger.info("🧪 [Dry Run] AI API 호출 없이 테스트 콘텐츠를 생성합니다.")
+                blog_content = f"""제목: [Dry Run] 글로벌 시장 인사이트 시각화 테스트
+{{{{< callout type="key-facts" title="Key Facts" >}}}}
+- 이것은 디자인 확인용 테스트 문구입니다.
+- 실제 AI API를 호출하지 않아 비용이 발생하지 않습니다.
+- 블룸버그/HBR 스타일의 사이드바 배치를 확인하세요.
+{{{{< /callout >}}}}
+
+{{{{< callout type="insight" title="Analyst's Insight" >}}}}
+현재 블로그의 레이아웃과 폰트, 그리고 커스텀 CSS 요소들이 정상적으로 출력되는지 확인하기 위한 더미 분석 내용입니다. 
+실행 시 'dry_run' 파라미터가 true로 설정되어 있으므로, 실제 뉴스 수집 및 AI 요약 과정은 생략되었습니다.
+{{{{< /callout >}}}}
+
+이 포스팅은 디자인 테스트를 위해 생성되었습니다. 실제 뉴스 데이터가 아닙니다.
+"""
+            else:
+                blog_content = self.generate_content(news, category=category)
             
             # 🚨 AI 생성 실패 시(쿼터 초과 등) 쓰레기 게시물 생성 방지
-            if "AI 요약을 사용할 수 없습니다" in blog_content or "모든 AI 모델이 응답하지 않습니다" in blog_content:
+            if not is_dry_run and ("AI 요약을 사용할 수 없습니다" in blog_content or "모든 AI 모델이 응답하지 않습니다" in blog_content):
                 logger.error(f"⛔ 게시물 생성 중단: AI 응답 실패 ({news['title']})")
                 continue
 
