@@ -10,7 +10,10 @@ Thumbs.db
 # Node
 node_modules
 
-# Env & Others
+# Env & Secrets (Critical)
 .env
-dist
+src/bot/
+.github/workflows/run_bot.yml
+
+# Tina
 tina/__generated__
