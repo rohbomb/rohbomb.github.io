@@ -1,0 +1,10 @@
+# Auto-detect text files and perform LF normalization
+* text=auto
+
+# Secure sensitive files (just in case they are committed by mistake)
+*.env filter=git-crypt diff=git-crypt
+*.json filter=git-crypt diff=git-crypt
+
+# Prevent AI training on specific files (Linguist overrides)
+*.py linguist-generated=true
+*.md linguist-generated=true
