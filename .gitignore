@@ -1,7 +1,6 @@
-<<<<<<< HEAD
 # Hugo default output
-/public
-/resources
+public
+resources
 .hugo_build.lock
 
 # OS
@@ -11,19 +10,7 @@ Thumbs.db
 # Node
 node_modules
 
+# Env & Others
 .env
-=======
-# Hugo default
-public
-resources
-.hugo_build.lock
-
-# Node
-node_modules
-.DS_Store
 dist
-.env
-
-# Tina
 tina/__generated__
->>>>>>> c9a1f1de68f507f0b954d886e0fc92be5499f664

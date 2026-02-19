@@ -40,6 +40,11 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; else pip install requests feedparser PyGithub google-generativeai python-dotenv pytz; fi
 
+    - name: Debug File Structure
+      run: |
+        echo "Current Directory: $(pwd)"
+        ls -R
+
     - name: Run Bot Script
       env:
         GH_PAT: ${{ secrets.GH_PAT }}
@@ -51,6 +56,8 @@ jobs:
           python src/bot/bot_core.py
         elif [ -f "bot_core.py" ]; then
           python bot_core.py
+        elif [ -f "src/bot_core.py" ]; then
+          python src/bot_core.py
         else
           echo "Error: bot_core.py not found!"
           exit 1
