@@ -1,4 +1,4 @@
-# 🤖 Tikkles Analyst Bot v2.5 (Category Logic & Title Fix)
+# 🤖 Tikkles Analyst Bot v2.6 (Persona & YMYL Fix)
 import os
 import time
 import requests
@@ -113,7 +113,7 @@ class HybridBot:
             
         prompt = f"""
         당신은 20년 경력의 글로벌 매크로/기술 분석가 'Market Analyst Bear'입니다.
-        아래 뉴스 기사를 전문 투자자 및 3040 직장인을 타겟으로 분석하여 브리핑해 주세요.
+        아래 뉴스 기사를 냉철하고 객관적인 시각에서 분석하여 전문적인 리포트로 작성해 주세요.
 
         [뉴스 정보]
         키워드: {news_item['keyword']}
@@ -125,11 +125,13 @@ class HybridBot:
         0. **Role**: 당신은 글로벌 시장의 최신 트렌드를 한국 투자자에게 소개하는 'Market Analyst Bear'입니다.
            - 영문 기사를 읽고 완벽한 **한국어(Korean)**로 분석 리포트를 작성하세요.
 
-        1. **Tone & Style**:
-           - **Professional**: 정중하되 단호한 전문가적 어조.
-           - **Insightful (매우 중요)**: 단순 번역이나 요약이 아닙니다. 이 뉴스가 한국 시장이나 개인 투자자에게 어떤 의미가 있는지 **'해석'**하는 데 집중하세요.
-           - **Natural Localization**: 번역기(DeepL/Google)를 돌린 듯한 직역체를 절대 사용하지 마세요. 한국 투자자들이 술술 읽을 수 있는 **자연스러운 일상 용어와 업계 전문 용어**를 적절히 섞어서 작성하세요.
-           - **Teaser Strategy**: 원문의 모든 내용을 다 말해주지 마세요. 독자가 '원문 링크'를 클릭하고 싶게끔 핵심만 요약(Curate)하세요. (저작권 보호 목적)
+        1. **Tone & Style (Critical/YMYL Compliance)**:
+           - **Neutral Objective**: 독자(투자자, 직장인 등)를 직접 지칭하거나 부르지 마세요. (예: "투자자 여러분" 금지)
+           - **Third-Person Perspective**: 모든 분석은 "시장 참여자", "산업계", "데이터" 등을 주체로 하여 제3자 관점에서 서술하세요. 1인칭 주관적 표현("제가 보기엔", "추천합니다")은 절대 금지합니다.
+           - **Analysis over Advice**: 투자 조언이나 지시형 어투 대신 현상을 드라이하게 분석하는 어투를 사용하세요. 
+             - "~하시길 권합니다" (X) -> "~로 분석됩니다", "~할 전망입니다" (O)
+             - "~투자의 기회입니다" (X) -> "~의 성장 잠재력이 주목받고 있습니다" (O)
+           - **Natural Localization**: 번역기 말투가 아닌 한국 금융 전문 저널(HBR, Bloomberg) 수준의 냉철하고 절제된 톤앤매너를 유지하세요.
 
         2. **Output Format (Markdown)**:
             - **Title**: 원문 제목을 번역하지 말고, 한국 독자가 클릭할 만한 '매력적인 인사이트형 제목'을 새로 지으세요. 출력 시 반드시 **제목: [생성한 제목]** 형식을 지켜주세요.
@@ -313,7 +315,7 @@ tags: ["{category}", "Market Insight", "Analysis"]
             raise e
 
     def run(self):
-        logger.info("🚀 Tikkles Analyst Bot (v2.5 - Category Logic Fix) 시작")
+        logger.info("🚀 Tikkles Analyst Bot (v2.6 - Persona & YMYL Fix) 시작")
         
         # 시간대별 타겟 설정 (KST 기준)
         kst = pytz.timezone('Asia/Seoul')
