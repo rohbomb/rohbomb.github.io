@@ -1,3 +1,4 @@
+# 🤖 Tikkles Analyst Bot v2.2 (JSON Fix & Path Unified)
 import os
 import time
 import requests
