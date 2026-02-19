@@ -10,7 +10,7 @@ from github import Github, GithubException
 import google.generativeai as genai
 from dotenv import load_dotenv
 import urllib.parse
-import json  # 🛠️ Fix: Global import to prevent NameError
+import json as sys_json # 🛠️ Fix: Use alias to avoid naming conflict
 
 # 로깅 설정
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -70,7 +70,7 @@ class HybridBot:
             if os.path.exists(processed_file):
                 try:
                     with open(processed_file, "r", encoding="utf-8") as f:
-                        processed_links = json.load(f)
+                        processed_links = sys_json.load(f)
                 except:
                     processed_links = []
             
@@ -85,7 +85,7 @@ class HybridBot:
                         processed_links = processed_links[-100:]
                         
                     with open(processed_file, "w", encoding="utf-8") as f:
-                        json.dump(processed_links, f, ensure_ascii=False, indent=2)
+                        sys_json.dump(processed_links, f, ensure_ascii=False, indent=2)
                         
                     return {
                         'title': entry.title,
@@ -298,7 +298,7 @@ tags: ["{category}", "Market Insight", "Analysis"]
             raise e
 
     def run(self):
-        logger.info("🚀 Tikkles Analyst Bot (v2.1 - Fixed Dependencies) 시작")
+        logger.info("🚀 Tikkles Analyst Bot (v2.2 - Final JSON Fix) 시작")
         
         # 시간대별 타겟 설정 (KST 기준)
         kst = pytz.timezone('Asia/Seoul')
