@@ -243,19 +243,39 @@ Analyst's Insight
         body_content = content
 
         if lines:
-             # '제목:'으로 시작하는 줄을 최우선으로 찾음
-             for i, line in enumerate(lines):
+             import re
+             # 정규표현식으로 '제목' 라벨 제거 패턴 정의
+             # ^: 시작, [\*\#]*: 강조/헤더 기호, \s*: 공백, 제목: '제목' 문자열, \s*: 공백, [: ]*: 콜론 등, \s*: 공백
+             title_pattern = re.compile(r'^[\*\#]*\s*제목\s*[:\.]?\s*[\*\#]*\s*', re.IGNORECASE)
+             
+             # 첫 줄부터 탐색하여 제목 라인 식별
+             for i, line in enumerate(lines[:3]): # 상위 3줄까지만 탐색
                  clean_line = line.strip()
-                 if clean_line.startswith('제목:') or clean_line.startswith('**제목:**') or clean_line.startswith('## 제목:'):
-                     extracted_title = clean_line.replace('제목:', '').replace('**', '').replace('##', '').strip()
+                 # '제목'으로 시작하거나, 패턴에 매칭되는 경우
+                 if title_pattern.match(clean_line) or clean_line.startswith("title:"):
+                     # 패턴 제거 후 제목 추출
+                     extracted_title = title_pattern.sub('', clean_line)
+                     # 끝부분의 불필요한 특수문자 제거 (** 등)
+                     extracted_title = re.sub(r'[\*\#]+$', '', extracted_title).strip()
+                     # 따옴표 제거
+                     extracted_title = extracted_title.strip('"').strip("'")
+                     
                      body_content = '\n'.join(lines[i+1:]).strip()
                      break
              else:
-                 # '제목:'이 없으면 첫 줄을 제목으로 하되, 원문 제목과 겹치는지 체크
+                 # '제목:' 라벨을 못 찾았을 경우, 첫 줄을 제목으로 간주하되 정제 시도
                  potential_title = lines[0].strip()
-                 if len(potential_title) > 5: # 너무 짧은 건 무시
-                     extracted_title = potential_title
+                 # 혹시라도 첫 줄에 '**' 같은 게 붙어있을 수 있으므로 제거
+                 extracted_title = re.sub(r'^[\*\#]+|[\*\#]+$', '', potential_title).strip()
+                 extracted_title = extracted_title.strip('"').strip("'")
+                 
+                 if len(extracted_title) > 5:
+                     # 첫 줄이 제목 같으면 본문은 두 번째 줄부터
                      body_content = '\n'.join(lines[1:]).strip()
+                 else:
+                     # 첫 줄이 너무 짧으면(제목이 아닐 확률 높음), 원문 제목 유지하고 본문 전체 사용
+                     extracted_title = title # 원문 제목 Fallback
+                     body_content = content
 
         # HTML Callout 박스 적용을 위한 텍스트 치환 (프롬프트에서 유도하지만 한번 더 정제)
         # Key Facts 섹션 (모델이 'Key Facts'만 출력할 경우를 대비해 매칭 문자열 축소)
