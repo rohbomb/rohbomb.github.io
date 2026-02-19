@@ -10,7 +10,7 @@
     --text-soft-grey: #E0E0E0;
     /* Slightly brighter for contrast */
     --point-gold: #F2C94C;
-    /* Bright Golden Yellow (Previous was #D3A74A) */
+    /* Bright Golden Yellow */
     --bg-box-keyfacts: #151821;
     --bg-box-insight: #1A1F2B;
 }
@@ -18,24 +18,18 @@
 /* Global Reset & Font Enforcement */
 body {
     font-family: var(--primary-font) !important;
-    /* Force Pretendard */
     font-size: 19px;
-    /* Slightly larger base size for PC */
     line-height: 1.9;
-    /* More breathing room */
     color: var(--text-soft-grey) !important;
     background-color: var(--bg-deep-black) !important;
     word-break: keep-all;
-    /* Korean typography best practice */
 }
 
 /* PC Readability Fix: Constrain Content Width */
 .post-content,
 .main {
     max-width: 800px;
-    /* Optimal reading width for PC */
     margin: 0 auto;
-    /* Center alignment */
 }
 
 /* Theme overrides for PaperMod elements */
@@ -45,7 +39,8 @@ body {
     --hljs-bg: var(--bg-box-keyfacts);
     --code-bg: var(--bg-box-keyfacts);
     --border: #333;
-    --primary: var(--point-gold);
+    /* Reset Primary to White/Grey for Logo & Icons, NOT Gold */
+    --primary: #E0E0E0;
 }
 
 /* 1. Header Styling */
@@ -56,7 +51,6 @@ body {
     padding-bottom: 30px;
     margin-bottom: 50px;
     text-align: center;
-    /* Center align header for magazine look */
 }
 
 .post-title {
@@ -85,24 +79,21 @@ body {
     color: var(--point-gold);
 }
 
-/* 3. Callout Boxes (Integrated Alignment) */
+/* 3. Callout Boxes */
 .callout {
     padding: 30px;
-    /* More padding */
     border-radius: 4px;
     margin: 50px 0;
-    /* More vertical space */
     width: 100%;
     box-sizing: border-box;
     transition: all 0.3s ease;
 }
 
-/* 3.1 KEY FACTS (Gold Left Border & Title) */
+/* 3.1 KEY FACTS */
 .callout-key-facts {
     background-color: var(--bg-box-keyfacts);
     border: none;
     border-left: 5px solid var(--point-gold);
-    /* Thicker border */
 }
 
 .callout-key-facts .callout-title {
@@ -116,7 +107,7 @@ body {
     border-bottom: 0px solid transparent;
 }
 
-/* 3.2 ANALYST'S INSIGHT (Gold Top Border) */
+/* 3.2 ANALYST'S INSIGHT */
 .callout-insight {
     background-color: var(--bg-box-insight);
     border: none;
@@ -132,7 +123,6 @@ body {
     margin-bottom: 25px;
     padding-bottom: 15px;
     border-bottom: 1px solid rgba(242, 201, 76, 0.3);
-    /* Subtle gold line */
     display: block;
 }
 
@@ -181,20 +171,27 @@ blockquote::before {
     position: absolute;
     top: -50px;
     left: 48%;
-    /* Center align */
     transform: translateX(-50%);
 }
 
-/* Reference Link Styling */
-a {
+/* Reference Link Styling - SCOPED TO CONTENT ONLY */
+/* This prevents global nav links/icons from turning gold */
+.post-content a {
     color: var(--point-gold);
     text-decoration: none;
     border-bottom: 1px dashed var(--point-gold);
 }
 
-a:hover {
+.post-content a:hover {
     color: #fff;
     border-bottom-style: solid;
+}
+
+/* Branding Fix: Reset Social Icons to Neutral if not handled by SVGs properly */
+/* Ensure buttons/tags are not forcefully yellow unless hovered or active */
+.button {
+    background: var(--bg-box-keyfacts);
+    color: var(--text-soft-grey);
 }
 
 /* Mobile Responsiveness */
