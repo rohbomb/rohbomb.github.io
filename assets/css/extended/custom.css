@@ -2,26 +2,39 @@
 
 :root {
     --primary-font: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
-    --brand-blue: #0056b3;
-    /* HBR/Bloomberg Blue */
-    --bg-callout-grey: #f9f9f9;
-    --bg-callout-blue: #f0f7ff;
+
+    /* 2. Color Palette (Dark Mode Only) */
+    --bg-deep-black: #0B0C10;
+    --text-soft-grey: #E5E5E5;
+    --point-gold: #D3A74A;
+    --bg-box-keyfacts: #151821;
+    --bg-box-insight: #1A1F2B;
 }
 
+/* 2. Single Dark Mode Enforcement */
 body {
     font-family: var(--primary-font);
     font-size: 18px;
-    /* Perplexity Suggestion: Bigger font */
-    line-height: 1.8;
-    color: #333;
-    background-color: #fff;
+    line-height: 1.85;
+    /* 4. Readability */
+    color: var(--text-soft-grey) !important;
+    background-color: var(--bg-deep-black) !important;
 }
 
-/* 1. HBR Style Header: Top Blue Hairline */
+/* Theme overrides for PaperMod elements to ensure Deep Black */
+.dark {
+    --bg: var(--bg-deep-black);
+    --content: var(--text-soft-grey);
+    --hljs-bg: var(--bg-box-keyfacts);
+    --code-bg: var(--bg-box-keyfacts);
+    --border: #333;
+}
+
+/* 1. HBR Style Header */
 .post-header {
-    border-top: 4px solid var(--brand-blue);
-    /* Signature Look */
-    border-bottom: 1px solid #eaeaea;
+    border-top: 4px solid var(--point-gold);
+    /* Gold Point */
+    border-bottom: 1px solid #333;
     padding-top: 30px;
     padding-bottom: 20px;
     margin-bottom: 40px;
@@ -33,9 +46,15 @@ body {
     margin-top: 10px;
     margin-bottom: 15px !important;
     letter-spacing: -0.02em;
+    color: #fff;
+    /* Title bright white */
 }
 
-/* 2. Drop Cap (Magazine Style) */
+.post-meta {
+    color: #888;
+}
+
+/* 2. Drop Cap (Gold) */
 .post-content>p:first-of-type::first-letter {
     font-size: 3.5em;
     font-weight: 900;
@@ -43,75 +62,95 @@ body {
     line-height: 0.8;
     margin-right: 12px;
     margin-top: 5px;
-    color: var(--brand-blue);
+    color: var(--point-gold);
 }
 
-/* 3. Bloomberg Style Components: Minimalist Borders over Shadows */
+/* 3. Callout Boxes (Integrated Alignment) */
 .callout {
     padding: 24px;
     border-radius: 4px;
-    /* Sharp corners for professional look */
-    margin: 30px 0;
+    margin: 40px 0;
+    /* Vertical breathing room */
+    width: 100%;
+    /* 1. Alignment Fix: Match content width */
+    box-sizing: border-box;
+    /* Ensure padding doesn't overflow width */
     transition: all 0.3s ease;
 }
 
-/* Key Facts - Responsive Floating Sidebar */
+/* 3.1 KEY FACTS (Gold Left Border) */
 .callout-key-facts {
-    background-color: var(--bg-callout-grey);
-    border: 1px solid #e5e5e5;
-    /* Thin border instead of shadow */
-    border-left: 4px solid #666;
+    background-color: var(--bg-box-keyfacts);
+    border: none;
+    border-left: 4px solid var(--point-gold);
 }
 
-/* Insight - Premium Box */
+.callout-key-facts .callout-title {
+    color: var(--point-gold);
+    font-weight: 700;
+    font-size: 1.0rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    /* 3. Letter spacing */
+    margin-bottom: 15px;
+    display: block;
+}
+
+/* 3.2 ANALYST'S INSIGHT (Gold Top Border) */
 .callout-insight {
-    background-color: var(--bg-callout-blue);
-    border: 1px solid #cfe2ff;
-    border-left: 4px solid var(--brand-blue);
+    background-color: var(--bg-box-insight);
+    border: none;
+    border-top: 4px solid var(--point-gold);
 }
 
-.callout-title {
+.callout-insight .callout-title {
+    color: var(--point-gold);
     font-weight: 800;
-    font-size: 1.1rem;
+    font-size: 1.4rem;
+    /* 3. Bigger font */
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(211, 167, 74, 0.3);
+    /* Thin gold separator */
+    display: block;
+}
+
+/* List Styling in Boxes */
+.callout ul,
+.callout ol {
+    margin-bottom: 0;
+    padding-left: 20px;
+}
+
+.callout li {
     margin-bottom: 10px;
-    color: var(--brand-blue);
+    color: #d0d0d0;
 }
 
-/* 4. Desktop Layout: Key Facts as Sidebar (Bloomberg Style) */
-@media (min-width: 1200px) {
-    .callout-key-facts {
-        float: right;
-        width: 350px;
-        margin-left: 40px;
-        margin-top: 10px;
-        margin-bottom: 20px;
-    }
-}
-
-/* 5. Image Soft Zoom Interaction */
+/* 5. Image Soft Zoom */
 .post-content img {
-    border-radius: 2px;
-    /* Professional sharp edges */
+    border-radius: 12px;
+    /* 4. Rounded Corners */
     margin: 30px 0;
     transition: transform 0.4s ease;
-    border: 1px solid #eee;
+    border: 1px solid #333;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    /* Deep Shadow */
 }
 
 .post-content img:hover {
     transform: scale(1.02);
-    /* Subtle zoom */
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
-/* 6. Pull Quote (HBR Style) */
+/* 6. Pull Quote */
 blockquote {
     border-left: none !important;
     font-size: 1.6rem;
     font-weight: 700;
     font-style: italic;
-    color: var(--brand-blue);
+    color: var(--point-gold);
     margin: 40px 0;
     padding: 0 20px;
     text-align: center;
@@ -122,37 +161,23 @@ blockquote {
 blockquote::before {
     content: "“";
     font-size: 4rem;
-    color: #e5e7eb;
+    color: #333;
     position: absolute;
     top: -40px;
     left: 45%;
 }
 
-/* Dark Mode Optimization */
-@media (prefers-color-scheme: dark) {
-    body {
-        background-color: #121212;
-        color: #e0e0e0;
-    }
-
-    .post-header {
-        border-bottom: 1px solid #333;
-    }
-
+/* 4. Responsive margins */
+@media (max-width: 768px) {
     .callout {
-        background-color: #1e1e1e;
-        border-color: #333;
+        margin-left: 0;
+        margin-right: 0;
+        width: 100%;
+        border-radius: 0;
+        /* Full width on mobile looks better without corners sometimes, or keep consistent */
     }
 
-    .callout-arrow {
-        border-right-color: #333;
-    }
-
-    .key-fact-item {
-        border-bottom-color: #333;
-    }
-
-    blockquote::before {
-        color: #333;
+    body {
+        font-size: 17px;
     }
 }

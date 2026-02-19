@@ -22,8 +22,8 @@ buildExpired = false
   author = "Analyst Bear"
   # images = ["<link or path of image for opengraph, twitter-cards>"]
   DateFormat = "2006-01-02"
-  defaultTheme = "auto" # dark, light
-  disableThemeToggle = false
+  defaultTheme = "dark" # dark, light
+  disableThemeToggle = true
 
   ShowReadingTime = false
   ShowShareButtons = true
