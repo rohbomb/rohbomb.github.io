@@ -1,4 +1,4 @@
-# 🤖 Tikkles Analyst Bot v2.3 (TypeError Fix)
+# 🤖 Tikkles Analyst Bot v2.4 (Korean Title Fix)
 import os
 import time
 import requests
@@ -128,8 +128,8 @@ class HybridBot:
            - **Teaser Strategy**: 원문의 모든 내용을 다 말해주지 마세요. 독자가 '원문 링크'를 클릭하고 싶게끔 핵심만 요약(Curate)하세요. (저작권 보호 목적)
 
         2. **Output Format (Markdown)**:
-           - **Title**: 원문 제목을 번역하지 말고, 한국 독자가 클릭할 만한 '매력적인 인사이트형 제목'을 새로 지으세요.
-           - **이모티콘 사용 금지**: 제목과 본문에 이모티콘(➡️, ✅ 등) 절대 금지.
+            - **Title**: 원문 제목을 번역하지 말고, 한국 독자가 클릭할 만한 '매력적인 인사이트형 제목'을 새로 지으세요. 출력 시 반드시 **제목: [생성한 제목]** 형식을 지켜주세요.
+            - **이모티콘 사용 금지**: 제목과 본문에 이모티콘(➡️, ✅ 등) 절대 금지.
            - **Key Facts (3줄 요약)**
              - 원문의 핵심 팩트 3가지를 건조하게 요약. 
              - (출처: [원문 매체명]) 형식으로 문장 끝에 출처 암시.
@@ -236,9 +236,14 @@ Analyst's Insight
         extracted_title = title 
         body_content = content
 
-        if lines and not lines[0].startswith('#'):
-             extracted_title = lines[0].replace('제목:', '').strip()
-             body_content = '\n'.join(lines[1:]).strip()
+        if lines:
+             # 첫 번째 줄 또는 '제목:'으로 시작하는 줄 찾기
+             for i, line in enumerate(lines):
+                 if '제목:' in line or i == 0:
+                     extracted_title = line.replace('제목:', '').replace('#', '').strip()
+                     body_content = '\n'.join(lines[i+1:]).strip()
+                     if extracted_title: # 유효한 제목을 찾았으면 중단
+                         break
 
         # HTML Callout 박스 적용을 위한 텍스트 치환 (프롬프트에서 유도하지만 한번 더 정제)
         # Key Facts 섹션 (모델이 'Key Facts'만 출력할 경우를 대비해 매칭 문자열 축소)
@@ -298,7 +303,7 @@ tags: ["{category}", "Market Insight", "Analysis"]
             raise e
 
     def run(self):
-        logger.info("🚀 Tikkles Analyst Bot (v2.3 - Final Logic Fix) 시작")
+        logger.info("🚀 Tikkles Analyst Bot (v2.4 - Korean Title Fix) 시작")
         
         # 시간대별 타겟 설정 (KST 기준)
         kst = pytz.timezone('Asia/Seoul')
