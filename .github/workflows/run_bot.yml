@@ -59,3 +59,14 @@ jobs:
           echo "Error: main.py not found!"
           exit 1
         fi
+
+    - name: Trigger Hugo Build on rohbomb.github.io
+      env:
+        GH_PAT: ${{ secrets.GH_PAT }}
+      run: |
+        echo "Triggering hugo.yaml workflow_dispatch on rohbomb.github.io..."
+        curl -X POST \
+          -H "Accept: application/vnd.github.v3+json" \
+          -H "Authorization: token ${{ secrets.GH_PAT }}" \
+          https://api.github.com/repos/rohbomb/rohbomb.github.io/actions/workflows/hugo.yaml/dispatches \
+          -d '{"ref":"main"}'
