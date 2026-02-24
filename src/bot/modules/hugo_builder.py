@@ -98,17 +98,14 @@ tags: {tags_str}
 ![{image_alt}]({image_url})
 *<small>{image_credit}</small>*
 
-{{{{< callout type="key-facts" title="<div class='callout callout-key-facts'>
-<span class='callout-title'>Key Facts</span>" >}}}}
+<div class='callout callout-key-facts'>
+<span class='callout-title'>Key Facts</span>
 {key_facts_md.strip()}
-{{{{< /callout >}}}}
-
-{{{{< callout type="insight" title="</div>
+</div>
 
 <div class='callout callout-insight'>
-<span class='callout-title'>Analyst's Insight</span>" >}}}}
+<span class='callout-title'>Analyst's Insight</span>
 {insight.strip()}
-{{{{< /callout >}}}}
 </div>
 
 ---
