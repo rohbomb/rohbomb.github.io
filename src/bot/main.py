@@ -81,8 +81,9 @@ def push_to_github(safe_filename, markdown_content, folder_name, config):
         logger.info(f"✅ GitHub {repo_name} 저장소에 파일 푸시 성공: {path}")
         return True
     except Exception as e:
-        logger.error(f"❌ GitHub 푸시 실패: {e}")
-        return False
+        logger.error(f"❌ GitHub 푸시 실패 (Exception): {e}")
+        import sys
+        sys.exit(1)
 
 def main():
     load_dotenv()
