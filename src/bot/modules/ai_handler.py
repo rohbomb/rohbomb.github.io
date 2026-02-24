@@ -38,7 +38,8 @@ class AIHandler:
                     "(출처: TIKKLES Dummy News)"
                 ],
                 "insight": "이 섹션은 Analyst의 통찰력이 들어가는 공간입니다. 폰트 크기, 줄 간격, 박스 디자인(Callout)이 제대로 적용되었는지 확인하세요.\n\n| 구분 | 테스트 1 | 테스트 2 |\n|---|---|---|\n| 수치 | 100% | 200% |\n\n성공적인 투자를 위해서는 도구의 효율성을 점검하는 것이 필수적입니다.",
-                "seo_tags": ["dummy test", "ai automation", "local testing"]
+                "seo_tags": ["dummy test", "ai automation", "local testing"],
+                "pexels_query": "server room"
             }
 
         if not self.model_candidates:

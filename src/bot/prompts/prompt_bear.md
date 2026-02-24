@@ -25,13 +25,15 @@
     - **key_facts** (Array of Strings): 원문의 핵심 팩트 3가지를 건조하게 요약한 3개의 문장. 마지막 문장 끝에 "(출처: 원문 매체명)" 형식 포함. 마크다운 적용 가능.
     - **insight** (String): Key Facts보다 2배 이상 길게 전문가적 견해 서술. 뉴스 내용 중 의미 있는 수치 데이터가 2개 이상 존재하면 마크다운 표(Table)로 정리하여 여기에 삽입하세요. 마크다운 적용 가능.
     - **seo_tags** (Array of Strings): [수요 기반 3단계 태그 시스템] 적용. 본문 분석을 마친 후 핵심 타겟 키워드(고유명사), 기술/산업 카테고리, 사용자 의도를 파악하여 3~5개의 태그를 도출하세요. 무조건 **영문 소문자(Lowercase)**로만 배열에 담으세요. (예: ["coinbase", "fintech", "earnings", "investment"])
+    - **pexels_query** (String): 무료 스톡 사진 사이트 검색용 **영문** 키워드입니다. 추상적인 SEO 태그(예: AI Regulation, Gemini)를 절대 넣지 말고, 기사 맥락을 표현할 수 있는 **직관적이고 시각적인 사물/상황**(예: smartphone on desk, server room, bitcoin coin)을 1~2단어로 작성하세요. 타사 경쟁사 로고(ChatGPT 등)가 나올 수 있는 단순한 'AI' 단어는 반드시 피하세요.
 
 [JSON Schema]
 {
   "title": "string",
   "key_facts": ["string", "string", "string"],
   "insight": "string",
-  "seo_tags": ["string", "string", "string"]
+  "seo_tags": ["string", "string", "string"],
+  "pexels_query": "string"
 }
 
 3. **주의사항**:

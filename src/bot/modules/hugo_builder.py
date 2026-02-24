@@ -5,6 +5,7 @@ import logging
 import requests
 from datetime import datetime
 import pytz
+import random
 
 logger = logging.getLogger("HybridBot")
 
@@ -12,26 +13,27 @@ class HugoBuilder:
     def __init__(self, pexels_api_key=None):
         self.pexels_api_key = pexels_api_key
 
-    def _get_pexels_image(self, keyword, category):
+    def _get_pexels_image(self, pexels_query, category):
         """Pexels API를 이용해 관련 이미지 URL과 저작권자 정보, SEO Alt 태그를 가져옴"""
         image_url = "https://picsum.photos/seed/{}/800/600".format(datetime.now().strftime("%Y-%m-%d-%H%M%S"))
         photographer = "Picsum Photos"
         photographer_url = "https://picsum.photos"
         
-        image_alt = f"{keyword} trends & {category} analysis"
+        image_alt = f"{pexels_query} trends & {category} analysis"
         image_credit = f"Photo from Picsum Photos"
 
         if not self.pexels_api_key:
             return image_url, image_alt, image_credit
             
         headers = {"Authorization": self.pexels_api_key}
-        url = f"https://api.pexels.com/v1/search?query={keyword}&per_page=1"
+        # 상위 5개 이미지를 가져와서 중복 방지를 위해 랜덤으로 1개 선택
+        url = f"https://api.pexels.com/v1/search?query={pexels_query}&per_page=5"
         try:
             response = requests.get(url, headers=headers)
             if response.status_code == 200:
                 data = response.json()
                 if data.get('photos'):
-                    photo = data['photos'][0]
+                    photo = random.choice(data['photos'])
                     image_url = photo['src']['landscape']
                     photographer = photo['photographer']
                     photographer_url = photo['photographer_url']
@@ -40,7 +42,7 @@ class HugoBuilder:
                     if not alt_desc:
                         alt_desc = "Stock photo representing market trends"
                     
-                    image_alt = f"{alt_desc} - {keyword} trends & {category} analysis"
+                    image_alt = f"{alt_desc} - {pexels_query} trends & {category} analysis"
                     image_credit = f"Photo by [{photographer}]({photographer_url}) on [Pexels](https://www.pexels.com)"
                     return image_url, image_alt, image_credit
         except Exception as e:
@@ -57,6 +59,9 @@ class HugoBuilder:
         folder_name = category.lower()
         safe_filename = f"news-{category}-{now.strftime('%Y-%m-%d-%H%M%S')}.md"
         
+        # 제미나이가 생성해준 pexels_query 추출 (없으면 기본값)
+        pexels_query = ai_json.get("pexels_query", "technology")
+        
         # Pexels 이미지 가져오기
         is_dry_run = os.getenv("DRY_RUN", "false").lower() == "true"
         if is_dry_run and not self.pexels_api_key:
@@ -64,7 +69,7 @@ class HugoBuilder:
             image_alt = f"Economics and Technology News"
             image_credit = f"Photo from Picsum Photos"
         else:
-            image_url, image_alt, image_credit = self._get_pexels_image(keyword, category)
+            image_url, image_alt, image_credit = self._get_pexels_image(pexels_query, category)
 
         # JSON 파싱 (안전한 치환)
         title = ai_json.get("title", "Market Update")
