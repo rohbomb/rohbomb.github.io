@@ -4,15 +4,12 @@
     /* 1. Font Setting: Verified Free License (SIL Open Font License) for Commercial Use */
     --primary-font: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
 
-    /* 2. Enhanced Color Palette (Brighter Gold) */
-    --bg-deep-black: #0B0C10;
-    /* Deepest Black */
-    --text-soft-grey: #E0E0E0;
-    /* Slightly brighter for contrast */
-    --point-gold: #F2C94C;
-    /* Bright Golden Yellow */
-    --bg-box-keyfacts: #151821;
-    --bg-box-insight: #1A1F2B;
+    /* 2. Enhanced Color Palette (Deep Navy & Soft Gray) */
+    --bg-deep-black: #12151c;   /* 딥 네이비로 변경 */
+    --text-soft-grey: #e1e1e6;  /* 텍스트를 살짝 더 차분하게 */
+    --point-gold: #F2C94C;      /* 기존 골드 유지 */
+    --bg-box-keyfacts: #1d222d; /* 박스 배경을 배경보다 살짝 밝게 */
+    --bg-box-insight: #242a38;  /* 인사이트 박스도 톤 맞춤 */
 }
 
 /* Global Reset & Font Enforcement */
