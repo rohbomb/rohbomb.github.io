@@ -136,13 +136,14 @@ body {
     line-height: 1.8;
 }
 
-/* 4. Image Styling */
+/* 4. Image Styling (크기 및 비율 강제 고정) */
 .post-content img {
+    width: 100%;
+    aspect-ratio: 16 / 9; /* 가로 세로 비율을 16:9로 완벽 고정 */
+    object-fit: cover;    /* 비율에 안 맞는 부분은 잘라내고 꽉 채움 */
     border-radius: 8px;
     margin: 40px 0;
     border: 1px solid #333;
-    max-width: 100%;
-    height: auto;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
 }
 
