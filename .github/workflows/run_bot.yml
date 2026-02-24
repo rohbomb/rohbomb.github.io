@@ -38,7 +38,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; else pip install requests feedparser PyGithub google-generativeai python-dotenv pytz; fi
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; else pip install requests feedparser PyGithub google-generativeai python-dotenv pytz pyyaml; fi
 
     - name: Debug File Structure
       run: |
@@ -52,13 +52,11 @@ jobs:
         PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
         DRY_RUN: ${{ github.event.inputs.dry_run }}
       run: |
-        if [ -f "src/bot/bot_core.py" ]; then
-          python src/bot/bot_core.py
-        elif [ -f "bot_core.py" ]; then
-          python bot_core.py
-        elif [ -f "src/bot_core.py" ]; then
-          python src/bot_core.py
+        if [ -f "src/bot/main.py" ]; then
+          python src/bot/main.py
+        elif [ -f "main.py" ]; then
+          python main.py
         else
-          echo "Error: bot_core.py not found!"
+          echo "Error: main.py not found!"
           exit 1
         fi
