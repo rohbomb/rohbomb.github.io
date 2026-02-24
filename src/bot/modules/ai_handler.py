@@ -46,12 +46,11 @@ class AIHandler:
             return None
 
         template = self._load_prompt_template()
-        prompt = template.format(
-            keyword=news_item.get('keyword', ''),
-            title=news_item.get('title', ''),
-            link=news_item.get('link', ''),
-            summary=news_item.get('summary', '')
-        )
+        prompt = template
+        prompt = prompt.replace("{keyword}", str(news_item.get('keyword', '')))
+        prompt = prompt.replace("{title}", str(news_item.get('title', '')))
+        prompt = prompt.replace("{link}", str(news_item.get('link', '')))
+        prompt = prompt.replace("{summary}", str(news_item.get('summary', '')))
 
         for model_name in self.model_candidates:
             try:
