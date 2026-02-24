@@ -50,7 +50,6 @@ jobs:
         GH_PAT: ${{ secrets.GH_PAT }}
         LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
         PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
-        DRY_RUN: ${{ github.event.inputs.dry_run }}
       run: |
         if [ -f "src/bot/main.py" ]; then
           python src/bot/main.py
