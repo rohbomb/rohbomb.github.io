@@ -10,8 +10,8 @@ class AIHandler:
         self.api_key = api_key
         if self.api_key:
             genai.configure(api_key=self.api_key)
-            # Fallback priority list
-            self.model_candidates = ["gemini-3.1-pro", "gemini-1.5-pro", "gemini-1.5-flash"]
+            # Fallback priority list (restored from working v2.8)
+            self.model_candidates = ['gemini-2.0-flash-exp', 'gemini-exp-1206', 'gemini-2.5-flash']
         else:
             self.model_candidates = []
 
