@@ -299,12 +299,18 @@ Analyst's Insight
         else:
             body_content = body_content.replace("</div>", "</div>") # 안전장치
 
+        # 카테고리별 맞춤형 SEO 태그 생성
+        if category == "Money":
+            tags_str = f'["{category}", "Market Insight", "Analysis", "Finance"]'
+        else:
+            tags_str = f'["{category}", "Tech Trends", "Productivity", "Innovation"]'
+
         markdown = f"""---
 title: "{extracted_title}"
 date: {date_str}
 draft: false
 categories: ["{category}"]
-tags: ["{category}", "Market Insight", "Analysis"]
+tags: {tags_str}
 ---
 
 ![{image_alt}]({image_url})
