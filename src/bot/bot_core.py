@@ -27,12 +27,17 @@ class HybridBot:
         self.pexels_api_key = os.getenv("PEXELS_API_KEY") # 🛠️ 복구: Pexels API Key 로드
         
         if not self.github_token:
-            logger.error("❌ GH_PAT 환경변수가 없습니다.")
-            raise ValueError("GitHub Token is missing")
-
-        # GitHub 연결
-        self.gh = Github(self.github_token)
-        self.repo = self.gh.get_repo(self.target_repo_name)
+            if os.getenv("DRY_RUN", "false").lower() == "true":
+                logger.info("🧪 [Dry Run] GH_PAT 누락 무시. 로컬 테스트를 진행합니다.")
+                self.gh = None
+                self.repo = None
+            else:
+                logger.error("❌ GH_PAT 환경변수가 없습니다.")
+                raise ValueError("GitHub Token is missing")
+        else:
+            # GitHub 연결
+            self.gh = Github(self.github_token)
+            self.repo = self.gh.get_repo(self.target_repo_name)
 
         # Gemini 설정 (API 키가 있을 때만)
         if self.llm_api_key:
@@ -139,6 +144,9 @@ class HybridBot:
            - **Key Facts (3줄 요약)**
              - 원문의 핵심 팩트 3가지를 건조하게 요약. 
              - (출처: [원문 매체명]) 형식으로 문장 끝에 출처 암시.
+           - **Data Visualization (필수 아님, 수치 데이터 존재 시)**
+             - 뉴스 내용 중 주가, 매출액, 성장률 등 의미 있는 **수치 데이터**가 2개 이상 존재할 경우, 이를 한눈에 보기 쉽게 마크다운 **표(Table)**로 정리하세요.
+             - 표의 제목을 간결하게 붙이고 본문(Key Facts 이후)에 자연스럽게 삽입하세요.
            - **Analyst's Insight (핵심)**
              - 이곳의 분량을 Key Facts보다 2배 이상 길게 작성하세요.
              - "이 뉴스는 ~라는 점에서 중요합니다.", "앞으로 ~분야의 변화가 예상됩니다." 등 전문가적 견해 서술.
@@ -211,7 +219,9 @@ Analyst's Insight
                     # WebP 변환 및 사이즈 최적화 (Perplexity 조언 반영)
                     # original 대신 large2x 사용 + fm=webp 파라미터 추가
                     image_url = photo['src']['large2x'] + "?auto=compress&cs=tinysrgb&w=800&fm=webp"
-                    image_alt = photo.get('alt', f"{keyword} related image")
+                    # SEO 고도화: 기존 Pexels 설명에 검색 키워드(keyword)와 분석(analysis) 단어 조합
+                    base_alt = photo.get('alt', f"{keyword} related image")
+                    image_alt = f"{base_alt} - {keyword} trends & {category} analysis"
                     photographer = photo.get('photographer', 'Pexels User')
                     photographer_url = photo.get('photographer_url', 'https://www.pexels.com')
                     image_credit = f"Photo by [{photographer}]({photographer_url}) on [Pexels](https://www.pexels.com)"
@@ -377,21 +387,8 @@ tags: ["{category}", "Market Insight", "Analysis"]
             logger.info(f"🔍 분석 중: {news['title']}")
             
             if is_dry_run:
-                logger.info("🧪 [Dry Run] AI API 호출 없이 테스트 콘텐츠를 생성합니다.")
-                blog_content = f"""제목: [Dry Run] 글로벌 시장 인사이트 시각화 테스트
-{{{{< callout type="key-facts" title="Key Facts" >}}}}
-- 이것은 디자인 확인용 테스트 문구입니다.
-- 실제 AI API를 호출하지 않아 비용이 발생하지 않습니다.
-- 블룸버그/HBR 스타일의 사이드바 배치를 확인하세요.
-{{{{< /callout >}}}}
-
-{{{{< callout type="insight" title="Analyst's Insight" >}}}}
-현재 블로그의 레이아웃과 폰트, 그리고 커스텀 CSS 요소들이 정상적으로 출력되는지 확인하기 위한 더미 분석 내용입니다. 
-실행 시 'dry_run' 파라미터가 true로 설정되어 있으므로, 실제 뉴스 수집 및 AI 요약 과정은 생략되었습니다.
-{{{{< /callout >}}}}
-
-이 포스팅은 디자인 테스트를 위해 생성되었습니다. 실제 뉴스 데이터가 아닙니다.
-"""
+                logger.info("🧪 [Dry Run] AI API를 호출하지만 GitHub 푸시는 생략하고 로컬에 저장합니다.")
+                blog_content = self.generate_content(news, category=category)
             else:
                 blog_content = self.generate_content(news, category=category)
             
