@@ -150,6 +150,14 @@ class HybridBot:
            - **Analyst's Insight (핵심)**
              - 이곳의 분량을 Key Facts보다 2배 이상 길게 작성하세요.
              - "이 뉴스는 ~라는 점에서 중요합니다.", "앞으로 ~분야의 변화가 예상됩니다." 등 전문가적 견해 서술.
+           - **SEO_TAGS (필수)**
+             - 본문 분석을 마친 후, 마크다운의 마지막 줄에 `SEO_TAGS:`로 시작하여 3~5개의 콤마(,)로 구분된 영문 소문자 태그를 출력하세요.
+             - 태그는 다음의 [3단계 태그 시스템] 규칙을 엄격히 따릅니다:
+               1. 핵심 타겟 키워드: 본문 내 실제 검색 수요가 높은 구체적 제품명/고유명사 (예: coinbase, nvidia)
+               2. 기술/산업 카테고리: 해당 기술의 대분류 (예: fintech, ai, semiconductor)
+               3. 사용자 의도: 독자가 정보를 찾는 목적 (예: investment, analysis, review)
+             - 주의: `analysis`, `market insight` 등 식상한 범용 태그는 배제하고, 무조건 모두 **소문자(Lowercase)**로만 작성하세요.
+             - 출력 예시: `SEO_TAGS: coinbase, fintech, earnings, investment`
 
         3. **주의사항**:
            - **언어**: 무조건 **한국어**로 출력.
@@ -299,11 +307,31 @@ Analyst's Insight
         else:
             body_content = body_content.replace("</div>", "</div>") # 안전장치
 
-        # 카테고리별 맞춤형 SEO 태그 생성
-        if category == "Money":
-            tags_str = f'["{category}", "Market Insight", "Analysis", "Finance"]'
+        # SEO_TAGS 파싱 및 동적 프론트매터 적용
+        # 정규식 패턴: 'SEO_TAGS:' 로 시작하고 뒷부분 텍스트 추출 (대소문자 무관)
+        seo_tags_pattern = re.compile(r'^SEO_TAGS\s*:\s*(.+)$', re.IGNORECASE | re.MULTILINE)
+        match = seo_tags_pattern.search(body_content)
+        
+        if match:
+            # 매칭된 태그 문자열 가져오기 (예: "coinbase, fintech, investment")
+            raw_tags = match.group(1).strip()
+            # 쉼표 기준으로 나누고 앞뒤 공백 제거 후 소문자로 변환하여 리스트 생성
+            tag_list = [tag.strip().lower() for tag in raw_tags.split(',')]
+            # 카테고리 태그(Money/Tools)는 무조건 기본으로 포함
+            if category.lower() not in tag_list:
+                tag_list.insert(0, category)
+            # 파이썬 리스트를 겹따옴표 처리된 JSON 배열 형태의 문자열로 변환
+            import json
+            tags_str = json.dumps(tag_list)
+            
+            # 본문에 남아있는 SEO_TAGS 라인을 깔끔하게 삭제하여 사용자에게 노출 방지
+            body_content = seo_tags_pattern.sub('', body_content).strip()
         else:
-            tags_str = f'["{category}", "Tech Trends", "Productivity", "Innovation"]'
+            # 혹시라도 AI가 태그를 못 만들었을 때를 대비한 Fallback (이전 로직)
+            if category == "Money":
+                tags_str = f'["{category}", "market insight", "finance"]'
+            else:
+                tags_str = f'["{category}", "tech trends", "innovation"]'
 
         markdown = f"""---
 title: "{extracted_title}"
