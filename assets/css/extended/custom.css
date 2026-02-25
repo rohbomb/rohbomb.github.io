@@ -166,10 +166,12 @@ body {
     border-radius: 8px;
 }
 
-/* 마우스를 올리면 블러와 노이즈가 걷히며 선명해짐 */
-.post-entry:hover img {
+/* 마우스를 올리면 블러와 노이즈가 걷히며 선명해짐 (목록 및 본문 공통) */
+.post-entry:hover img,
+.post-content img:hover {
     filter: saturate(1) brightness(1) contrast(1) blur(0px);
 }
+
 .post-entry:hover::after {
     opacity: 0.02;
 }
