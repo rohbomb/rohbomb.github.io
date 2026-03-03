@@ -37,3 +37,16 @@ jobs:
         run: |
           cd src/bot
           python main.py
+
+      - name: Sync posts from public repo (backup)
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: |
+          git remote add public https://x-access-token:${GH_PAT}@github.com/rohbomb/rohbomb.github.io.git
+          git fetch public main
+          git checkout public/main -- content/posts/ || true
+          git config user.name "Analyst Bot"
+          git config user.email "bot@tikkles.com"
+          git add content/posts/
+          git diff --cached --quiet || git commit -m "sync: backup posts from public repo"
+          git push origin main || true
