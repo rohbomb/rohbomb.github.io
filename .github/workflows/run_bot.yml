@@ -1,0 +1,39 @@
+# 봇 자동 실행 워크플로우 (비공개단 tikklab 전용)
+name: Run Analyst Bot
+
+on:
+  schedule:
+    # 매일 오전 8시 KST (UTC 23:00 전날) - Money 카테고리
+    - cron: '0 23 * * *'
+    # 매일 오후 7시 KST (UTC 10:00) - Tools 카테고리
+    - cron: '0 10 * * *'
+
+  # 수동 트리거 (테스트용)
+  workflow_dispatch:
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r src/bot/requirements.txt
+
+      - name: Run Analyst Bot
+        env:
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: |
+          cd src/bot
+          python main.py

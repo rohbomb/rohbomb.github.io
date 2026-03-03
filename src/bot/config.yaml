@@ -1,0 +1,11 @@
+github:
+  target_repo_name: "rohbomb/rohbomb.github.io"
+
+rss:
+  sources:
+    money:
+      keyword: "Economy Bitcoin Stock Market"
+      category: "Money"
+    tools:
+      keyword: "AI Technology Tools Gadgets"
+      category: "Tools"

@@ -10,10 +10,11 @@ Thumbs.db
 # Node
 node_modules
 
-# Env & Secrets (Critical)
+# Env & Secrets (Critical) - .env 파일만 정밀 차단
 .env
-src/bot/
-.github/workflows/run_bot.yml
+src/bot/.env
+src/bot/.env.*
+!src/bot/.env.example
 
 # Tina
 tina/__generated__
