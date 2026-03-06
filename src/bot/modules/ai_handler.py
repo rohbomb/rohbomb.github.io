@@ -66,6 +66,11 @@ class AIHandler:
                 response = model.generate_content(prompt, generation_config=generation_config)
                 response_text = response.text
                 
+                # 가비지 뉴스 필터: AI가 광고/어그로/저품질로 판별한 경우 스킵
+                if "SKIP_THIS_ARTICLE" in response_text:
+                    logger.info("🗑️ 가비지 뉴스로 판별되어 포스팅을 건너뜁니다 (SKIP).")
+                    return None
+                
                 try:
                     result_json = json.loads(response_text)
                     return result_json
