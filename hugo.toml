@@ -1,60 +1,67 @@
-baseURL = "https://rohbomb.github.io/"
+﻿baseURL = "https://rohbomb.github.io/"
+# GitHub Actions Build Trigger
 languageCode = "ko-kr"
-title = "TIKKLES / AI · Tech · Life Insights"
+title = "TIKKLES / AI 쨌 Tech 쨌 Life Insights"
 theme = "PaperMod"
 
 enableRobotsTXT = true
 buildDrafts = false
-buildFuture = true
+buildFuture = true # Bot(KST) vs Server(UTC) Timezone Issue Fix
 buildExpired = false
 
-[markup.goldmark.renderer]
-unsafe = true
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
 
 [params]
-env = "production"
-title = "TIKKLES | AI, Tech & Life Insights"
-description = "Analyst Bear의 뉴스 큐레이션과 넙쭉이의 IT/라이프 기록"
-keywords = ["Blog", "Portfolio", "PaperMod"]
-author = "Analyst Bear"
-DateFormat = "2006-01-02"
-defaultTheme = "dark"
-disableThemeToggle = true
-ShowReadingTime = false
-ShowShareButtons = true
-ShowPostNavLinks = true
-ShowBreadCrumbs = true
-ShowCodeCopyButtons = true
-ShowWordCount = true
-ShowRssButtonInSectionTermList = true
-UseHugoToc = true
-ShowRelatedContent = true
+  env = "production"
+  title = "TIKKLES | AI, Tech & Life Insights"
+  description = "Analyst Bear???댁뒪 ?먮젅?댁뀡怨??숈춬?댁쓽 IT/?쇱씠??湲곕줉"
+  keywords = ["Blog", "Portfolio", "PaperMod"]
+  author = "Analyst Bear"
+  # images = ["<link or path of image for opengraph, twitter-cards>"]
+  DateFormat = "2006-01-02 15:04"
+  defaultTheme = "dark" # dark, light, trigger
+  disableThemeToggle = true
+  googleAnalytics = "" # G-XXXXXXXXXX ?뺥깭 (??μ씠 諛쒓툒 ???낅젰)
+  adsensePublisherId = "" # ca-pub-XXXXXXXXXXXXXXXX ?뺥깭 (??μ씠 諛쒓툒 ???낅젰)
 
-[params.profileMode]
-enabled = false
-title = "TIKKLES | AI, Tech & Life Insights"
-subtitle = "Analyst Bear의 뉴스 큐레이션과 넙쭉이의 IT/라이프 기록"
-imageUrl = "<link or path of image for opengraph, twitter-cards>"
-imageWidth = 120
-imageHeight = 120
-imageTitle = "my image"
-buttons = [
-  { name = "Posts", url = "posts" },
-  { name = "Tags", url = "tags" }
-]
+  ShowReadingTime = false
+  ShowShareButtons = true
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowWordCount = false
+  ShowRssButtonInSectionTermList = true
+  UseHugoToc = true
+  ShowRelatedContent = true
 
-[[params.socialIcons]]
-name = "Github"
-url = "https://github.com/rohbomb"
+  [params.profileMode]
+    enabled = false
+    title = "TIKKLES | AI, Tech & Life Insights"
+    subtitle = "Analyst Bear???댁뒪 ?먮젅?댁뀡怨??숈춬?댁쓽 IT/?쇱씠??湲곕줉"
+    imageUrl = "<link or path of image for opengraph, twitter-cards>"
+    imageWidth = 120
+    imageHeight = 120
+    imageTitle = "my image"
+    buttons = [
+      { name = "Posts", url = "posts" },
+      { name = "Tags", url = "tags" }
+    ]
 
-[[menu.main]]
-identifier = "posts"
-name = "Posts"
-url = "/posts/"
-weight = 10
+  [[params.socialIcons]]
+    name = "Github"
+    url = "https://github.com/rohbomb"
 
-[[menu.main]]
-identifier = "tags"
-name = "Tags"
-url = "/tags/"
-weight = 20
+[menu]
+  [[menu.main]]
+    identifier = "posts"
+    name = "Posts"
+    url = "/posts/"
+    weight = 10
+  [[menu.main]]
+    identifier = "tags"
+    name = "Tags"
+    url = "/tags/"
+    weight = 20
