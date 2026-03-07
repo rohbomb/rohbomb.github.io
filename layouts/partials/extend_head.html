@@ -1,3 +1,21 @@
+{{- if not hugo.IsServer -}}
+{{- if .Site.Params.googleAnalytics -}}
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ .Site.Params.googleAnalytics }}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', '{{ .Site.Params.googleAnalytics }}');
+</script>
+{{- end -}}
+
+{{- if .Site.Params.adsensePublisherId -}}
+<script async
+  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ .Site.Params.adsensePublisherId }}"
+  crossorigin="anonymous"></script>
+{{- end -}}
+{{- end -}}
+
 {{ if .IsPage }}
 <script type="application/ld+json">
 {
