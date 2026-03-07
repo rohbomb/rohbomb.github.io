@@ -77,6 +77,7 @@ class HugoBuilder:
         safe_title = title.replace('"', '\\"').replace("\n", " ")
         key_facts = ai_json.get("key_facts", [])
         insight = ai_json.get("insight", "")
+        summary = ai_json.get("summary", "")
         # tags와 categories는 ai_json에서 직접 가져올 수도 있으나, 현재 create_post 인자로 받고 있음
         # seo_tags는 기존 로직 유지 (ai_json에서 가져와서 처리)
         seo_tags = ai_json.get("tags", []) # 프롬프트의 'tags' 키와 맞춤
@@ -103,6 +104,8 @@ tags: {tags_str}
 
 ![{image_alt}]({image_url})
 *<small>{image_credit}</small>*
+
+{summary.strip()}
 
 <div class='callout callout-key-facts'>
 <span class='callout-title'>Key Facts</span>
