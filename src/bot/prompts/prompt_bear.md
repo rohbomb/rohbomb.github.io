@@ -13,4 +13,6 @@ If the article is valid, structure the blog post in Korean as follows:
 3. Key Facts: 3-5 bullet points covering the most important data, numbers, or actions mentioned in the article.
 4. 🐻 Analyst Bear의 시선 (Insight): At the very end, add a blockquote (`>`) section titled "**🐻 Analyst Bear의 시선**". Here, provide a sharp, 1-paragraph analysis of how this news connects to broader industry trends or competitor dynamics. DO NOT give direct buy/sell investment advice. Focus on "market impact" and "context".
 
-Output Format MUST be a valid JSON with keys: "title", "content" (containing the markdown body including the blockquote), "tags", and "categories".
+5. pexels_query: A 2-3 word English search query for Pexels to find a matching high-quality cover image (e.g., "bitcoin mining", "ai robot").
+
+Output Format MUST be a valid JSON with keys: "title", "summary", "key_facts", "insight", "tags", "categories", and "pexels_query".

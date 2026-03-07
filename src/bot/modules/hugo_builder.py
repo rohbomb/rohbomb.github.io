@@ -71,14 +71,15 @@ class HugoBuilder:
         else:
             image_url, image_alt, image_credit = self._get_pexels_image(pexels_query, category)
 
-        # JSON 파싱 (안전한 치환)
+        # AI가 생성한 데이터 추출 (JSON 키 이름 확인)
         title = ai_json.get("title", "Market Update")
         # 따옴표/특수문자로 인한 프론트매터 파싱 에러 방지용 따옴표 이스케이프 제거
         safe_title = title.replace('"', '\\"').replace("\n", " ")
-        
         key_facts = ai_json.get("key_facts", [])
         insight = ai_json.get("insight", "")
-        seo_tags = ai_json.get("seo_tags", [])
+        # tags와 categories는 ai_json에서 직접 가져올 수도 있으나, 현재 create_post 인자로 받고 있음
+        # seo_tags는 기존 로직 유지 (ai_json에서 가져와서 처리)
+        seo_tags = ai_json.get("tags", []) # 프롬프트의 'tags' 키와 맞춤
         
         # 기본 카테고리 태그 보장 (소문자)
         cat_lower = category.lower()
