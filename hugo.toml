@@ -1,7 +1,7 @@
 baseURL = "https://rohbomb.github.io/"
 # GitHub Actions Build Trigger
 languageCode = "ko-kr"
-title = "TIKKLES / AI 쨌 Tech 쨌 Life Insights"
+title = "TIKKLES | AI | Tech | Life Insights"
 theme = "PaperMod"
 
 enableRobotsTXT = true
@@ -17,7 +17,7 @@ buildExpired = false
 [params]
   env = "production"
   title = "TIKKLES | AI, Tech & Life Insights"
-  description = "Analyst Bear???댁뒪 ?먮젅?댁뀡怨??숈춬?댁쓽 IT/?쇱씠??湲곕줉"
+  description = "Analyst Bear의 뉴스 큐레이션과 흑웅이의 IT/라이프 기록"
   keywords = ["Blog", "Portfolio", "PaperMod"]
   author = "Analyst Bear"
   # images = ["<link or path of image for opengraph, twitter-cards>"]
@@ -40,7 +40,7 @@ buildExpired = false
   [params.profileMode]
     enabled = false
     title = "TIKKLES | AI, Tech & Life Insights"
-    subtitle = "Analyst Bear???댁뒪 ?먮젅?댁뀡怨??숈춬?댁쓽 IT/?쇱씠??湲곕줉"
+    subtitle = "Analyst Bear의 뉴스 큐레이션과 흑웅이의 IT/라이프 기록"
     imageUrl = "<link or path of image for opengraph, twitter-cards>"
     imageWidth = 120
     imageHeight = 120
