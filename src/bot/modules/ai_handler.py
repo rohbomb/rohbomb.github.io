@@ -58,9 +58,27 @@ class AIHandler:
                 logger.info(f"🤖 모델 시도 중: {model_name}")
                 model = genai.GenerativeModel(model_name)
                 
-                # JSON 강제 출력 설정
+                # JSON 강제 출력 설정 및 response_schema 도입
                 generation_config = genai.types.GenerationConfig(
                     response_mime_type="application/json",
+                    response_schema={
+                        "type": "OBJECT",
+                        "properties": {
+                            "title": {"type": "STRING"},
+                            "summary": {"type": "STRING"},
+                            "key_facts": {
+                                "type": "ARRAY",
+                                "items": {"type": "STRING"}
+                            },
+                            "insight": {"type": "STRING"},
+                            "tags": {
+                                "type": "ARRAY",
+                                "items": {"type": "STRING"}
+                            },
+                            "pexels_query": {"type": "STRING"}
+                        },
+                        "required": ["title", "summary", "key_facts", "insight", "tags", "pexels_query"]
+                    }
                 )
                 
                 response = model.generate_content(prompt, generation_config=generation_config)

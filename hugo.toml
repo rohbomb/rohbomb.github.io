@@ -24,8 +24,8 @@ buildExpired = false
   DateFormat = "2006-01-02 15:04"
   defaultTheme = "dark" # dark, light, trigger
   disableThemeToggle = true
-  googleAnalytics = "" # G-XXXXXXXXXX ?뺥깭 (??μ씠 諛쒓툒 ???낅젰)
-  adsensePublisherId = "" # ca-pub-XXXXXXXXXXXXXXXX ?뺥깭 (??μ씠 諛쒓툒 ???낅젰)
+  googleAnalytics = "" # G-XXXXXXXXXX 형태 (대장이 발급 후 입력)
+  adsensePublisherId = "" # ca-pub-XXXXXXXXXXXXXXXX 형태 (대장이 발급 후 입력)
 
   ShowReadingTime = false
   ShowShareButtons = true

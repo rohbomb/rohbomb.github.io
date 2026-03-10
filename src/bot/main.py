@@ -2,7 +2,8 @@ import os
 import sys
 import yaml
 import logging
-from datetime import datetime
+import time
+from datetime import datetime, timedelta
 import pytz
 from dotenv import load_dotenv
 import feedparser
@@ -43,15 +44,32 @@ def fetch_rss_news(keyword):
         logger.warning("검색된 뉴스가 없습니다.")
         return []
     
+    kst = pytz.timezone('Asia/Seoul')
+    now = datetime.now(kst)
     news_list = []
-    # 최신 뉴스 1개만 추출
-    for entry in feed.entries[:1]:
+    
+    for entry in feed.entries:
+        # pubDate 파싱 및 24시간 이내 필터링
+        if hasattr(entry, 'published_parsed') and entry.published_parsed:
+            pub_dt = datetime.fromtimestamp(time.mktime(entry.published_parsed), pytz.utc).astimezone(kst)
+            if now - pub_dt > timedelta(hours=24):
+                logger.info(f"⏳ 24시간이 지난 뉴스 건너뜀 (발행일: {pub_dt.strftime('%Y-%m-%d %H:%M')})")
+                continue
+                
         news_list.append({
             'title': entry.title,
             'link': entry.link,
             'summary': entry.description if hasattr(entry, 'description') else "No Summary",
             'keyword': keyword
         })
+        
+        # 최신 뉴스 1개만 추출
+        if len(news_list) >= 1:
+            break
+            
+    if not news_list:
+        logger.warning("🕒 24시간 이내에 발행된 뉴스가 없습니다.")
+        
     return news_list
 
 def push_to_github(safe_filename, markdown_content, folder_name, config):
@@ -82,8 +100,18 @@ def push_to_github(safe_filename, markdown_content, folder_name, config):
         return True
     except Exception as e:
         logger.error(f"❌ GitHub 푸시 실패 (Exception): {e}")
-        import sys
-        sys.exit(1)
+        # Fallback: 로컬 backup_dumps에 안전하게 백업 (하드 종료 방지)
+        root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+        backup_dir = os.path.join(root_dir, 'backup_dumps')
+        os.makedirs(backup_dir, exist_ok=True)
+        backup_path = os.path.join(backup_dir, safe_filename)
+        try:
+            with open(backup_path, "w", encoding="utf-8") as bf:
+                bf.write(markdown_content)
+            logger.info(f"💾 [Fallback] 에러 발생으로 백업 폴더에 포스트 저장 및 종료 방지 완료: {backup_path}")
+        except Exception as be:
+            logger.error(f"❌ 백업 저장마저 실패: {be}")
+        return False
 
 def main():
     load_dotenv()
