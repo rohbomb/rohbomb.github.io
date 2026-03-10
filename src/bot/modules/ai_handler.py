@@ -64,6 +64,7 @@ class AIHandler:
                     response_schema={
                         "type": "OBJECT",
                         "properties": {
+                            "is_valid_article": {"type": "BOOLEAN"},
                             "title": {"type": "STRING"},
                             "summary": {"type": "STRING"},
                             "key_facts": {
@@ -77,20 +78,21 @@ class AIHandler:
                             },
                             "pexels_query": {"type": "STRING"}
                         },
-                        "required": ["title", "summary", "key_facts", "insight", "tags", "pexels_query"]
+                        "required": ["is_valid_article", "title", "summary", "key_facts", "insight", "tags", "pexels_query"]
                     }
                 )
                 
                 response = model.generate_content(prompt, generation_config=generation_config)
                 response_text = response.text
                 
-                # 가비지 뉴스 필터: AI가 광고/어그로/저품질로 판별한 경우 스킵
-                if "SKIP_THIS_ARTICLE" in response_text:
-                    logger.info("🗑️ 가비지 뉴스로 판별되어 포스팅을 건너뜁니다 (SKIP).")
-                    return None
-                
                 try:
                     result_json = json.loads(response_text)
+                    
+                    # 🚨 가비지 뉴스 필터: AI가 저품질로 판별한 경우 안전하게 스킵
+                    if not result_json.get("is_valid_article", True):
+                        logger.info("🗑️ 가비지/광고 뉴스로 판별되어 포스팅을 건너뜁니다 (is_valid_article: false).")
+                        return None
+                        
                     return result_json
                 except json.JSONDecodeError:
                     logger.warning(f"⚠️ {model_name} JSON 디코딩 실패. Raw text:\n{response_text}")
