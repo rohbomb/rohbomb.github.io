@@ -2,11 +2,12 @@
 name: Run Analyst Bot
 
 on:
-  schedule:
-    # 매일 오전 8시 KST (UTC 23:00 전날) - Money 카테고리
-    - cron: '0 23 * * *'
-    # 매일 오후 7시 KST (UTC 10:00) - Tools 카테고리
-    - cron: '0 10 * * *'
+  # 🚨 대장 지시로 자동 포스팅 중단 (저품질 이슈 해결 전까지 수동으로만 가동)
+  # schedule:
+  #   # 매일 오전 8시 KST (UTC 23:00 전날) - Money 카테고리
+  #   - cron: '0 23 * * *'
+  #   # 매일 오후 7시 KST (UTC 10:00) - Tools 카테고리
+  #   - cron: '0 10 * * *'
 
   # 수동 트리거 (테스트용)
   workflow_dispatch:
