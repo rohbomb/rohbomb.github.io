@@ -1,0 +1,35 @@
+name: CashCow Hybrid Bot (Plan B)
+
+on:
+  schedule:
+    - cron: '0 */4 * * *' # 4시간마다 실행 (UTC 기준)
+  workflow_dispatch: # 수동 실행 버튼
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 저장소 체크아웃
+        uses: actions/checkout@v3
+
+      - name: 파이썬 설정 (3.10)
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: 의존성 설치
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f "requirements.txt" ]; then pip install -r requirements.txt; fi
+          # 봇 실행에 필요한 추가 패키지는 requirements.txt에 있다고 가정
+
+      - name: 🤖 캐시카우 봇 실행
+        env:
+          WP_URL: ${{ secrets.WP_URL }}
+          WP_USER: ${{ secrets.WP_USER }}
+          WP_PASSWORD: ${{ secrets.WP_PASSWORD }}
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+        run: |
+          # 봇 실행 스크립트 (Plan B 전환 시 bot_core.py 수정 필요할 수 있음)
+          # python src/bot/bot_core.py
+          echo "봇 실행 준비 완료 (오라클 실패 시 활성화)"
