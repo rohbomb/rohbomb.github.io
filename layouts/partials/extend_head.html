@@ -1,11 +1,12 @@
 {{- if not hugo.IsServer -}}
-{{- if .Site.Params.googleAnalytics -}}
-<script async src="https://www.googletagmanager.com/gtag/js?id={{ .Site.Params.googleAnalytics }}"></script>
+{{- if site.Params.googleAnalytics -}}
+<!-- Google Analytics 4 (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ site.Params.googleAnalytics }}"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag() { dataLayer.push(arguments); }
   gtag('js', new Date());
-  gtag('config', '{{ .Site.Params.googleAnalytics }}');
+  gtag('config', '{{ site.Params.googleAnalytics }}');
 </script>
 {{- end -}}
 
