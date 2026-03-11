@@ -31,14 +31,17 @@ class AIHandler:
         if is_dry_run and not self.api_key:
             logger.info("🧪 [Dry Run Mode] AI API 호출 없이 더미 JSON 데이터를 반환합니다.")
             return {
+                "is_valid_article": True,
                 "title": "[Dry Run] 글로벌 시장 인사이트 시각화 테스트",
+                "summary": "안티그래비티 에이전트 모드 테스트를 위한 Dry Run 요약문입니다.",
                 "key_facts": [
                     "이것은 디자인 확인용 테스트 문구입니다.",
                     "실제 AI API를 호출하지 않아 비용이 발생하지 않습니다.",
                     "(출처: TIKKLES Dummy News)"
                 ],
                 "insight": "이 섹션은 Analyst의 통찰력이 들어가는 공간입니다. 폰트 크기, 줄 간격, 박스 디자인(Callout)이 제대로 적용되었는지 확인하세요.\n\n| 구분 | 테스트 1 | 테스트 2 |\n|---|---|---|\n| 수치 | 100% | 200% |\n\n성공적인 투자를 위해서는 도구의 효율성을 점검하는 것이 필수적입니다.",
-                "seo_tags": ["dummy test", "ai automation", "local testing"],
+                "tags": ["dummy test", "ai automation", "local testing"],
+                "categories": ["Tech", "IT"],
                 "pexels_query": "server room"
             }
 

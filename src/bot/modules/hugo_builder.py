@@ -6,6 +6,7 @@ import requests
 from datetime import datetime
 import pytz
 import random
+import urllib.parse
 
 logger = logging.getLogger("HybridBot")
 
@@ -27,7 +28,8 @@ class HugoBuilder:
             
         headers = {"Authorization": self.pexels_api_key}
         # 상위 5개 이미지를 가져와서 중복 방지를 위해 랜덤으로 1개 선택
-        url = f"https://api.pexels.com/v1/search?query={pexels_query}&per_page=5"
+        encoded_query = urllib.parse.quote(pexels_query)
+        url = f"https://api.pexels.com/v1/search?query={encoded_query}&per_page=5"
         try:
             response = requests.get(url, headers=headers)
             if response.status_code == 200:
