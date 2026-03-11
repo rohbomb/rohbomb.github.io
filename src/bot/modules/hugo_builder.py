@@ -6,6 +6,7 @@ import requests
 from datetime import datetime
 import pytz
 import random
+import urllib.parse
 
 logger = logging.getLogger("HybridBot")
 
@@ -27,7 +28,8 @@ class HugoBuilder:
             
         headers = {"Authorization": self.pexels_api_key}
         # 상위 5개 이미지를 가져와서 중복 방지를 위해 랜덤으로 1개 선택
-        url = f"https://api.pexels.com/v1/search?query={pexels_query}&per_page=5"
+        encoded_query = urllib.parse.quote(pexels_query)
+        url = f"https://api.pexels.com/v1/search?query={encoded_query}&per_page=5"
         try:
             response = requests.get(url, headers=headers)
             if response.status_code == 200:
@@ -73,14 +75,15 @@ class HugoBuilder:
 
         # AI가 생성한 데이터 추출 (JSON 키 이름 확인)
         title = ai_json.get("title", "Market Update")
-        # 따옴표/특수문자로 인한 프론트매터 파싱 에러 방지용 따옴표 이스케이프 제거
-        safe_title = title.replace('"', '\\"').replace("\n", " ")
+        # 따옴표/특수문자로 인한 프론트매터 파싱 에러 방지용 치환 강화
+        safe_title = title.replace('"', "'").replace(":", "：").replace("\n", " ")
+        
+        summary = ai_json.get("summary", "")
+        safe_summary = summary.replace('"', "'").replace(":", "：").replace("\n", " ")
+        
         key_facts = ai_json.get("key_facts", [])
         insight = ai_json.get("insight", "")
-        summary = ai_json.get("summary", "")
-        # tags와 categories는 ai_json에서 직접 가져올 수도 있으나, 현재 create_post 인자로 받고 있음
-        # seo_tags는 기존 로직 유지 (ai_json에서 가져와서 처리)
-        seo_tags = ai_json.get("tags", []) # 프롬프트의 'tags' 키와 맞춤
+        seo_tags = ai_json.get("tags", ai_json.get("seo_tags", []))
         
         # 기본 카테고리 태그 보장 (소문자)
         cat_lower = category.lower()
@@ -100,12 +103,13 @@ date: {date_str}
 draft: false
 categories: ["{category}"]
 tags: {tags_str}
+summary: "{safe_summary}"
 ---
 
 ![{image_alt}]({image_url})
 *<small>{image_credit}</small>*
 
-{summary.strip()}
+{safe_summary.strip()}
 
 <div class='callout callout-key-facts'>
 <span class='callout-title'>Key Facts</span>

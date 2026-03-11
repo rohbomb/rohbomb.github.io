@@ -31,14 +31,17 @@ class AIHandler:
         if is_dry_run and not self.api_key:
             logger.info("🧪 [Dry Run Mode] AI API 호출 없이 더미 JSON 데이터를 반환합니다.")
             return {
+                "is_valid_article": True,
                 "title": "[Dry Run] 글로벌 시장 인사이트 시각화 테스트",
+                "summary": "안티그래비티 에이전트 모드 테스트를 위한 Dry Run 요약문입니다.",
                 "key_facts": [
                     "이것은 디자인 확인용 테스트 문구입니다.",
                     "실제 AI API를 호출하지 않아 비용이 발생하지 않습니다.",
                     "(출처: TIKKLES Dummy News)"
                 ],
                 "insight": "이 섹션은 Analyst의 통찰력이 들어가는 공간입니다. 폰트 크기, 줄 간격, 박스 디자인(Callout)이 제대로 적용되었는지 확인하세요.\n\n| 구분 | 테스트 1 | 테스트 2 |\n|---|---|---|\n| 수치 | 100% | 200% |\n\n성공적인 투자를 위해서는 도구의 효율성을 점검하는 것이 필수적입니다.",
-                "seo_tags": ["dummy test", "ai automation", "local testing"],
+                "tags": ["dummy test", "ai automation", "local testing"],
+                "categories": ["Tech", "IT"],
                 "pexels_query": "server room"
             }
 
@@ -58,21 +61,41 @@ class AIHandler:
                 logger.info(f"🤖 모델 시도 중: {model_name}")
                 model = genai.GenerativeModel(model_name)
                 
-                # JSON 강제 출력 설정
+                # JSON 강제 출력 설정 및 response_schema 도입
                 generation_config = genai.types.GenerationConfig(
                     response_mime_type="application/json",
+                    response_schema={
+                        "type": "OBJECT",
+                        "properties": {
+                            "is_valid_article": {"type": "BOOLEAN"},
+                            "title": {"type": "STRING"},
+                            "summary": {"type": "STRING"},
+                            "key_facts": {
+                                "type": "ARRAY",
+                                "items": {"type": "STRING"}
+                            },
+                            "insight": {"type": "STRING"},
+                            "tags": {
+                                "type": "ARRAY",
+                                "items": {"type": "STRING"}
+                            },
+                            "pexels_query": {"type": "STRING"}
+                        },
+                        "required": ["is_valid_article", "title", "summary", "key_facts", "insight", "tags", "pexels_query"]
+                    }
                 )
                 
                 response = model.generate_content(prompt, generation_config=generation_config)
                 response_text = response.text
                 
-                # 가비지 뉴스 필터: AI가 광고/어그로/저품질로 판별한 경우 스킵
-                if "SKIP_THIS_ARTICLE" in response_text:
-                    logger.info("🗑️ 가비지 뉴스로 판별되어 포스팅을 건너뜁니다 (SKIP).")
-                    return None
-                
                 try:
                     result_json = json.loads(response_text)
+                    
+                    # 🚨 가비지 뉴스 필터: AI가 저품질로 판별한 경우 안전하게 스킵
+                    if not result_json.get("is_valid_article", True):
+                        logger.info("🗑️ 가비지/광고 뉴스로 판별되어 포스팅을 건너뜁니다 (is_valid_article: false).")
+                        return None
+                        
                     return result_json
                 except json.JSONDecodeError:
                     logger.warning(f"⚠️ {model_name} JSON 디코딩 실패. Raw text:\n{response_text}")
