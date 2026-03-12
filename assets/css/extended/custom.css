@@ -27,9 +27,22 @@ body {
     word-break: keep-all;
 }
 
-/* All UI elements to 070707 */
-.header, .footer, .nav, .post-meta, .post-header, .post-title, .logo a {
+/* Force ALL text elements to #070707 */
+p, li, span, a, div, section, article, time, .post-meta, .post-header, .post-title, .logo a, .header, .footer {
     color: var(--text-main) !important;
+}
+
+/* PaperMod specific overrides for forced dark-ish gray text */
+.post-content p, .post-content li, .post-content h1, .post-content h2, .post-content h3 {
+    color: var(--text-main) !important;
+}
+
+/* Theme color overrides to prevent PaperMod's gray */
+.dark, :root {
+    --bg: var(--bg-paper);
+    --content: var(--text-main);
+    --primary: var(--text-main);
+    --secondary: var(--text-muted);
 }
 
 /* Base Headings - Perplexity 'Lead Summary' Style */
