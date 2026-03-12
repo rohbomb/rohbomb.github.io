@@ -5,15 +5,15 @@
     --primary-font: 'Pretendard', -apple-system, sans-serif;
     --heading-font: 'Nanum Myeongjo', 'Song Myung', serif;
 
-    /* 2. Premium Color Palette (Inspired by Dior/Hanji) */
-    --bg-paper: #FDFBF7;        /* 한지 느낌의 따뜻한 배경 */
-    --text-main: #1A2238;       /* 남색 니트 컬러 (깊은 네이비) */
-    --point-gold: #C5A021;      /* 디올 골드 포인트 */
-    --text-muted: #555e75;      /* 서브 텍스트용 차분한 남색 */
+    /* 2. Precision Premium Palette (User Defined) */
+    --bg-paper: #B3937E;        /* 대장이 지정한 배경색 */
+    --text-main: #070707;       /* 대장이 지정한 폰트색 (남색 니트 느낌) */
+    --point-gold: #C28E4F;      /* 대장이 지정한 포인트 골드 */
+    --text-muted: #3d3d3d;      /* 서브 텍스트용 차분한 다크 그레이 */
     
     /* Box & Decorative Elements */
-    --bg-box: #F7F1E3;          /* 상자용 약간 더 짙은 베이지 */
-    --border-light: rgba(26, 34, 56, 0.1);
+    --bg-box: rgba(255, 255, 255, 0.1); 
+    --border-light: rgba(7, 7, 7, 0.1);
 }
 
 /* Global Styles */
