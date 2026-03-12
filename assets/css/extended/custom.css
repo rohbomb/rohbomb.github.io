@@ -1,78 +1,80 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
 :root {
-    /* 1. Font Setting: Verified Free License (SIL Open Font License) for Commercial Use */
-    --primary-font: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+    /* 1. Font Setting: Pretendard for Body, Serif for Headings */
+    --primary-font: 'Pretendard', -apple-system, sans-serif;
+    --heading-font: 'Nanum Myeongjo', 'Song Myung', serif;
 
-    /* 2. Enhanced Color Palette (Deep Navy & Soft Gray) */
-    --bg-deep-black: #12151c;   /* 딥 네이비로 변경 */
-    --text-soft-grey: #e1e1e6;  /* 텍스트를 살짝 더 차분하게 */
-    --point-gold: #F2C94C;      /* 기존 골드 유지 */
-    --bg-box-keyfacts: #1d222d; /* 박스 배경을 배경보다 살짝 밝게 */
-    --bg-box-insight: #242a38;  /* 인사이트 박스도 톤 맞춤 */
+    /* 2. Premium Color Palette (Inspired by Dior/Hanji) */
+    --bg-paper: #FDFBF7;        /* 한지 느낌의 따뜻한 배경 */
+    --text-main: #1A2238;       /* 남색 니트 컬러 (깊은 네이비) */
+    --point-gold: #C5A021;      /* 디올 골드 포인트 */
+    --text-muted: #555e75;      /* 서브 텍스트용 차분한 남색 */
+    
+    /* Box & Decorative Elements */
+    --bg-box: #F7F1E3;          /* 상자용 약간 더 짙은 베이지 */
+    --border-light: rgba(26, 34, 56, 0.1);
 }
 
-/* Global Reset & Font Enforcement */
+/* Global Styles */
 body {
     font-family: var(--primary-font) !important;
     font-size: 19px;
-    line-height: 1.9;
-    color: var(--text-soft-grey) !important;
-    background-color: var(--bg-deep-black) !important;
+    line-height: 1.8;
+    color: var(--text-main) !important;
+    background-color: var(--bg-paper) !important;
     word-break: keep-all;
 }
 
-/* PC Readability Fix: Constrain Content Width */
-.post-content,
-.main {
-    max-width: 800px;
-    margin: 0 auto;
+/* Base Headings - Perplexity 'Lead Summary' Style */
+h1, h2, h3 {
+    font-family: var(--heading-font) !important;
+    color: var(--text-main);
+    letter-spacing: -0.02em;
 }
 
-/* Theme overrides for PaperMod elements */
-.dark {
-    --bg: var(--bg-deep-black);
-    --content: var(--text-soft-grey);
-    --hljs-bg: var(--bg-box-keyfacts);
-    --code-bg: var(--bg-box-keyfacts);
-    --border: #333;
-    /* Reset Primary to White/Grey for Logo & Icons, NOT Gold */
-    --primary: #E0E0E0;
+h2 {
+    font-size: 2.5rem !important;
+    font-weight: 800;
+    line-height: 1.3;
+    margin-top: 80px !important;
+    margin-bottom: 30px !important;
+    color: var(--text-main);
+    border-bottom: none !important;
 }
 
-/* 1. Header Styling */
+/* Header Styling (Premium Gold Top Border) */
 .post-header {
-    border-top: 4px solid var(--point-gold);
-    border-bottom: 1px solid #333;
-    padding-top: 40px;
-    padding-bottom: 30px;
-    margin-bottom: 50px;
+    border-top: 6px solid var(--point-gold);
+    border-bottom: 1px solid var(--border-light);
+    padding-top: 50px;
+    padding-bottom: 40px;
+    margin-bottom: 60px;
     text-align: center;
 }
 
 .post-title {
-    font-size: 3rem !important;
-    font-weight: 800;
-    margin-top: 15px;
-    margin-bottom: 20px !important;
-    letter-spacing: -0.03em;
-    color: #fff;
-    line-height: 1.3;
+    font-family: var(--heading-font) !important;
+    font-size: 3.2rem !important;
+    font-weight: 900;
+    color: var(--text-main) !important;
+    line-height: 1.25;
 }
 
 .post-meta {
-    color: #999;
-    font-size: 0.95rem;
+    color: var(--text-muted);
+    font-size: 1rem;
 }
 
-/* 2. Drop Cap (Bright Gold) */
-.post-content>p:first-of-type::first-letter {
-    font-size: 3.8em;
+/* Drop Cap (Dior Gold) */
+.post-content > p:first-of-type::first-letter {
+    font-size: 4em;
+    font-family: var(--heading-font);
     font-weight: 900;
     float: left;
-    line-height: 0.8;
-    margin-right: 14px;
-    margin-top: 6px;
+    line-height: 0.85;
+    margin-right: 15px;
+    margin-top: 5px;
     color: var(--point-gold);
 }
 
