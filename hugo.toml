@@ -1,12 +1,13 @@
 baseURL = "https://rohbomb.github.io/"
-# GitHub Actions Build Trigger
-languageCode = "ko-kr"
 title = "TIKKLES | AI | Tech | Life Insights"
 theme = "PaperMod"
 
+# Multilingual Settings
+defaultContentLanguage = "en"
+defaultContentLanguageInSubdir = false
 enableRobotsTXT = true
 buildDrafts = false
-buildFuture = true # Bot(KST) vs Server(UTC) Timezone Issue Fix
+buildFuture = true
 buildExpired = false
 
 [markup]
@@ -14,59 +15,66 @@ buildExpired = false
     [markup.goldmark.renderer]
       unsafe = true
 
+[languages]
+  [languages.en]
+    languageName = "English"
+    languageCode = "en-us"
+    contentDir = "content/en"
+    weight = 1
+    [languages.en.params]
+      title = "TIKKLES | Global Tech Insights"
+      description = "Global tech news curation for the digital era."
+    [[languages.en.menu.main]]
+      identifier = "posts"
+      name = "Posts"
+      url = "/posts/"
+      weight = 10
+    [[languages.en.menu.main]]
+      identifier = "tags"
+      name = "Tags"
+      url = "/tags/"
+      weight = 20
+    [[languages.en.menu.main]]
+      identifier = "about"
+      name = "About Us"
+      url = "/about/"
+      weight = 30
+
+  [languages.ko]
+    languageName = "한국어"
+    languageCode = "ko-kr"
+    contentDir = "content/ko"
+    weight = 2
+    [languages.ko.params]
+      title = "TIKKLES | 한국 IT 인사이트"
+      description = "Analyst Bear의 뉴스 큐레이션과 한국 시장 선점용 테크 블로그"
+    [[languages.ko.menu.main]]
+      identifier = "posts"
+      name = "포스트"
+      url = "/ko/posts/"
+      weight = 10
+    [[languages.ko.menu.main]]
+      identifier = "tags"
+      name = "태그"
+      url = "/ko/tags/"
+      weight = 20
+    [[languages.ko.menu.main]]
+      identifier = "about"
+      name = "소개"
+      url = "/ko/about/"
+      weight = 30
+
 [params]
   env = "production"
-  title = "TIKKLES | AI, Tech & Life Insights"
-  description = "Analyst Bear의 뉴스 큐레이션과 대장의 IT/라이프 기록"
-  keywords = ["Blog", "Portfolio", "PaperMod"]
   author = "Analyst Bear"
-  # images = ["<link or path of image for opengraph, twitter-cards>"]
   DateFormat = "2006-01-02 15:04"
-  defaultTheme = "dark" # dark, light, trigger
+  defaultTheme = "dark"
   disableThemeToggle = true
-  google_analytics = "G-T0TJ2VHYF9" # G-XXXXXXXXXX 형태 (대장이 발급 후 입력)
-  adsensePublisherId = "" # ca-pub-XXXXXXXXXXXXXXXX 형태 (대장이 발급 후 입력)
-
+  google_analytics = "G-T0TJ2VHYF9"
+  
   ShowReadingTime = false
   ShowShareButtons = true
   ShowPostNavLinks = true
   ShowBreadCrumbs = true
   ShowCodeCopyButtons = true
   ShowWordCount = false
-  ShowRssButtonInSectionTermList = true
-  UseHugoToc = true
-  ShowRelatedContent = true
-
-  [params.profileMode]
-    enabled = false
-    title = "TIKKLES | AI, Tech & Life Insights"
-    subtitle = "Analyst Bear의 뉴스 큐레이션과 대장의 IT/라이프 기록"
-    imageUrl = "<link or path of image for opengraph, twitter-cards>"
-    imageWidth = 120
-    imageHeight = 120
-    imageTitle = "my image"
-    buttons = [
-      { name = "Posts", url = "posts" },
-      { name = "Tags", url = "tags" }
-    ]
-
-  [[params.socialIcons]]
-    name = "Github"
-    url = "https://github.com/rohbomb"
-
-[menu]
-  [[menu.main]]
-    identifier = "posts"
-    name = "Posts"
-    url = "/posts/"
-    weight = 10
-  [[menu.main]]
-    identifier = "tags"
-    name = "Tags"
-    url = "/tags/"
-    weight = 20
-  [[menu.main]]
-    identifier = "about"
-    name = "About Us"
-    url = "/about/"
-    weight = 30
