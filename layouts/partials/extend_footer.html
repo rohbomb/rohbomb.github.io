@@ -1,0 +1,210 @@
+<!-- ============================================================
+     🎧 TTS 오디오 리더 (Web Speech API)
+     - 100% 무과금, 브라우저 네이티브 API
+     - .post-content 영역만 읽음
+     - html lang 속성으로 EN/KO 자동 분기
+     ============================================================ -->
+
+{{ if .IsPage }}
+<script>
+(function() {
+  'use strict';
+
+  // DOM 로드 후 실행
+  document.addEventListener('DOMContentLoaded', function() {
+    var postContent = document.querySelector('.post-content');
+    if (!postContent || !window.speechSynthesis) return;
+
+    // --- 버튼 생성 ---
+    var container = document.createElement('div');
+    container.className = 'tts-container';
+
+    var btn = document.createElement('button');
+    btn.className = 'tts-btn';
+    btn.setAttribute('aria-label', 'Read article aloud');
+    btn.innerHTML = '<span class="tts-icon">🎧</span><span class="tts-label">이 글 듣기</span>';
+
+    var progressBar = document.createElement('div');
+    progressBar.className = 'tts-progress';
+    var progressFill = document.createElement('div');
+    progressFill.className = 'tts-progress-fill';
+    progressBar.appendChild(progressFill);
+
+    container.appendChild(btn);
+    container.appendChild(progressBar);
+
+    // .post-header 다음 또는 .post-content 직전에 삽입
+    var postHeader = document.querySelector('.post-header');
+    if (postHeader && postHeader.nextSibling) {
+      postHeader.parentNode.insertBefore(container, postHeader.nextSibling);
+    } else {
+      postContent.parentNode.insertBefore(container, postContent);
+    }
+
+    // --- 언어 자동 감지 ---
+    var htmlLang = document.documentElement.lang || 'en';
+    var lang = htmlLang.startsWith('ko') ? 'ko-KR' : 'en-US';
+    var isKorean = lang === 'ko-KR';
+
+    // 라벨 다국어
+    var LABEL_PLAY = isKorean ? '이 글 듣기' : 'Listen to this article';
+    var LABEL_PAUSE = isKorean ? '일시정지' : 'Pause';
+    var LABEL_RESUME = isKorean ? '이어 듣기' : 'Resume';
+    var LABEL_STOP = isKorean ? '중지' : 'Stop';
+
+    btn.querySelector('.tts-label').textContent = LABEL_PLAY;
+
+    // --- 텍스트 추출 ---
+    function extractText() {
+      var text = '';
+      var elements = postContent.querySelectorAll('p, h2, h3, h4, li, blockquote, td');
+      for (var i = 0; i < elements.length; i++) {
+        var t = elements[i].textContent.trim();
+        if (t) text += t + '. ';
+      }
+      return text;
+    }
+
+    // --- 상태 관리 ---
+    var state = 'idle'; // idle | playing | paused
+    var utterances = [];
+    var currentIndex = 0;
+    var totalChunks = 0;
+
+    // 텍스트 청크 분리 (Web Speech API 문자열 길이 제한 대응)
+    function splitText(text, maxLen) {
+      var chunks = [];
+      while (text.length > 0) {
+        if (text.length <= maxLen) {
+          chunks.push(text);
+          break;
+        }
+        var idx = text.lastIndexOf('. ', maxLen);
+        if (idx === -1) idx = text.lastIndexOf(' ', maxLen);
+        if (idx === -1) idx = maxLen;
+        chunks.push(text.substring(0, idx + 1));
+        text = text.substring(idx + 1).trim();
+      }
+      return chunks;
+    }
+
+    function updateUI(newState) {
+      state = newState;
+      var icon = btn.querySelector('.tts-icon');
+      var label = btn.querySelector('.tts-label');
+
+      if (state === 'playing') {
+        icon.textContent = '⏸️';
+        label.textContent = LABEL_PAUSE;
+        btn.classList.add('tts-active');
+        progressBar.style.display = 'block';
+      } else if (state === 'paused') {
+        icon.textContent = '▶️';
+        label.textContent = LABEL_RESUME;
+        btn.classList.add('tts-active');
+      } else {
+        icon.textContent = '🎧';
+        label.textContent = LABEL_PLAY;
+        btn.classList.remove('tts-active');
+        progressBar.style.display = 'none';
+        progressFill.style.width = '0%';
+      }
+    }
+
+    function updateProgress() {
+      if (totalChunks > 0) {
+        var pct = Math.round(((currentIndex + 1) / totalChunks) * 100);
+        progressFill.style.width = pct + '%';
+      }
+    }
+
+    function speakChunks(chunks) {
+      if (currentIndex >= chunks.length) {
+        updateUI('idle');
+        currentIndex = 0;
+        return;
+      }
+
+      var utter = new SpeechSynthesisUtterance(chunks[currentIndex]);
+      utter.lang = lang;
+      utter.rate = isKorean ? 1.1 : 1.0;
+      utter.pitch = 1.0;
+
+      utter.onend = function() {
+        currentIndex++;
+        updateProgress();
+        speakChunks(chunks);
+      };
+
+      utter.onerror = function() {
+        updateUI('idle');
+        currentIndex = 0;
+      };
+
+      window.speechSynthesis.speak(utter);
+    }
+
+    function startReading() {
+      window.speechSynthesis.cancel();
+      currentIndex = 0;
+
+      var text = extractText();
+      if (!text) return;
+
+      var chunks = splitText(text, 180);
+      totalChunks = chunks.length;
+
+      updateUI('playing');
+      updateProgress();
+      speakChunks(chunks);
+    }
+
+    function stopReading() {
+      window.speechSynthesis.cancel();
+      currentIndex = 0;
+      updateUI('idle');
+    }
+
+    // --- 이벤트 핸들링 ---
+    btn.addEventListener('click', function() {
+      if (state === 'idle') {
+        startReading();
+      } else if (state === 'playing') {
+        window.speechSynthesis.pause();
+        updateUI('paused');
+      } else if (state === 'paused') {
+        window.speechSynthesis.resume();
+        updateUI('playing');
+      }
+    });
+
+    // 너무 오래 멈춰있으면 자동 정지 (브라우저 타임아웃 방어)
+    var keepAlive;
+    function startKeepAlive() {
+      keepAlive = setInterval(function() {
+        if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
+          window.speechSynthesis.pause();
+          window.speechSynthesis.resume();
+        }
+      }, 10000);
+    }
+
+    function stopKeepAlive() {
+      clearInterval(keepAlive);
+    }
+
+    // 페이지 이탈 시 정리
+    window.addEventListener('beforeunload', function() {
+      window.speechSynthesis.cancel();
+      stopKeepAlive();
+    });
+
+    // 더블클릭으로 정지
+    btn.addEventListener('dblclick', function(e) {
+      e.preventDefault();
+      stopReading();
+    });
+  });
+})();
+</script>
+{{ end }}

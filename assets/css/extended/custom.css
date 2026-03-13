@@ -176,3 +176,67 @@ h2 {
 .post-content .entry-cover img {
     max-height: none;
 }
+
+/* ------------------------------------------------------------
+   🎧 TTS 오디오 리더 스타일 (PaperMod 미니멀)
+   ------------------------------------------------------------ */
+.tts-container {
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.tts-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 20px;
+    background: var(--bg-dark-block);
+    border: 1px solid var(--border-main);
+    border-radius: 30px; /* 더 둥글고 세련된 느낌 */
+    color: var(--text-main);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.tts-btn:hover {
+    background: var(--entry);
+    border-color: var(--point-gold);
+    transform: translateY(-1px);
+}
+
+.tts-btn.tts-active {
+    border-color: var(--point-gold);
+    color: var(--point-gold);
+}
+
+.tts-progress {
+    width: 180px;
+    height: 3px;
+    background: var(--border-main);
+    border-radius: 2px;
+    overflow: hidden;
+    display: none;
+}
+
+.tts-progress-fill {
+    height: 100%;
+    background: var(--point-gold);
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+.tts-icon {
+    font-size: 1.1rem;
+}
+
+.tts-label {
+    min-width: 80px;
+}
+
