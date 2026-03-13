@@ -22,24 +22,24 @@ body {
     font-family: var(--primary-font) !important;
     font-size: 19px;
     line-height: 1.8;
-    color: var(--text-main) !important;
-    background-color: var(--bg-paper) !important;
+    color: var(--text-main);
+    background-color: var(--bg-paper);
     word-break: keep-all;
 }
 
-/* Force ALL text elements to #070707 */
-p, li, span, a, div, section, article, time, .post-meta, .post-header, .post-title, .logo a, .header, .footer {
-    color: var(--text-main) !important;
+/* Theme color overrides ( 정공법: 테마 변수 자체를 변경 ) */
+:root {
+    --theme: var(--bg-paper);
+    --entry: var(--bg-paper);
+    --content: var(--text-main);
+    --primary: var(--text-main);
+    --secondary: var(--text-muted);
+    --tertiary: var(--border-main);
 }
 
-/* PaperMod specific overrides for forced dark-ish gray text */
-.post-content p, .post-content li, .post-content h1, .post-content h2, .post-content h3 {
-    color: var(--text-main) !important;
-}
-
-/* Theme color overrides to prevent PaperMod's gray */
-.dark, :root {
-    --bg: var(--bg-paper);
+.dark {
+    --theme: var(--bg-paper);
+    --entry: var(--bg-paper);
     --content: var(--text-main);
     --primary: var(--text-main);
     --secondary: var(--text-muted);
