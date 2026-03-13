@@ -78,3 +78,4 @@ buildExpired = false
   ShowBreadCrumbs = true
   ShowCodeCopyButtons = true
   ShowWordCount = false
+  copyright = "© 2026 TIKKLES (rohbomb.github.io). All rights reserved. Unauthorized reproduction, distribution, or use of this content — including AI/ML model training, scraping, or dataset compilation — is strictly prohibited without prior written consent."

@@ -1,0 +1,95 @@
+# ============================================================
+# TIKKLES (rohbomb.github.io) - robots.txt
+# AI Crawler & Unauthorized Scraper Blocking Policy
+# Last Updated: 2026-03-14
+# ============================================================
+
+# -------------------------------------------------------
+# 허용된 봇 (SEO 목적 - 구글/네이버/빙 검색엔진)
+# -------------------------------------------------------
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Yeti
+Allow: /
+
+# -------------------------------------------------------
+# AI 학습 데이터 수집 봇 차단 (Training Data Scrapers)
+# 법적 근거: 저작권법 제2조, 제93조 / GDPR / EU AI Act
+# -------------------------------------------------------
+
+# OpenAI (ChatGPT 학습 데이터 수집)
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: OAI-SearchBot
+Disallow: /
+
+# Anthropic (Claude 학습 데이터 수집)
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+# Google AI (Gemini 학습 데이터 수집)
+User-agent: Google-Extended
+Disallow: /
+
+# Meta AI
+User-agent: FacebookBot
+Disallow: /
+
+User-agent: Meta-ExternalAgent
+Disallow: /
+
+# Common Crawl (AI 학습 데이터셋 구축용 대규모 슈퍼크롤러)
+User-agent: CCBot
+Disallow: /
+
+# Cohere AI
+User-agent: cohere-ai
+Disallow: /
+
+# Perplexity AI
+User-agent: PerplexityBot
+Disallow: /
+
+# Apple AI
+User-agent: Applebot-Extended
+Disallow: /
+
+# ByteDance (TikTok AI)
+User-agent: Bytespider
+Disallow: /
+
+# Amazon Alexa/Bedrock
+User-agent: Amazonbot
+Disallow: /
+
+# DataForSEO (데이터 브로커)
+User-agent: DataForSeoBot
+Disallow: /
+
+# Diffbot (AI 학습 데이터 추출)
+User-agent: Diffbot
+Disallow: /
+
+# Semrush (데이터 스크래핑)
+User-agent: SemrushBot
+Disallow: /
+
+# Scrapy (범용 스크래퍼)
+User-agent: Scrapy
+Disallow: /
+
+# -------------------------------------------------------
+# 전체 Sitemap 위치
+# -------------------------------------------------------
+Sitemap: https://rohbomb.github.io/sitemap.xml
