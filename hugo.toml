@@ -27,7 +27,7 @@ buildExpired = false
     [[languages.en.menu.main]]
       identifier = "posts"
       name = "Posts"
-      url = "/posts/"
+      url = "/post/"
       weight = 10
     [[languages.en.menu.main]]
       identifier = "tags"
@@ -51,7 +51,7 @@ buildExpired = false
     [[languages.ko.menu.main]]
       identifier = "posts"
       name = "포스트"
-      url = "/ko/posts/"
+      url = "/ko/post/"
       weight = 10
     [[languages.ko.menu.main]]
       identifier = "tags"

@@ -78,12 +78,12 @@ h1, h2, h3 {
 }
 
 h2 {
-    font-size: 2.5rem !important;  /* 소제목 크기 */
+    font-size: 1.6rem !important;  /* 소제목 크기 (Comet 기준 + 약간 키움) */
     line-height: 1.3;
-    margin-top: 80px !important;   /* 위쪽 여백 */
-    margin-bottom: 30px !important;/* 아래쪽 여백 */
-    border-top: 1px solid var(--border-main); /* 제목 위 구분선 */
-    padding-top: 2rem;
+    margin-top: 50px !important;   /* 위쪽 여백 */
+    margin-bottom: 20px !important;/* 아래쪽 여백 */
+    border-top: 1px solid var(--border-main);
+    padding-top: 1.5rem;
 }
 
 /* ------------------------------------------------------------
@@ -99,7 +99,7 @@ h2 {
 
 .post-title {
     font-family: var(--heading-font) !important;
-    font-size: 3.2rem !important;  /* 대문 타이틀 크기 */
+    font-size: 2rem !important;    /* 대문 타이틀 크기 (기존 3.2 → 2) */
     font-weight: 900;
     color: var(--text-main) !important;
 }
@@ -148,4 +148,25 @@ h2 {
 /* 헤딩 앵커(#) 숨김 (레이아웃 오버라이드로 이미 제거됨) */
 .anchor {
     display: none !important;
+}
+
+/* ------------------------------------------------------------
+   📌 커버(썸네일) 이미지 최적화 (모바일 여백 제거)
+   ------------------------------------------------------------ */
+.entry-cover {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.entry-cover img {
+    width: 100%;
+    height: auto;
+    max-height: 280px;   /* 카드 내 최대 높이 제한 */
+    object-fit: cover;   /* 비율 유지하며 빈 공간 없이 채우기 */
+    object-position: center;
+}
+
+/* 포스트 본문 내 커버 이미지 (hiddenInSingle시 불필요) */
+.post-content .entry-cover img {
+    max-height: none;
 }
