@@ -1,5 +1,5 @@
 baseURL = "https://rohbomb.github.io/"
-title = "TIKKLES | AI | Tech | Life Insights"
+title = "TIKKLES: IT, mellow."
 theme = "PaperMod"
 
 # Multilingual Settings
@@ -22,8 +22,8 @@ buildExpired = false
     contentDir = "content/en"
     weight = 1
     [languages.en.params]
-      title = "TIKKLES | Global Tech Insights"
-      description = "Global tech news curation for the digital era."
+      title = "TIKKLES: IT, mellow."
+      description = "Your mellow guide to IT, AI tools, and productivity. Honest reviews, quiet insights — no hype."
     [[languages.en.menu.main]]
       identifier = "posts"
       name = "Posts"
@@ -46,8 +46,8 @@ buildExpired = false
     contentDir = "content/ko"
     weight = 2
     [languages.ko.params]
-      title = "TIKKLES | 한국 IT 인사이트"
-      description = "Analyst Bear의 뉴스 큐레이션과 한국 시장 선점용 테크 블로그"
+      title = "TIKKLES: IT, mellow."
+      description = "IT와 테크, 생산성 도구를 비전문가의 시선에서 부드럽게 풀어냅니다. 안티그래비티, 커서 등 최신 AI 도구 실전 리뷰."
     [[languages.ko.menu.main]]
       identifier = "posts"
       name = "포스트"
@@ -66,6 +66,7 @@ buildExpired = false
 
 [params]
   env = "production"
+  titleSeparator = " ·"
   author = "Analyst Bear"
   DateFormat = "2006-01-02 15:04"
   defaultTheme = "dark"
