@@ -240,3 +240,20 @@ h2 {
     min-width: 80px;
 }
 
+.tts-voice-select {
+    background: var(--bg-dark-block);
+    border: 1px solid var(--border-main);
+    border-radius: 8px;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    padding: 3px 8px;
+    cursor: pointer;
+    outline: none;
+    max-width: 160px;
+}
+
+.tts-voice-select:focus {
+    border-color: var(--point-gold);
+}
+
+

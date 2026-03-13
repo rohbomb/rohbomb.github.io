@@ -54,13 +54,80 @@
 
     btn.querySelector('.tts-label').textContent = LABEL_PLAY;
 
-    // --- 텍스트 추출 ---
+    // --- 보이스 셀렉터 ---
+    var voiceSelect = document.createElement('select');
+    voiceSelect.className = 'tts-voice-select';
+    voiceSelect.title = isKorean ? '목소리 선택' : 'Select voice';
+    container.appendChild(voiceSelect);
+
+    var availableVoices = [];
+    function populateVoices() {
+      var voices = window.speechSynthesis.getVoices();
+      // 현재 언어 관련 목소리만 필터링
+      var filtered = voices.filter(function(v) {
+        return v.lang.startsWith(isKorean ? 'ko' : 'en');
+      });
+      if (filtered.length === 0) filtered = voices; // 없으면 전체 표시
+      availableVoices = filtered;
+      voiceSelect.innerHTML = '';
+      filtered.forEach(function(v, i) {
+        var opt = document.createElement('option');
+        opt.value = i;
+        opt.textContent = v.name.replace(/Microsoft |Google /, '');
+        voiceSelect.appendChild(opt);
+      });
+    }
+    populateVoices();
+    if (window.speechSynthesis.onvoiceschanged !== undefined) {
+      window.speechSynthesis.onvoiceschanged = populateVoices;
+    }
+
+    // --- 텍스트 추출 (전체 callout 포함 포괄적 방식) ---
     function extractText() {
       var text = '';
-      var elements = postContent.querySelectorAll('p, h2, h3, h4, li, blockquote, td');
-      for (var i = 0; i < elements.length; i++) {
-        var t = elements[i].textContent.trim();
-        if (t) text += t + '. ';
+      // 제외할 요소들 (이미지 캡션, 원문링크, photo credit 등)
+      var EXCLUDE = ['small', 'figure', 'figcaption', 'script', 'style', 'noscript',
+                     'nav', 'header', 'footer', '.tts-container', '.post-meta',
+                     '.share-buttons', '.breadcrumbs'];
+
+      // post-content 내 모든 텍스트 포함 요소를 DOM 순서대로 순회
+      var walker = document.createTreeWalker(
+        postContent,
+        NodeFilter.SHOW_ELEMENT,
+        {
+          acceptNode: function(node) {
+            // 제외 태그 체크
+            var tag = node.tagName.toLowerCase();
+            if (['script','style','noscript','figure','figcaption','small'].includes(tag)) {
+              return NodeFilter.FILTER_REJECT;
+            }
+            // TTS 버튼 자신도 제외
+            if (node.classList && node.classList.contains('tts-container')) {
+              return NodeFilter.FILTER_REJECT;
+            }
+            // 텍스트를 직접 담는 요소만 ACCEPT
+            var TARGET_TAGS = ['p','h1','h2','h3','h4','h5','li','blockquote','dt','dd','td','th'];
+            if (TARGET_TAGS.includes(tag)) {
+              return NodeFilter.FILTER_ACCEPT;
+            }
+            return NodeFilter.FILTER_SKIP;
+          }
+        },
+        false
+      );
+
+      var node;
+      var seen = new Set();
+      while ((node = walker.nextNode())) {
+        // 이미 읽은 텍스트 중복 방지 (중첩 구조 대응)
+        var t = node.textContent.trim();
+        // 이미지 캡션 패턴 제외 (Photo by ... on Pexels)
+        if (!t || t.length < 3 || seen.has(t)) continue;
+        if (/^Photo by .+ on Pexels/.test(t)) continue;
+        if (/^원문 링크/.test(t)) continue;
+        if (/^보러가기$/.test(t)) continue;
+        seen.add(t);
+        text += t + '. ';
       }
       return text;
     }
@@ -129,6 +196,11 @@
       utter.lang = lang;
       utter.rate = isKorean ? 1.1 : 1.0;
       utter.pitch = 1.0;
+      // 선택된 보이스 적용
+      var selectedIdx = parseInt(voiceSelect.value, 10);
+      if (availableVoices[selectedIdx]) {
+        utter.voice = availableVoices[selectedIdx];
+      }
 
       utter.onend = function() {
         currentIndex++;
