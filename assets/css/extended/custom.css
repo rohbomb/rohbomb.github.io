@@ -1,34 +1,35 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
 :root {
-    /* 1. Font Setting: Pretendard for Body, Serif for Headings */
+    /* ============================================================
+       🎨 대장 전용 프리미엄 디자인 요리법 (Design Cookbook)
+       ------------------------------------------------------------
+       이곳의 값들을 수정하면 블로그 전체의 느낌이 변합니다. 
+       헥사 코드(#000000)나 픽셀(px) 숫자를 자유롭게 바꿔보세요!
+       ============================================================ */
+
+    /* [1] 타이포그래피 (폰트) */
     --primary-font: 'Pretendard', -apple-system, sans-serif;
     --heading-font: 'Nanum Myeongjo', 'Song Myung', serif;
 
-    /* 2. Precision Premium Palette (Updated by User) */
-    --bg-paper: #FFCA91;        /* 대장이 지정한 새로운 배경색 */
-    --text-main: #070707;       /* 모든 텍스트는 070707 */
-    --point-gold: #C28E4F;      /* 대장이 지정한 포인트 골드 */
-    --text-muted: #3d3b38;      /* 서브 텍스트용 차분한 톤 */
+    /* [2] 핵심 컬러 팔레트 (대장 지정) */
+    --bg-paper: #FFCA91;        /* 배경색: 따뜻한 크림/한지 톤 */
+    --text-main: #070707;       /* 메인 텍스트: 선명한 딥 블랙 */
+    --point-gold: #C28E4F;      /* 포인트 골드: 디올 럭셔리 포인트 */
+    --text-muted: #3d3b38;      /* 보조 텍스트: 차분한 다크 그레이 */
     
-    /* Box & Decorative Elements (Tone Down based on Background) */
-    --bg-box: rgba(0, 0, 0, 0.05); /* 배경에서 살짝 톤 다운된 블록 */
-    --bg-dark-block: #D9A875;      /* 하단 검정 블록들을 배경색 기반으로 톤 다운 */
-    --border-main: rgba(7, 7, 7, 0.15);
-}
+    /* [3] UI 블록 & 경계선 설정 */
+    --bg-box: rgba(0, 0, 0, 0.05);  /* 은은한 박스 배경 */
+    --bg-dark-block: #D9A875;       /* 태그, 푸터 등 강조 블록의 기본색 */
+    --border-main: rgba(7, 7, 7, 0.15); /* 실선 테두리 컬러 */
 
-/* Global Styles */
-body {
-    font-family: var(--primary-font) !important;
-    font-size: 19px;
-    line-height: 1.8;
-    color: var(--text-main);
-    background-color: var(--bg-paper);
-    word-break: keep-all;
-}
+    /* [4] 곡률 및 입체감 (박스 라운드 등 대장이 직접 조절!) */
+    --radius-main: 8px;            /* 버튼, 상자 등의 둥글기 (0px = 날카로운 직각형) */
+    --shadow-premium: 0 10px 30px rgba(0, 0, 0, 0.05); /* 은은한 부유 효과(그림자) */
 
-/* Theme color overrides ( 정공법: 테마 변수 자체를 변경 ) */
-:root {
+    /* ------------------------------------------------------------
+       ⚠️ 아래는 테마 시스템 연동 설정입니다. (색상 연동 시에만 수정)
+       ------------------------------------------------------------ */
     --theme: var(--bg-paper);
     --entry: var(--bg-paper);
     --content: var(--text-main);
@@ -37,6 +38,20 @@ body {
     --tertiary: var(--border-main);
 }
 
+/* ------------------------------------------------------------
+   📌 본문 기본 스타일 (Body & Spacing)
+   ------------------------------------------------------------ */
+body {
+    font-family: var(--primary-font) !important;
+    font-size: 19px;          /* 전체적인 글자 크기 */
+    line-height: 1.8;         /* 줄 사이 간격 (클수록 시원함) */
+    color: var(--text-main);
+    background-color: var(--bg-paper);
+    word-break: keep-all;     /* 한국어 단어 단위 끊김 방지 */
+    letter-spacing: -0.01em;  /* 자간 (살짝 좁히면 저널 느낌 상승) */
+}
+
+/* 다크모드 강제 고정 (대장의 정밀 컬러 유지를 위함) */
 .dark {
     --theme: var(--bg-paper);
     --entry: var(--bg-paper);
@@ -45,27 +60,30 @@ body {
     --secondary: var(--text-muted);
 }
 
-/* Base Headings - Perplexity 'Lead Summary' Style */
+/* ------------------------------------------------------------
+   📌 헤딩 스타일 (Perplexity 'Lead Summary' Style)
+   ------------------------------------------------------------ */
 h1, h2, h3 {
     font-family: var(--heading-font) !important;
     color: var(--text-main);
     letter-spacing: -0.02em;
+    font-weight: 800;
 }
 
 h2 {
-    font-size: 2.5rem !important;
-    font-weight: 800;
+    font-size: 2.5rem !important;  /* 소제목 크기 */
     line-height: 1.3;
-    margin-top: 80px !important;
-    margin-bottom: 30px !important;
-    color: var(--text-main);
-    border-bottom: none !important;
+    margin-top: 80px !important;   /* 위쪽 여백 */
+    margin-bottom: 30px !important;/* 아래쪽 여백 */
+    border-top: 1px solid var(--border-main); /* 제목 위 구분선 */
+    padding-top: 2rem;
 }
 
-/* Header Styling (Premium Gold Top Border) */
+/* ------------------------------------------------------------
+   📌 포스트 헤더 & 타이틀 (Dior 상단 포인트)
+   ------------------------------------------------------------ */
 .post-header {
-    border-top: 6px solid var(--point-gold);
-    border-bottom: 1px solid var(--border-light);
+    border-top: 6px solid var(--point-gold); /* 최상단 골드 띠지 */
     padding-top: 50px;
     padding-bottom: 40px;
     margin-bottom: 60px;
@@ -74,18 +92,15 @@ h2 {
 
 .post-title {
     font-family: var(--heading-font) !important;
-    font-size: 3.2rem !important;
+    font-size: 3.2rem !important;  /* 대문 타이틀 크기 */
     font-weight: 900;
     color: var(--text-main) !important;
-    line-height: 1.25;
 }
 
-.post-meta {
-    color: var(--text-muted);
-    font-size: 1rem;
-}
-
-/* Drop Cap (Dior Gold) */
+/* ------------------------------------------------------------
+   📌 본문 장식 요소 (Drop Cap)
+   ------------------------------------------------------------ */
+/* 포스팅 첫 글자 왕따시만하게 만들기 */
 .post-content > p:first-of-type::first-letter {
     font-size: 4em;
     font-family: var(--heading-font);
@@ -94,74 +109,18 @@ h2 {
     line-height: 0.85;
     margin-right: 15px;
     margin-top: 5px;
-    color: var(--point-gold);
+    color: var(--point-gold); /* 첫 글자만 골드 포인트 */
 }
 
-/* 3. Callout Boxes */
-.callout {
-    padding: 30px;
-    border-radius: 4px;
-    margin: 50px 0;
-    width: 100%;
-    box-sizing: border-box;
-    transition: all 0.3s ease;
-}
-
-/* 3.1 KEY FACTS */
-.callout-key-facts {
-    background-color: var(--bg-box-keyfacts);
-    border: none;
-    border-left: 5px solid var(--point-gold);
-}
-
-.callout-key-facts .callout-title {
-    color: var(--point-gold);
-    font-weight: 800;
-    font-size: 1.1rem;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    margin-bottom: 20px;
-    display: block;
-    border-bottom: 0px solid transparent;
-}
-
-/* 3.2 ANALYST'S INSIGHT */
-.callout-insight {
-    background-color: var(--bg-box-insight);
-    border: none;
-    border-top: 5px solid var(--point-gold);
-}
-
-.callout-insight .callout-title {
-    color: var(--point-gold);
-    font-weight: 800;
-    font-size: 1.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 25px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid rgba(242, 201, 76, 0.3);
-    display: block;
-}
-
-/* List Styling */
-.callout ul,
-.callout ol {
-    margin-bottom: 0;
-    padding-left: 20px;
-}
-
-.callout li {
-    margin-bottom: 12px;
-    color: #E0E0E0;
-    line-height: 1.8;
-}
-
-/* Dark Blocks Refined: Tags & Footer */
+/* ------------------------------------------------------------
+   📌 UI 블록 (Tags, Footer, Buttons)
+   ------------------------------------------------------------ */
 .post-tags a, .share-buttons, .post-nav {
     background: var(--bg-dark-block) !important;
     color: var(--text-main) !important;
+    border-radius: var(--radius-main) !important; /* 대장이 정한 곡률 적용 */
     border: 1px solid rgba(7, 7, 7, 0.1) !important;
+    box-shadow: var(--shadow-premium);             /* 그림자 효과 적용 */
 }
 
 .post-tags a:hover {
@@ -169,13 +128,17 @@ h2 {
     color: #fff !important;
 }
 
-/* Image Styling */
+/* ------------------------------------------------------------
+   📌 이미지 스타일 (입체감 있는 사진)
+   ------------------------------------------------------------ */
 .post-content img {
+    border-radius: var(--radius-main);
     border: 1px solid var(--border-main);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    box-shadow: var(--shadow-premium);
+    margin: 40px 0;
 }
 
-/* 7. Hide Heading Anchors (#) */
+/* 헤딩 앵커(#) 숨김 (레이아웃 오버라이드로 이미 제거됨) */
 .anchor {
     display: none !important;
 }
