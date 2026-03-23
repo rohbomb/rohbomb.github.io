@@ -256,4 +256,47 @@ h2 {
     border-color: var(--point-gold);
 }
 
+/* ------------------------------------------------------------
+   👴 시니어 모드 (series: Mother-AI 전용)
+   - 폰트 1.35배 확대, 줄간격 2.0, 대비 극대화
+   - 5060 기성세대 시각 피로도 최소화 목적
+   ------------------------------------------------------------ */
+.senior-mode .post-content p,
+.senior-mode .post-content li,
+.senior-mode .post-content dd,
+.senior-mode .post-content td {
+    font-size: 1.35rem !important;   /* 기본 대비 1.2배 이상 확대 */
+    line-height: 2.0 !important;     /* 1.8 이상 확보 */
+    letter-spacing: 0.01em;          /* 자간 살짝 넓혀 가독성 향상 */
+    word-break: keep-all;
+}
 
+.senior-mode .post-content h2 {
+    font-size: 2.1rem !important;
+    margin-top: 60px !important;
+}
+
+.senior-mode .post-content h3 {
+    font-size: 1.7rem !important;
+}
+
+.senior-mode .post-content {
+    color: #FFFFFF;                   /* 대비 극대화: 순백 텍스트 */
+}
+
+.senior-mode .post-content blockquote {
+    font-size: 1.25rem;
+    border-left: 4px solid var(--point-gold);
+    padding: 15px 20px;
+}
+
+/* 모바일 GNB 메뉴 여백 보정 (울엄빠 IT백과사전 7~8글자 대응) */
+@media (max-width: 768px) {
+    .header .nav #menu {
+        gap: 8px;
+    }
+    .header .nav #menu li a {
+        padding: 6px 10px;
+        font-size: 0.85rem;
+    }
+}
