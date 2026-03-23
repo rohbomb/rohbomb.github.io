@@ -1,5 +1,5 @@
 baseURL = "https://rohbomb.github.io/"
-title = "TIKKLES: IT, mellow."
+title = "TIKKLES : IT, so mellow."
 theme = "PaperMod"
 
 # Multilingual Settings
@@ -26,7 +26,7 @@ buildExpired = false
     contentDir = "content/en"
     weight = 1
     [languages.en.params]
-      title = "TIKKLES: IT, mellow."
+      title = "TIKKLES : IT, so mellow."
       description = "Your mellow guide to IT, AI tools, and productivity. Honest reviews, quiet insights — no hype."
     [[languages.en.menu.main]]
       identifier = "mother-ai"
@@ -55,7 +55,7 @@ buildExpired = false
     contentDir = "content/ko"
     weight = 2
     [languages.ko.params]
-      title = "TIKKLES: IT, mellow."
+      title = "TIKKLES : IT, so mellow."
       description = "IT와 테크, 생산성 도구를 비전문가의 시선에서 부드럽게 풀어냅니다. 안티그래비티, 커서 등 최신 AI 도구 실전 리뷰."
     [[languages.ko.menu.main]]
       identifier = "mother-ai"
