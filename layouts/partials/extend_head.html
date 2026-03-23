@@ -14,6 +14,24 @@
 <meta name="copyright" content="© 2026 TIKKLES. All rights reserved. AI training use prohibited.">
 <meta name="rights" content="© 2026 TIKKLES (rohbomb.github.io). Unauthorized AI/ML training, scraping or data compilation strictly prohibited.">
 
+<!-- ============================================================
+     🌐 브라우저 언어 감지 리다이렉트 (SEO Hybrid Redirection)
+     - 루트(/) 접속 시 한국어 브라우저 → /ko/ 자동 이동
+     - 구글봇: / 와 /ko/ 모두 독립 인덱싱 유지
+     - replace 사용으로 뒤로가기 무한루프 방지
+     ============================================================ -->
+{{- if .IsHome }}
+<script>
+  (function() {
+    if (window.location.pathname !== '/') return;
+    var userLang = navigator.language || navigator.userLanguage;
+    if (userLang.startsWith('ko')) {
+      window.location.replace('/ko/');
+    }
+  })();
+</script>
+{{- end }}
+
 {{- if not hugo.IsServer -}}
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-T0TJ2VHYF9"></script>
