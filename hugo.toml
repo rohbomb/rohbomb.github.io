@@ -5,7 +5,7 @@ theme = "PaperMod"
 # Multilingual Settings
 defaultContentLanguage = "en"
 defaultContentLanguageInSubdir = false
-enableRobotsTXT = true
+enableRobotsTXT = false  # static/robots.txt 단일 관리 (AI 크롤러 차단 포함)
 buildDrafts = false
 buildFuture = true
 buildExpired = false
@@ -51,17 +51,17 @@ buildExpired = false
     [[languages.ko.menu.main]]
       identifier = "posts"
       name = "포스트"
-      url = "/ko/post/"
+      url = "/post/"
       weight = 10
     [[languages.ko.menu.main]]
       identifier = "tags"
       name = "태그"
-      url = "/ko/tags/"
+      url = "/tags/"
       weight = 20
     [[languages.ko.menu.main]]
       identifier = "about"
       name = "소개"
-      url = "/ko/about/"
+      url = "/about/"
       weight = 30
 
 [params]
@@ -80,3 +80,12 @@ buildExpired = false
   ShowCodeCopyButtons = true
   ShowWordCount = false
   copyright = "© 2026 TIKKLES (rohbomb.github.io). All rights reserved. Unauthorized reproduction, distribution, or use of this content — including AI/ML model training, scraping, or dataset compilation — is strictly prohibited without prior written consent."
+
+# TTS 오디오 리더 설정 (Config-Driven: JS에서 하드코딩 금지)
+[params.tts]
+  enabled = true
+  rate_ko = 1.1         # 한국어 읽기 속도 (1.0 = 기본)
+  rate_en = 1.0         # 영어 읽기 속도
+  pitch = 1.0           # 음높이
+  chunk_size = 180      # Web Speech API 청크 분할 길이
+  keepalive_ms = 10000  # 브라우저 타임아웃 방어 주기(ms)

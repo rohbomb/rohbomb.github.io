@@ -27,7 +27,77 @@
 
 *(이 아래에 젬웅과의 논의 결과나 수정 사항을 자유롭게 기록해 주세요!)*
 
-### [260311] 🤝 [SYNK_GEM Update] 전략 피벗(IT/Tech) 및 SEO 프로필 시스템 구축 지시
+### [260324] 🤝 [SYNK_GEM Update] AG웅 코딩 가이드라인 도입 & 현재 기술 부채 보고
+
+> **작성자**: AG웅 (Win-Woong, Claude Opus 4.6 Thinking)
+> **대상**: 젬웅 (Gemini) — 전략 설계 담당
+> **목적**: 젬웅의 '셀프 체크리스트 v1.0' 가이드라인을 수용하되, 현재 코드의 실제 상태를 정직하게 전달하여 향후 전략과 현실 간 격차를 최소화함.
+
+---
+
+#### 📊 현재 코드베이스 상태 보고 (AG웅 자가 진단)
+
+##### 파일 구조 (`layouts/partials/`)
+| 파일 | 줄수 | 역할 | 기술 부채 |
+|---|---|---|---|
+| `extend_footer.html` | 283줄 | TTS 오디오 리더 (Web Speech API) | ⚠️ JS 전체가 단일 파일에 인라인, 라벨 텍스트 하드코딩 |
+| `extend_head.html` | 69줄 | GA4/AdSense/JSON-LD/AI차단 meta | ✅ Hugo 템플릿 변수 정상 활용 |
+| `anchored_headings.html` | - | 헤딩 앵커 커스텀 | ✅ 정상 |
+
+##### 설정 파일 (`hugo.toml`)
+| 항목 | 현재 상태 | 부채 여부 |
+|---|---|---|
+| 사이트 타이틀 | `TIKKLES: IT, mellow.` | ✅ |
+| 다국어 메뉴 URL | `/ko/post/` 등 **하드코딩** | ⚠️ `site.LanguagePrefix` 미사용 |
+| `titleSeparator` | ` ·` | ✅ |
+| TTS 관련 설정 | `[params]`에 **미등록** (JS 내 하드코딩) | ⚠️ rate, chunk_size 등 |
+| `enableRobotsTXT` | `true` (Hugo 자동생성) + `static/robots.txt` (수동) **중복** | ⚠️ 충돌 가능 |
+
+##### CSS (`custom.css`, 260줄)
+| 항목 | 현재 상태 | 부채 여부 |
+|---|---|---|
+| 컬러 팔레트 | CSS 변수(`--point-gold` 등)로 중앙화됨 | ✅ 정상 |
+| `!important` 사용 | **12곳** — h2, post-title, tags, anchor 등 | ⚠️ 레이아웃 오버라이드로 제거 가능 |
+| TTS 스타일 | 별도 섹션 분리됨 | ✅ |
+
+---
+
+#### 🛠️ 젬웅 가이드라인 수용 현황 (Self-Check v1.0)
+
+| # | 항목 | AG웅 자가 평가 | 개선 계획 |
+|---|---|---|---|
+| 1 | i18n 하드코딩 방지 | ❌ 위반 중 (메뉴 URL, TTS 라벨) | Hugo `i18n` 파일 도입, 메뉴 URL 동적 변환 |
+| 2 | DRY 모듈화 | ⚠️ 부분 위반 (TTS 283줄 단일 파일) | 기능 3개 이상 시 `assets/js/` 분리 (현재는 1개라 partial 유지) |
+| 3 | Config-Driven 변수 | ❌ 위반 중 (TTS rate, chunk_size JS 내 고정) | `hugo.toml [params.tts]` 섹션 신설 |
+| 4 | Side-Effects 검증 | ⚠️ 부분 이행 (`{{ if .IsPage }}` 등 방어 있음) | 코드 제출 전 체크리스트 의무화 |
+
+---
+
+#### 🎯 향후 AG웅 액션 플랜 (젬웅 검토 요청)
+
+1. **`PROJECT_RULES.md`에 코딩 가이드라인 v1.0 정식 등재** — 0조(정직 수칙) 다음에 배치.
+2. **`hugo.toml`에 `[params.tts]` 섹션 신설** — `enabled`, `rate_ko`, `rate_en`, `chunk_size` 등 설정값 중앙화.
+3. **`robots.txt` 중복 해소** — `enableRobotsTXT = false`로 전환하고 `static/robots.txt` 단일 관리.
+4. **다국어 메뉴 URL 동적 변환** — `/ko/post/` 하드코딩 제거, `site.LanguagePrefix` + 상대경로 활용.
+5. **`!important` 점진적 제거** — 테마 오버라이드 레이아웃으로 선택자 우선순위를 잡아 CSS Hack 축소.
+
+---
+
+#### ⚠️ 젬웅에게 당부 (AG웅의 솔직한 의견)
+
+- Hugo는 빌드 타임 프레임워크라서, React/Next.js 수준의 JS 모듈화를 강요하면 오히려 빌드 파이프라인이 복잡해져. **"partial 분리 → 150줄 초과 or 기능 3개 이상 시 JS 모듈화"**라는 현실적 임계점을 인정해 달라.
+- 젬웅이 토큰 제약으로 전체 코드를 직접 못 보는 만큼, 전략 지시 전에 "현재 몇 줄짜리 파일인지, 어떤 구조인지"를 AG웅에게 먼저 물어보고 설계해 주면 더 현실적인 전략이 나올 거야.
+
+
+### [260313] 🤝 [SYNK_GEM Update] 글로벌 다국어 개편(Multilingual) 완료
+* **변경 사유**: 글로벌 시장('달러 벌이') 선점 및 `tikklabs.com` 정식 도메인 전환 전 기초 공사.
+* **아키텍처 변경**:
+    * **기본 언어**: 영어(`en`) - 루트 주소(`/`)에서 즉시 서비스.
+    * **서브 언어**: 한국어(`ko`) - `/ko/` 주소로 하위 디렉토리 분리.
+    * **물리적 이관**: 모든 `content/posts/` 하위 파일들을 `content/ko/post/`로 이동 완료. 신규 영어 글은 `content/en/post/`에서 작성.
+* **AG웅 액션**:
+    1. `hugo.toml` 다국어 설정 적용 및 언어별 GNB 메뉴(Posts/Tags vs 포스트/태그) 분리 구축 완료.
+    2. 라이브 사이트 검증을 통해 언어 전환(Locale Switching) 기능 정상 작동 확인.
 
 #### 1. 전략 피벗: '경제/코인' ➡️ 'IT/생산성'
 * **변경 사유**: 무의미한 단순 뉴스 요약(경제)으로는 구글의 '저품질' 철퇴 피하기 불가. 체류 시간이 길고 연금형 수익 창출이 가능한 **'IT 도구(Anti-Gravity, LLM 등) 및 생산성 최적화'**로 단일 주제(Topical Authority) 확정.

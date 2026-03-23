@@ -5,7 +5,7 @@
      - html lang 속성으로 EN/KO 자동 분기
      ============================================================ -->
 
-{{ if .IsPage }}
+{{ if and .IsPage (default true .Site.Params.tts.enabled) }}
 <script>
 (function() {
   'use strict';
@@ -14,6 +14,13 @@
   document.addEventListener('DOMContentLoaded', function() {
     var postContent = document.querySelector('.post-content');
     if (!postContent || !window.speechSynthesis) return;
+
+    // --- Config-Driven 설정 (hugo.toml [params.tts]에서 주입) ---
+    var TTS_RATE_KO = {{ default 1.1 .Site.Params.tts.rate_ko }};
+    var TTS_RATE_EN = {{ default 1.0 .Site.Params.tts.rate_en }};
+    var TTS_PITCH = {{ default 1.0 .Site.Params.tts.pitch }};
+    var TTS_CHUNK_SIZE = {{ default 180 .Site.Params.tts.chunk_size }};
+    var TTS_KEEPALIVE_MS = {{ default 10000 .Site.Params.tts.keepalive_ms }};
 
     // --- 버튼 생성 ---
     var container = document.createElement('div');
@@ -194,8 +201,8 @@
 
       var utter = new SpeechSynthesisUtterance(chunks[currentIndex]);
       utter.lang = lang;
-      utter.rate = isKorean ? 1.1 : 1.0;
-      utter.pitch = 1.0;
+      utter.rate = isKorean ? TTS_RATE_KO : TTS_RATE_EN;
+      utter.pitch = TTS_PITCH;
       // 선택된 보이스 적용
       var selectedIdx = parseInt(voiceSelect.value, 10);
       if (availableVoices[selectedIdx]) {
@@ -223,7 +230,7 @@
       var text = extractText();
       if (!text) return;
 
-      var chunks = splitText(text, 180);
+      var chunks = splitText(text, TTS_CHUNK_SIZE);
       totalChunks = chunks.length;
 
       updateUI('playing');
@@ -258,7 +265,7 @@
           window.speechSynthesis.pause();
           window.speechSynthesis.resume();
         }
-      }, 10000);
+      }, TTS_KEEPALIVE_MS);
     }
 
     function stopKeepAlive() {
