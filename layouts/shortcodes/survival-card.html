@@ -1,0 +1,292 @@
+<!-- ============================================================
+     🆘 Survival UI (사출형 웹앱) Shortcode
+     - 외국인이 한국인에게 한국어 빅 폰트 카드를 0.5초 내 보여주는 인터랙티브 UI
+     - 탭 전환 + 톤(Polite/Urgent) 토글 + 풀스크린 카드
+     - 외부 라이브러리 0, Vanilla JS only, < 5KB
+     ============================================================ -->
+
+<style>
+/* --- Survival UI 전용 스타일 --- */
+.survival-ui {
+  margin: 30px 0;
+  font-family: var(--primary-font, sans-serif);
+}
+
+/* 탭 버튼 영역 */
+.survival-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.survival-tab-btn {
+  padding: 8px 16px;
+  border: 1px solid var(--border-main, #333);
+  border-radius: 20px;
+  background: var(--bg-dark-block, #2A2520);
+  color: var(--text-main, #F5F0E8);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.survival-tab-btn:hover,
+.survival-tab-btn.active {
+  background: var(--point-gold, #F5A623);
+  color: #000;
+  border-color: var(--point-gold, #F5A623);
+}
+
+/* 톤 토글 영역 */
+.survival-tone-toggle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  font-size: 0.85rem;
+  color: var(--text-muted, #9E9E9E);
+}
+
+.survival-tone-toggle label {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tone-switch {
+  position: relative;
+  width: 48px;
+  height: 26px;
+  background: var(--bg-dark-block, #2A2520);
+  border-radius: 13px;
+  border: 1px solid var(--border-main, #333);
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.tone-switch::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--text-muted, #9E9E9E);
+  top: 2px;
+  left: 3px;
+  transition: all 0.3s;
+}
+
+.tone-switch.urgent {
+  background: #E53935;
+  border-color: #E53935;
+}
+
+.tone-switch.urgent::after {
+  left: 24px;
+  background: #fff;
+}
+
+/* 탭 콘텐츠 */
+.survival-panel {
+  display: none;
+}
+
+.survival-panel.active {
+  display: block;
+}
+
+/* 카드 아이템 */
+.survival-card-item {
+  padding: 16px 20px;
+  margin: 8px 0;
+  background: var(--bg-dark-block, #2A2520);
+  border: 1px solid var(--border-main, #333);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.survival-card-item:hover {
+  border-color: var(--point-gold, #F5A623);
+  transform: translateX(4px);
+}
+
+.survival-card-item .ko-text {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-main, #F5F0E8);
+  margin-bottom: 6px;
+}
+
+.survival-card-item .en-text {
+  font-size: 0.85rem;
+  color: var(--text-muted, #9E9E9E);
+}
+
+/* 어전트 모드 카드 강조 */
+.survival-ui.tone-urgent .survival-card-item {
+  border-color: #E53935;
+  background: rgba(229, 57, 53, 0.08);
+}
+
+.survival-ui.tone-urgent .survival-card-item .ko-text {
+  color: #FF8A80;
+}
+
+/* 풀스크린 모달 */
+.survival-fullscreen {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 99999;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 40px;
+  cursor: pointer;
+  animation: survivalFadeIn 0.15s ease;
+}
+
+.survival-fullscreen.show {
+  display: flex;
+}
+
+.survival-fullscreen .fs-ko {
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 900;
+  color: #FFFFFF;
+  text-align: center;
+  line-height: 1.3;
+  word-break: keep-all;
+  margin-bottom: 20px;
+}
+
+.survival-fullscreen .fs-en {
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  color: var(--text-muted, #9E9E9E);
+  text-align: center;
+}
+
+.survival-fullscreen .fs-hint {
+  position: absolute;
+  bottom: 30px;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.3);
+}
+
+.survival-fullscreen.urgent .fs-ko {
+  color: #FF5252;
+}
+
+@keyframes survivalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+</style>
+
+<div class="survival-ui" id="survivalUI">
+  <!-- 탭 버튼들 -->
+  <div class="survival-tabs" id="survivalTabs">
+    {{ $inner := .Inner }}
+    {{ $panels := split $inner "<!-- TAB:" }}
+    {{ range $i, $panel := $panels }}
+      {{ if gt (len (trim $panel " \n\r")) 0 }}
+        {{ $parts := split $panel " -->" }}
+        {{ if gt (len $parts) 1 }}
+          {{ $tabName := trim (index $parts 0) " \n\r" }}
+          <button class="survival-tab-btn{{ if eq $i 1 }} active{{ end }}" data-tab="tab-{{ $i }}">{{ $tabName }}</button>
+        {{ end }}
+      {{ end }}
+    {{ end }}
+  </div>
+
+  <!-- 톤 토글 -->
+  <div class="survival-tone-toggle">
+    <span>🙂 정중한 표현</span>
+    <div class="tone-switch" id="toneSwitch" title="Click to toggle Polite/Urgent"></div>
+    <span>🚨 긴급 표현</span>
+  </div>
+
+  <!-- 탭 패널들 -->
+  {{ range $i, $panel := $panels }}
+    {{ if gt (len (trim $panel " \n\r")) 0 }}
+      {{ $parts := split $panel " -->" }}
+      {{ if gt (len $parts) 1 }}
+        <div class="survival-panel{{ if eq $i 1 }} active{{ end }}" id="tab-{{ $i }}">
+          {{ index $parts 1 | safeHTML }}
+        </div>
+      {{ end }}
+    {{ end }}
+  {{ end }}
+</div>
+
+<!-- 풀스크린 모달 -->
+<div class="survival-fullscreen" id="survivalModal">
+  <div class="fs-ko"></div>
+  <div class="fs-en"></div>
+  <div class="fs-hint">Tap anywhere to close</div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+  var ui = document.getElementById('survivalUI');
+  var modal = document.getElementById('survivalModal');
+  if (!ui || !modal) return;
+
+  var toneSwitch = document.getElementById('toneSwitch');
+  var isUrgent = false;
+
+  // --- 탭 전환 ---
+  ui.querySelectorAll('.survival-tab-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      ui.querySelectorAll('.survival-tab-btn').forEach(function(b) { b.classList.remove('active'); });
+      ui.querySelectorAll('.survival-panel').forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.getAttribute('data-tab'));
+      if (target) target.classList.add('active');
+    });
+  });
+
+  // --- 톤 토글 ---
+  toneSwitch.addEventListener('click', function() {
+    isUrgent = !isUrgent;
+    toneSwitch.classList.toggle('urgent', isUrgent);
+    ui.classList.toggle('tone-urgent', isUrgent);
+    // urgent 모드 카드 텍스트 전환
+    ui.querySelectorAll('.survival-card-item').forEach(function(card) {
+      var koEl = card.querySelector('.ko-text');
+      var urgentTxt = card.getAttribute('data-urgent');
+      var politeTxt = card.getAttribute('data-polite');
+      if (koEl && urgentTxt && politeTxt) {
+        koEl.textContent = isUrgent ? urgentTxt : politeTxt;
+      }
+    });
+  });
+
+  // --- 카드 클릭 → 풀스크린 ---
+  ui.addEventListener('click', function(e) {
+    var card = e.target.closest('.survival-card-item');
+    if (!card) return;
+    var koText = card.querySelector('.ko-text').textContent;
+    var enText = card.querySelector('.en-text').textContent;
+    modal.querySelector('.fs-ko').textContent = koText;
+    modal.querySelector('.fs-en').textContent = enText;
+    modal.classList.toggle('urgent', isUrgent);
+    modal.classList.add('show');
+  });
+
+  // --- 모달 닫기 (어디든 터치/클릭) ---
+  modal.addEventListener('click', function() {
+    modal.classList.remove('show');
+  });
+})();
+</script>

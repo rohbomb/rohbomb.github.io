@@ -80,6 +80,7 @@ buildExpired = false
 
 [params]
   env = "production"
+  description = "울엄빠를 위한 IT 백과사전 & 외국인을 위한 K-테크 생존 가이드, TIKKLES입니다."
   titleSeparator = " ·"
   author = "Analyst Bear"
   DateFormat = "2006-01-02 15:04"
