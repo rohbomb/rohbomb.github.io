@@ -20,15 +20,22 @@
     --heading-font: 'Nanum Myeongjo', 'Song Myung', serif;
 
     /* [2] 핵심 컬러 팔레트 — Warm Night */
-    --bg-paper: #1A1A1A;        /* 배경색: 웜 차콜 다크 */
-    --text-main: #F5F0E8;       /* 메인 텍스트: 크림 화이트 */
-    --point-gold: #F5A623;      /* 포인트: 앰버 골드 */
-    --text-muted: #9E9E9E;      /* 보조 텍스트: 웜 그레이 */
-    
+    --bg-paper: #1A1A1A;
+    /* 배경색: 웜 차콜 다크 */
+    --text-main: #F5F0E8;
+    /* 메인 텍스트: 크림 화이트 */
+    --point-gold: #F5A623;
+    /* 포인트: 앰버 골드 */
+    --text-muted: #9E9E9E;
+    /* 보조 텍스트: 웜 그레이 */
+
     /* [3] UI 블록 & 경계선 설정 */
-    --bg-box: rgba(255, 255, 255, 0.04);  /* 은은한 박스 배경 */
-    --bg-dark-block: #2A2520;             /* 태그, 푸터 등 강조 블록 */
-    --border-main: rgba(245, 240, 232, 0.12); /* 실선 테두리 컬러 */
+    --bg-box: rgba(255, 255, 255, 0.04);
+    /* 은은한 박스 배경 */
+    --bg-dark-block: #2A2520;
+    /* 태그, 푸터 등 강조 블록 */
+    --border-main: rgba(245, 240, 232, 0.12);
+    /* 실선 테두리 컬러 */
 
     /* [4] 곡률 및 입체감 */
     --radius-main: 8px;
@@ -50,12 +57,16 @@
    ------------------------------------------------------------ */
 body {
     font-family: var(--primary-font) !important;
-    font-size: 19px;          /* 전체적인 글자 크기 */
-    line-height: 1.8;         /* 줄 사이 간격 (클수록 시원함) */
+    font-size: 19px;
+    /* 전체적인 글자 크기 */
+    line-height: 1.8;
+    /* 줄 사이 간격 (클수록 시원함) */
     color: var(--text-main);
     background-color: var(--bg-paper);
-    word-break: keep-all;     /* 한국어 단어 단위 끊김 방지 */
-    letter-spacing: -0.01em;  /* 자간 (살짝 좁히면 저널 느낌 상승) */
+    word-break: keep-all;
+    /* 한국어 단어 단위 끊김 방지 */
+    letter-spacing: -0.01em;
+    /* 자간 (살짝 좁히면 저널 느낌 상승) */
 }
 
 /* 다크모드 강제 고정 (대장의 정밀 컬러 유지를 위함) */
@@ -70,7 +81,9 @@ body {
 /* ------------------------------------------------------------
    📌 헤딩 스타일 (Perplexity 'Lead Summary' Style)
    ------------------------------------------------------------ */
-h1, h2, h3 {
+h1,
+h2,
+h3 {
     font-family: var(--heading-font) !important;
     color: var(--text-main);
     letter-spacing: -0.02em;
@@ -78,7 +91,8 @@ h1, h2, h3 {
 }
 
 h2 {
-    font-size: 1.7rem !important;  /* 소제목 크기 (+1 적용) */
+    font-size: 1.7rem !important;
+    /* 소제목 크기 (+1 적용) */
     line-height: 1.3;
     margin-top: 50px !important;
     margin-bottom: 20px !important;
@@ -91,16 +105,21 @@ h2 {
    ------------------------------------------------------------ */
 .post-header {
     border-top: 6px solid var(--point-gold);
-    padding-top: 30px;      /* 골드바 ↔ 타이틀 간격 */
-    padding-bottom: 20px;   /* 타이틀 ↔ 본문(이미지) 간격 축소 */
-    margin-top: 15px;       /* breadcrumb(홈>>Posts) ↔ 골드바 간격 */
-    margin-bottom: 30px;    /* 헤더 ↔ 첫 이미지 간격 */
+    padding-top: 30px;
+    /* 골드바 ↔ 타이틀 간격 */
+    padding-bottom: 20px;
+    /* 타이틀 ↔ 본문(이미지) 간격 축소 */
+    margin-top: 15px;
+    /* breadcrumb(홈>>Posts) ↔ 골드바 간격 */
+    margin-bottom: 30px;
+    /* 헤더 ↔ 첫 이미지 간격 */
     text-align: center;
 }
 
 .post-title {
     font-family: var(--heading-font) !important;
-    font-size: 2rem !important;    /* 대문 타이틀 크기 (기존 3.2 → 2) */
+    font-size: 2rem !important;
+    /* 대문 타이틀 크기 (기존 3.2 → 2) */
     font-weight: 900;
     color: var(--text-main) !important;
 }
@@ -109,7 +128,7 @@ h2 {
    📌 본문 장식 요소 (Drop Cap)
    ------------------------------------------------------------ */
 /* 포스팅 첫 글자 왕따시만하게 만들기 */
-.post-content > p:first-of-type::first-letter {
+.post-content>p:first-of-type::first-letter {
     font-size: 4em;
     font-family: var(--heading-font);
     font-weight: 900;
@@ -117,18 +136,23 @@ h2 {
     line-height: 0.85;
     margin-right: 15px;
     margin-top: 5px;
-    color: var(--point-gold); /* 첫 글자만 골드 포인트 */
+    color: var(--point-gold);
+    /* 첫 글자만 골드 포인트 */
 }
 
 /* ------------------------------------------------------------
    📌 UI 블록 (Tags, Footer, Buttons)
    ------------------------------------------------------------ */
-.post-tags a, .share-buttons, .post-nav {
+.post-tags a,
+.share-buttons,
+.post-nav {
     background: var(--bg-dark-block) !important;
     color: var(--text-main) !important;
-    border-radius: var(--radius-main) !important; /* 대장이 정한 곡률 적용 */
+    border-radius: var(--radius-main) !important;
+    /* 대장이 정한 곡률 적용 */
     border: 1px solid rgba(7, 7, 7, 0.1) !important;
-    box-shadow: var(--shadow-premium);             /* 그림자 효과 적용 */
+    box-shadow: var(--shadow-premium);
+    /* 그림자 효과 적용 */
 }
 
 .post-tags a:hover {
@@ -158,7 +182,8 @@ h2 {
     margin: 0 !important;
     padding: 0 !important;
     overflow: hidden;
-    line-height: 0;  /* 인라인 이미지 기본 하단 갭 제거 */
+    line-height: 0;
+    /* 인라인 이미지 기본 하단 갭 제거 */
 }
 
 .entry-cover img {
@@ -167,7 +192,8 @@ h2 {
     max-height: 250px;
     object-fit: cover;
     object-position: center;
-    display: block;  /* 인라인→블록: 하단 여백 원천 차단 */
+    display: block;
+    /* 인라인→블록: 하단 여백 원천 차단 */
     margin: 0;
     padding: 0;
 }
@@ -196,13 +222,14 @@ h2 {
     padding: 8px 20px;
     background: var(--bg-dark-block);
     border: 1px solid var(--border-main);
-    border-radius: 30px; /* 더 둥글고 세련된 느낌 */
+    border-radius: 30px;
+    /* 더 둥글고 세련된 느낌 */
     color: var(--text-main);
     font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .tts-btn:hover {
@@ -265,9 +292,12 @@ h2 {
 .senior-mode .post-content li,
 .senior-mode .post-content dd,
 .senior-mode .post-content td {
-    font-size: 1.35rem !important;   /* 기본 대비 1.2배 이상 확대 */
-    line-height: 2.0 !important;     /* 1.8 이상 확보 */
-    letter-spacing: 0.01em;          /* 자간 살짝 넓혀 가독성 향상 */
+    font-size: 1.35rem !important;
+    /* 기본 대비 1.2배 이상 확대 */
+    line-height: 2.0 !important;
+    /* 1.8 이상 확보 */
+    letter-spacing: 0.01em;
+    /* 자간 살짝 넓혀 가독성 향상 */
     word-break: keep-all;
 }
 
@@ -281,7 +311,8 @@ h2 {
 }
 
 .senior-mode .post-content {
-    color: #FFFFFF;                   /* 대비 극대화: 순백 텍스트 */
+    color: #FFFFFF;
+    /* 대비 극대화: 순백 텍스트 */
 }
 
 .senior-mode .post-content blockquote {
@@ -295,8 +326,122 @@ h2 {
     .header .nav #menu {
         gap: 8px;
     }
+
     .header .nav #menu li a {
         padding: 6px 10px;
         font-size: 0.85rem;
     }
+}
+
+/* ============================================================
+   🔲 Grid 레이아웃 (메인 화면 3단 → 2단 → 1단)
+   - 체류시간 극대화: 한눈에 여러 글 노출
+   - 유튜브/미디어 여백 대비: 넉넉한 gap
+   ============================================================ */
+.posts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 20px;
+}
+
+.posts-grid .post-entry,
+.posts-grid .first-entry {
+    margin: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border-main, #333);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.posts-grid .post-entry:hover,
+.posts-grid .first-entry:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.posts-grid .first-entry {
+    border: 1px solid var(--border-main, #333);
+}
+
+.posts-grid .entry-content p {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* 태블릿: 2단 */
+@media (max-width: 1100px) {
+    .posts-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+
+/* 모바일: 1단 */
+@media (max-width: 600px) {
+    .posts-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+}
+
+/* ============================================================
+   📌 Pinned 포스트 (최상단 고정, 골드 포인트)
+   ============================================================ */
+.pinned-section {
+    margin-bottom: 40px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid var(--border-main, #333);
+}
+
+.pinned-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--point-gold, #F5A623);
+    margin-bottom: 16px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.pinned-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+.pinned-entry {
+    border: 2px solid var(--point-gold, #F5A623) !important;
+    border-radius: 14px !important;
+    background: linear-gradient(135deg, rgba(245, 166, 35, 0.06) 0%, transparent 60%);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pinned-entry:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(245, 166, 35, 0.15);
+}
+
+.pinned-entry .entry-header h2 {
+    font-size: 1.4rem;
+}
+
+/* ============================================================
+   📺 미디어 임베드 여백 (유튜브 큐레이션 대비)
+   ============================================================ */
+.post-content iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: none;
+    border-radius: 12px;
+    margin: 24px 0;
+}
+
+.post-content .survival-ui,
+.post-content .senior-tube-card,
+.post-content .video-embed {
+    margin: 32px 0;
 }

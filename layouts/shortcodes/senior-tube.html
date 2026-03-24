@@ -1,0 +1,144 @@
+<!-- ============================================================
+     📺 Senior-Tube: 시니어 유튜브 큐레이션 전용 숏코드
+     - survival-card와 완전 분리됨 (DRY 원칙)
+     - 파라미터: id(유튜브영상ID), title(제목), desc(설명)
+     - 부모님이 큰 버튼만 누르면 유튜브 앱으로 바로 이동
+     ============================================================ -->
+
+<style>
+/* Senior-Tube 전용 스타일 (숏코드 내 격리) */
+.senior-tube-card {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid var(--point-gold, #F5A623);
+  border-radius: 16px;
+  overflow: hidden;
+  margin: 24px 0;
+  background: var(--bg-dark-block, #2A2520);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.senior-tube-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(245, 166, 35, 0.15);
+}
+
+.senior-tube-thumb {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  overflow: hidden;
+}
+
+.senior-tube-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 재생 버튼 오버레이 */
+.senior-tube-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  background: rgba(255, 0, 0, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.senior-tube-play::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 28px solid #fff;
+  border-top: 18px solid transparent;
+  border-bottom: 18px solid transparent;
+  margin-left: 6px;
+}
+
+.senior-tube-card:hover .senior-tube-play {
+  transform: translate(-50%, -50%) scale(1.1);
+  background: rgba(255, 0, 0, 1);
+}
+
+.senior-tube-info {
+  padding: 20px 24px;
+}
+
+.senior-tube-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text-main, #F5F0E8);
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.senior-tube-desc {
+  font-size: 1rem;
+  color: var(--text-muted, #9E9E9E);
+  line-height: 1.6;
+}
+
+.senior-tube-cta {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 12px 28px;
+  background: #FF0000;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.senior-tube-cta:hover {
+  background: #cc0000;
+  transform: scale(1.03);
+}
+
+/* 시니어 모드에서 더 크게 */
+.senior-mode .senior-tube-title {
+  font-size: 1.7rem;
+}
+
+.senior-mode .senior-tube-desc {
+  font-size: 1.2rem;
+}
+
+.senior-mode .senior-tube-cta {
+  font-size: 1.4rem;
+  padding: 16px 36px;
+}
+
+.senior-mode .senior-tube-play {
+  width: 100px;
+  height: 100px;
+}
+</style>
+
+{{ $id := .Get "id" }}
+{{ $title := .Get "title" }}
+{{ $desc := .Get "desc" }}
+
+<div class="senior-tube-card">
+  <a href="https://www.youtube.com/watch?v={{ $id }}" target="_blank" rel="noopener" class="senior-tube-thumb" aria-label="{{ $title }}">
+    <img src="https://img.youtube.com/vi/{{ $id }}/maxresdefault.jpg" alt="{{ $title }}" loading="lazy">
+    <div class="senior-tube-play"></div>
+  </a>
+  <div class="senior-tube-info">
+    <div class="senior-tube-title">📺 {{ $title }}</div>
+    {{ with $desc }}<div class="senior-tube-desc">{{ . }}</div>{{ end }}
+    <a href="https://www.youtube.com/watch?v={{ $id }}" target="_blank" rel="noopener" class="senior-tube-cta">
+      ▶ 바로 재생하기
+    </a>
+  </div>
+</div>
