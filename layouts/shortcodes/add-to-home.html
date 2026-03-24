@@ -1,0 +1,217 @@
+<!-- ============================================================
+     📱 OS 감지 홈 화면 추가 (PWA Guide) Shortcode
+     - iOS/Android 감지하여 "홈 화면에 추가" 맞춤형 UI 제공
+     - 포스팅당 1회만 삽입하여 DRY 원칙 준수
+     ============================================================ -->
+
+<style>
+/* 왕버튼 스타일 */
+.ath-btn-wrapper {
+    text-align: center;
+    margin: 40px 0;
+}
+
+.ath-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 360px;
+    padding: 18px 24px;
+    background: linear-gradient(135deg, var(--point-gold, #F5A623) 0%, #FF8F00 100%);
+    color: #000;
+    font-size: 1.35rem;
+    font-weight: 800;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(245, 166, 35, 0.4);
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s;
+    /* 시니어 가독성 */
+    word-break: keep-all;
+    line-height: 1.3;
+}
+
+.ath-btn:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 12px 30px rgba(245, 166, 35, 0.5);
+}
+
+.ath-btn-icon {
+    font-size: 1.8rem;
+}
+
+/* 모달 풀스크린 */
+.ath-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 999999;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+    animation: athFadeIn 0.3s forwards;
+}
+
+.ath-modal.show {
+    display: flex;
+}
+
+.ath-content {
+    background: var(--bg-dark-block, #222);
+    border: 3px solid var(--point-gold, #F5A623);
+    border-radius: 24px;
+    padding: 40px 24px;
+    text-align: center;
+    max-width: 340px;
+    width: 100%;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    position: relative;
+}
+
+.ath-title {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #FFF;
+    margin-bottom: 24px;
+    word-break: keep-all;
+}
+
+.ath-desc {
+    font-size: 1.3rem;
+    color: #EEEEEE;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    word-break: keep-all;
+}
+
+.ath-desc b {
+    color: var(--point-gold, #F5A623);
+    font-size: 1.4rem;
+}
+
+.ath-close-btn {
+    background: #444;
+    color: #FFF;
+    border: none;
+    padding: 16px 40px;
+    font-size: 1.3rem;
+    font-weight: 800;
+    border-radius: 30px;
+    cursor: pointer;
+    width: 100%;
+}
+
+/* 지시 화살표 */
+@keyframes athBounceTop {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+@keyframes athBounceBottom {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(15px); }
+}
+
+@keyframes athFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.ath-arrow-top {
+    position: fixed;
+    top: 20px;
+    right: 30px;
+    font-size: 5rem;
+    animation: athBounceTop 1s infinite;
+    display: none;
+    pointer-events: none;
+}
+
+.ath-arrow-bottom {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 5rem;
+    animation: athBounceBottom 1s infinite;
+    display: none;
+    pointer-events: none;
+}
+
+.ath-arrow-top.show, .ath-arrow-bottom.show {
+    display: block;
+}
+</style>
+
+<div class="ath-btn-wrapper">
+    <button class="ath-btn" id="athBtn">
+        <span class="ath-btn-icon">📱</span> 1초 만에 스마트폰<br>바탕화면에 설치하기
+    </button>
+</div>
+
+<div class="ath-modal" id="athModal">
+    <div class="ath-arrow-top" id="athArrowTop">☝️</div>
+    <div class="ath-arrow-bottom" id="athArrowBottom">👇</div>
+    
+    <div class="ath-content">
+        <div class="ath-title" id="athTitle">설치 방법</div>
+        <div class="ath-desc" id="athDesc">브라우저 메뉴를 열어주세요.</div>
+        <button class="ath-close-btn" id="athClose">닫기 (알겠습니다)</button>
+    </div>
+</div>
+
+<script>
+(function() {
+    'use strict';
+    var btn = document.getElementById('athBtn');
+    if (!btn) return;
+    
+    // 모달 DOM 참조
+    var modal = document.getElementById('athModal');
+    var closeBtn = document.getElementById('athClose');
+    var title = document.getElementById('athTitle');
+    var desc = document.getElementById('athDesc');
+    var arrowTop = document.getElementById('athArrowTop');
+    var arrowBottom = document.getElementById('athArrowBottom');
+
+    btn.addEventListener('click', function() {
+        var ua = navigator.userAgent || navigator.vendor || window.opera;
+        var isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+        var isAndroid = /android/i.test(ua);
+
+        // 화살표 초기화
+        arrowTop.classList.remove('show');
+        arrowBottom.classList.remove('show');
+
+        if (isIOS) {
+            title.innerHTML = '아이폰(사파리) 설치';
+            desc.innerHTML = '화면 맨 아래쪽의 <b>공유 아이콘(⍐)</b>을 누른 뒤<br><br><b>[ 홈 화면에 추가 ➕ ]</b><br>버튼을 눌러주세요!';
+            arrowBottom.classList.add('show');
+        } else if (isAndroid) {
+            title.innerHTML = '갤럭시(안드로이드) 설치';
+            desc.innerHTML = '화면 오른쪽 맨 위의 <b>점 3개 메뉴(⋮)</b>를 누른 뒤<br><br><b>[ 홈 화면에 추가 📱 ]</b><br>버튼을 눌러주세요!';
+            arrowTop.classList.add('show');
+        } else {
+            title.innerHTML = 'PC 접속 상태입니다';
+            desc.innerHTML = '스마트폰으로 접속하시면 폰 바탕화면에 앱처럼 설치할 수 있습니다.<br><br>현재 화면을 <b>북마크(Ctrl+D)</b> 해주세요!';
+        }
+
+        modal.classList.add('show');
+    });
+
+    closeBtn.addEventListener('click', function() {
+        modal.classList.remove('show');
+    });
+
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            modal.classList.remove('show');
+        }
+    });
+})();
+</script>
