@@ -1,0 +1,61 @@
+{{- with .cxt}} {{/* Apply proper context from dict */}}
+
+{{- $isHidden := $.isHidden }}
+{{- $imgdl := "" }}
+{{- $hasCover := false }}
+{{- $alt := .Title | plainify }}
+
+{{/* ============================================================
+     🖼️ 3단 방어 썸네일 Fallback 로직 (DRY & SEO 최적화)
+     ============================================================ */}}
+{{/* 1순위: Front Matter의 cover.image */}}
+{{- if .Params.cover.image }}
+    {{- $imgdl = .Params.cover.image | absURL }}
+    {{- $hasCover = true }}
+    {{- if .Params.cover.alt }}{{ $alt = .Params.cover.alt }}{{ end }}
+{{- else }}
+    {{/* 2순위: 마크다운 본문에서 첫 번째 이미지 정규식(findRESubmatch) 추출 */}}
+    {{- $imgRegex := `(?i)<img[^>]+src="([^">]+)"|!\[[^\]]*\]\(([^)]+)\)` }}
+    {{- $matches := findRESubmatch $imgRegex .Content 1 }}
+    {{- if $matches }}
+        {{- $match := index $matches 0 }}
+        {{- if index $match 1 }}
+            {{- $imgdl = index $match 1 | absURL }}
+        {{- else }}
+            {{- $imgdl = index $match 2 | absURL }}
+        {{- end }}
+        {{- $hasCover = true }}
+    {{- else }}
+        {{/* 3순위: 디폴트 Placeholder */}}
+        {{- $imgdl = "/images/tn.png" | absURL }}
+        {{- $hasCover = true }}
+    {{- end }}
+{{- end }}
+
+{{- if and $hasCover (not $isHidden) }}
+<figure class="entry-cover">
+    {{- $loading := cond $.IsSingle "eager" "lazy" }}
+    {{- $addLink := (and site.Params.cover.linkFullImages $.IsSingle) }}
+    
+    {{- if $addLink }}
+        <a href="{{ $imgdl }}" target="_blank" rel="noopener noreferrer">
+    {{- else if not $.IsSingle }}
+        <a href="{{ .Permalink }}" aria-label="post link to {{ .Title | plainify }}" tabindex="-1">
+    {{- end }}
+    
+    <img loading="{{ $loading }}" src="{{ $imgdl }}" alt="{{ $alt }}">
+    
+    {{- if or $addLink (not $.IsSingle) }}
+        </a>
+    {{- end }}
+
+    {{- /* Display Caption only on single pages */}}
+    {{- if $.IsSingle }}
+        {{- with .Params.cover.caption }}
+            <figcaption>{{ . | markdownify }}</figcaption>
+        {{- end }}
+    {{- end }}
+</figure>
+{{- end }}
+
+{{- end }}

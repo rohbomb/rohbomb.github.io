@@ -352,6 +352,9 @@ h2 {
     overflow: hidden;
     border: 1px solid var(--border-main, #333);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    position: relative; /* 워터마크 기준점 */
 }
 
 .posts-grid .post-entry:hover,
@@ -362,6 +365,15 @@ h2 {
 
 .posts-grid .first-entry {
     border: 1px solid var(--border-main, #333);
+}
+
+/* 🖼️ 썸네일 16:9 강제 및 찌그러짐 방지 */
+.posts-grid .entry-cover img {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    object-fit: cover;
+    max-height: none !important; /* Theme 기본 max-height 제거 */
+    border-radius: 12px 12px 0 0;
 }
 
 .posts-grid .entry-content p {
@@ -444,4 +456,20 @@ h2 {
 .post-content .senior-tube-card,
 .post-content .video-embed {
     margin: 32px 0;
+}
+
+/* ============================================================
+   ⚡ 카피캣 방어용 글로벌 워터마크
+   ============================================================ */
+.post-entry::after {
+    content: "⚡ Powered by TIKKLES";
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-muted, #9E9E9E);
+    opacity: 0.3;
+    pointer-events: none;
+    letter-spacing: 0.05em;
 }
