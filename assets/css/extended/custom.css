@@ -41,6 +41,9 @@
     --radius-main: 8px;
     --shadow-premium: 0 10px 30px rgba(0, 0, 0, 0.3);
 
+    /* 프리미엄 와이드 캔버스 */
+    --main-width: 1200px !important;
+
     /* ------------------------------------------------------------
        ⚠️ 아래는 테마 시스템 연동 설정입니다.
        ------------------------------------------------------------ */
@@ -340,22 +343,23 @@ h2 {
 .posts-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    gap: 32px;
     margin-top: 20px;
 }
 
 .posts-grid .post-entry,
 .posts-grid .first-entry {
     margin: 0;
-    border-radius: 12px;
+    border-radius: 16px;
     overflow: hidden;
+    background: var(--bg-dark-block);
+    padding: 0 24px 35px 24px;
     border: 1px solid var(--border-main, #333);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     display: flex;
     flex-direction: column;
     position: relative; /* 워터마크 기준점 */
     height: 100%;
-    padding-bottom: 35px;
 }
 
 .posts-grid .post-entry:hover,
@@ -371,7 +375,8 @@ h2 {
 /* 썸네일 비율 강제 (기존 max-height 삭제 필수) */
 .posts-grid .post-entry .entry-cover,
 .posts-grid .first-entry .entry-cover {
-    width: 100%;
+    width: calc(100% + 48px);
+    margin: 0 -24px;
     aspect-ratio: 16 / 9 !important;
     overflow: hidden;
 }
@@ -383,11 +388,20 @@ h2 {
     max-height: none !important;
 }
 
+.posts-grid .entry-header h2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .posts-grid .entry-content p {
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* 태블릿: 2단 */
@@ -473,7 +487,7 @@ h2 {
     content: "⚡ Powered by TIKKLES";
     position: absolute;
     bottom: 12px;
-    right: 15px;
+    right: 24px;
     font-size: 0.75rem;
     font-weight: 600;
     color: var(--text-muted);
