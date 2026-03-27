@@ -189,7 +189,6 @@ h2 {
 .entry-cover img {
     width: 100%;
     height: auto;
-    max-height: 250px;
     object-fit: cover;
     object-position: center;
     display: block;
@@ -355,6 +354,8 @@ h2 {
     display: flex;
     flex-direction: column;
     position: relative; /* 워터마크 기준점 */
+    height: 100%;
+    padding-bottom: 35px;
 }
 
 .posts-grid .post-entry:hover,
@@ -367,13 +368,19 @@ h2 {
     border: 1px solid var(--border-main, #333);
 }
 
-/* 🖼️ 썸네일 16:9 강제 및 찌그러짐 방지 */
-.posts-grid .entry-cover img {
-    aspect-ratio: 16 / 9;
+/* 썸네일 비율 강제 (기존 max-height 삭제 필수) */
+.posts-grid .post-entry .entry-cover,
+.posts-grid .first-entry .entry-cover {
     width: 100%;
-    object-fit: cover;
-    max-height: none !important; /* Theme 기본 max-height 제거 */
-    border-radius: 12px 12px 0 0;
+    aspect-ratio: 16 / 9 !important;
+    overflow: hidden;
+}
+.posts-grid .post-entry .entry-cover img,
+.posts-grid .first-entry .entry-cover img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    max-height: none !important;
 }
 
 .posts-grid .entry-content p {
@@ -461,15 +468,15 @@ h2 {
 /* ============================================================
    ⚡ 카피캣 방어용 글로벌 워터마크
    ============================================================ */
-.post-entry::after {
+.posts-grid .post-entry::after,
+.posts-grid .first-entry::after {
     content: "⚡ Powered by TIKKLES";
     position: absolute;
-    bottom: 15px;
-    right: 20px;
+    bottom: 12px;
+    right: 15px;
     font-size: 0.75rem;
-    font-weight: 700;
-    color: var(--text-muted, #9E9E9E);
-    opacity: 0.3;
+    font-weight: 600;
+    color: var(--text-muted);
+    opacity: 0.35;
     pointer-events: none;
-    letter-spacing: 0.05em;
 }
