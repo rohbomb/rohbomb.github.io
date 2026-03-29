@@ -1,4 +1,12 @@
-<link rel="alternate" hreflang="x-default" href="{{ .Site.BaseURL }}">
+{{ $xDefault := .Permalink }}
+{{ if eq .Lang "ko" }}
+  {{ range .Translations }}
+    {{ if eq .Language.Lang "en" }}
+      {{ $xDefault = .Permalink }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+<link rel="alternate" hreflang="x-default" href="{{ $xDefault }}">
 <!-- ============================================================
      🚫 AI 크롤러 차단 & 저작권 보호 메타 태그
      법적 효력: robots meta는 OpenAI/Anthropic/Google AI 정책상 준수 의무
@@ -67,16 +75,11 @@
       "@type": "ImageObject",
       "url": {{ site.Params.assets.favicon | default "favicon.ico" | absURL }}
     }
-  },
-  "description": {{ .Summary | plainify }}
-}
-</script>
+    {{ if eq .Language.Lang "ko" }}
+      {{ $koUrl = .Permalink }}
+    {{ end }}
+  {{ end }}
 {{ end }}
-
-<!-- ============================================================
-     🇰🇷 한국어 접속자 안내 토스트 (SEO 안전)
-     ============================================================ -->
-{{ if .IsHome }}
 <style>
   #kr-toast {
     position: fixed;
@@ -114,13 +117,12 @@
 <div id="kr-toast">
   <p>🇰🇷 한국어로 보시겠어요?</p>
   <div class="toast-btns">
-    <a href="/ko/" class="toast-btn toast-go">이동할게요</a>
+    <a href="{{ $koUrl }}" class="toast-btn toast-go">이동할게요</a>
     <button id="kr-toast-close" class="toast-btn toast-close">닫기</button>
   </div>
 </div>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    if (window.location.pathname !== '/') return;
     var userLang = navigator.language || navigator.userLanguage;
     if (userLang.includes('ko') && !sessionStorage.getItem('krToastClosed')) {
       var toast = document.getElementById('kr-toast');
