@@ -1,3 +1,4 @@
+<link rel="alternate" hreflang="x-default" href="{{ .Site.BaseURL }}">
 <!-- ============================================================
      🚫 AI 크롤러 차단 & 저작권 보호 메타 태그
      법적 효력: robots meta는 OpenAI/Anthropic/Google AI 정책상 준수 의무
@@ -18,23 +19,6 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/apple-touch-icon.svg">
 
-<!-- ============================================================
-     🌐 브라우저 언어 감지 리다이렉트 (SEO Hybrid Redirection)
-     - 루트(/) 접속 시 한국어 브라우저 → /ko/ 자동 이동
-     - 구글봇: / 와 /ko/ 모두 독립 인덱싱 유지
-     - replace 사용으로 뒤로가기 무한루프 방지
-     ============================================================ -->
-{{- if .IsHome }}
-<script>
-  (function() {
-    if (window.location.pathname !== '/') return;
-    var userLang = navigator.language || navigator.userLanguage;
-    if (userLang.startsWith('ko')) {
-      window.location.replace('/ko/');
-    }
-  })();
-</script>
-{{- end }}
 
 {{- if not hugo.IsServer -}}
 
@@ -86,5 +70,69 @@
   },
   "description": {{ .Summary | plainify }}
 }
+</script>
+{{ end }}
+
+<!-- ============================================================
+     🇰🇷 한국어 접속자 안내 토스트 (SEO 안전)
+     ============================================================ -->
+{{ if .IsHome }}
+<style>
+  #kr-toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: var(--bg-dark-block, #1A1A1A);
+    color: var(--text-main, #F5F0E8);
+    border: 2px solid var(--point-gold, #F5A623);
+    padding: 16px 24px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    z-index: 9999;
+    font-family: var(--primary-font, sans-serif);
+    display: none;
+    align-items: center;
+    gap: 20px;
+    animation: slideUpToast 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes slideUpToast { from { transform: translateY(100px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  #kr-toast p { margin: 0; font-size: 1.05rem; font-weight: 700; letter-spacing: -0.02em; }
+  .toast-btns { display: flex; gap: 8px; }
+  .toast-btn { 
+    padding: 8px 14px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-weight: 700; border: none; transition: 0.2s;
+  }
+  .toast-go { background: var(--point-gold, #F5A623); color: #fff; text-decoration: none; }
+  .toast-go:hover { opacity: 0.9; }
+  .toast-close { background: rgba(255,255,255,0.08); color: var(--text-muted, #9E9E9E); }
+  .toast-close:hover { background: rgba(255,255,255,0.15); color: #fff; }
+  @media (max-width: 600px) {
+    #kr-toast { bottom: 20px; right: 20px; left: 20px; flex-direction: column; text-align: center; gap: 12px; }
+    .toast-btns { width: 100%; }
+    .toast-btn { flex: 1; text-align: center; }
+  }
+</style>
+<div id="kr-toast">
+  <p>🇰🇷 한국어로 보시겠어요?</p>
+  <div class="toast-btns">
+    <a href="/ko/" class="toast-btn toast-go">이동할게요</a>
+    <button id="kr-toast-close" class="toast-btn toast-close">닫기</button>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.location.pathname !== '/') return;
+    var userLang = navigator.language || navigator.userLanguage;
+    if (userLang.includes('ko') && !sessionStorage.getItem('krToastClosed')) {
+      var toast = document.getElementById('kr-toast');
+      var closeBtn = document.getElementById('kr-toast-close');
+      if(toast && closeBtn) {
+        toast.style.display = 'flex';
+        closeBtn.addEventListener('click', function() {
+          toast.style.display = 'none';
+          sessionStorage.setItem('krToastClosed', 'true');
+        });
+      }
+    }
+  });
 </script>
 {{ end }}
