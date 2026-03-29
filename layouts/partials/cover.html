@@ -26,9 +26,8 @@
         {{- end }}
         {{- $hasCover = true }}
     {{- else }}
-        {{/* 3순위: 디폴트 Placeholder */}}
-        {{- $imgdl = "/images/tn.png" | absURL }}
-        {{- $hasCover = true }}
+        {{/* 3순위: 디폴트 Placeholder (삭제됨: 존재하지 않는 이미지 렌더링 방지) */}}
+        {{- $hasCover = false }}
     {{- end }}
 {{- end }}
 
