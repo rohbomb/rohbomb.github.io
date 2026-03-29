@@ -27,7 +27,6 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/apple-touch-icon.svg">
 
-
 {{- if not hugo.IsServer -}}
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-T0TJ2VHYF9"></script>
@@ -75,6 +74,19 @@
       "@type": "ImageObject",
       "url": {{ site.Params.assets.favicon | default "favicon.ico" | absURL }}
     }
+  },
+  "description": {{ .Summary | plainify }}
+}
+</script>
+{{ end }}
+
+<!-- ============================================================
+     🇰🇷 한국어 접속자 안내 토스트 (글로벌 진입 대응)
+     ============================================================ -->
+{{- if eq .Lang "en" -}}
+{{ $koUrl := "/ko/" }}
+{{ if .IsTranslated }}
+  {{ range .Translations }}
     {{ if eq .Language.Lang "ko" }}
       {{ $koUrl = .Permalink }}
     {{ end }}
@@ -137,4 +149,4 @@
     }
   });
 </script>
-{{ end }}
+{{- end -}}
