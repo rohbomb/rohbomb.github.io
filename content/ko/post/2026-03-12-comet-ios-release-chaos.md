@@ -4,9 +4,11 @@ date: 2026-03-12T18:55:00+09:00
 draft: false
 categories: ["Tech", "Tools"]
 tags: ["Comet", "Perplexity", "iOS Browser", "MobileUX", "AppRelease", "QA", "SoftwareReliability"]
+cover:
+  image: "/images/comet_ios_release_failure.png"
+  alt: "Comet iOS Browser Availability Analysis"
 ---
 
-![Comet iOS Browser Availability Analysis](/images/comet_ios_release_failure.png)
 
 인공지능 기반 검색 엔진으로 급부상한 퍼플렉시티(Perplexity)가 지난 3월 11일, 독자적인 크로미엄 기반 브라우저 'Comet'의 iOS 버전을 정식 출시했습니다. 하지만 출시 직후 발생한 기술적 결함과 불투명한 대응은 사용자들 사이에서 적지 않은 혼란을 야기하고 있습니다.
 
