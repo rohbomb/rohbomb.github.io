@@ -13,9 +13,9 @@ Welcome to **TIKKLES**. We are a professional curation blog dedicated to bridgin
 
 We go beyond superficial gadget reviews. Our focus is on actionable guides that eliminate inefficiencies, empowering you to reclaim focus and master your everyday digital life.
 
-*   **Digital Literacy & Accessibility**: Step-by-step troubleshooting and setup guides designed to make software, web environments, and apps accessible to all generations and technical skill levels.
-*   **Life Hacking & Productivity**: Proven strategies—from browser optimization techniques to dopamine detox routines—that enhance mental clarity and drive peak efficiency (K-Efficiency).
-*   **Actionable Tech Curation**: Distilling the overwhelming flood of global IT trends into practical, easy-to-understand insights that you can actively apply to your daily workflow.
+*  **Digital Literacy & Accessibility**: Step-by-step troubleshooting and setup guides designed to make software, web environments, and apps accessible to all generations and technical skill levels.
+*  **Life Hacking & Productivity**: Proven strategies—from browser optimization techniques to dopamine detox routines—that enhance mental clarity and drive peak efficiency (K-Efficiency).
+*  **Actionable Tech Curation**: Distilling the overwhelming flood of global IT trends into practical, easy-to-understand insights that you can actively apply to your daily workflow.
 
 ## Our Mission
 

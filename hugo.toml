@@ -14,6 +14,10 @@ buildExpired = false
   tag = "tags"
   series = "series"
 
+# Flat SEO URL: /slug/ (EN) or /ko/slug/ (KO) — 필러/클러스터 공통
+[permalinks]
+  post = "/:slug/"
+
 [markup]
   [markup.goldmark]
     [markup.goldmark.renderer]

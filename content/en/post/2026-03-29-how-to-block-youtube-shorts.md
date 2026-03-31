@@ -3,19 +3,19 @@ title: "The Ultimate Guide to Reclaiming Focus: How to Block YouTube Shorts and 
 date: 2026-03-29T16:00:00+09:00
 draft: false
 categories:
-  - Productivity
-  - Tech
+ - Productivity
+ - Tech
 tags:
-  - Digital Detox
-  - YouTube
-  - Focus
-  - Unhook
-author: "Captain"
+ - Digital Detox
+ - YouTube
+ - Focus
+ - Unhook
+author: "Arthur G."
 cover:
-  image: "/images/focus_thumbnail.png"
-  alt: "A glowing brain focused on a laptop screen, blocking out distracting apps"
-  caption: "Mastering K-Efficiency through digital environment control."
-  relative: false
+ image: "/images/focus_thumbnail.png"
+ alt: "A glowing brain focused on a laptop screen, blocking out distracting apps"
+ caption: "Mastering K-Efficiency through digital environment control."
+ relative: false
 showToc: true
 TocOpen: false
 pinned: true
@@ -37,7 +37,7 @@ To protect your cognitive bandwidth, **you need friction.**
 
 ---
 
-## 🛠️ Step-by-Step Defense: How to Block Shorts & Feed
+## ️ Step-by-Step Defense: How to Block Shorts & Feed
 
 The goal is to turn YouTube back into a utility—a searchable video library—instead of an aggressive recommendation engine.
 
@@ -47,9 +47,9 @@ For Chrome, Edge, and Firefox users, **Unhook** is the ultimate weapon against t
 
 1. **Install the Extension**: Search for "Unhook - Remove YouTube Recommended Videos" on your browser's extension store.
 2. **Toggle the Shields**:
-   - **Hide Feed**: Disables the homepage grid. You will only see a search bar.
-   - **Hide Shorts**: Completely removes the Shorts shelf and tab.
-   - **Hide Up Next & Comments**: (Optional) Prevents the rabbit hole of side-bar recommendations.
+  - **Hide Feed**: Disables the homepage grid. You will only see a search bar.
+  - **Hide Shorts**: Completely removes the Shorts shelf and tab.
+  - **Hide Up Next & Comments**: (Optional) Prevents the rabbit hole of side-bar recommendations.
 3. **The Result**: You now open YouTube, search exactly what you need, watch it, and leave—with zero visual noise pulling you sideways.
 
 ### Method 2: Custom uBlock Origin Filters (Advanced Defense)
@@ -58,17 +58,17 @@ If you prefer using adblockers like uBlock Origin without installing extra exten
 
 1. Open the uBlock Origin dashboard and head to the **My filters** tab.
 2. Paste the following network filters to kill Shorts:
-   ```css
-   ! Block YouTube Shorts entirely
-   youtube.com##ytd-rich-grid-row, #contents.ytd-rich-grid-row > ytd-rich-item-renderer:has(ytd-rich-grid-media a[href^="/shorts/"])
-   youtube.com##ytd-reel-shelf-renderer
-   youtube.com##[page-subtype="shorts"]
-   ```
+  ```css
+  ! Block YouTube Shorts entirely
+  youtube.com##ytd-rich-grid-row, #contents.ytd-rich-grid-row > ytd-rich-item-renderer:has(ytd-rich-grid-media a[href^="/shorts/"])
+  youtube.com##ytd-reel-shelf-renderer
+  youtube.com##[page-subtype="shorts"]
+  ```
 3. Click **Apply Changes**. Shorts will no longer render on your screen.
 
 ---
 
-## 🧠 The "K-Efficiency" Mindset: Focus as a Strategy
+## The "K-Efficiency" Mindset: Focus as a Strategy
 
 In South Korea, where the "Pali-Pali" (빨리빨리, meaning "hurry up") culture meets fierce academic and professional competition, managing time isn't just a soft skill—it’s survival. We call this hyper-focused, distraction-resilient state **"K-Efficiency."**
 
