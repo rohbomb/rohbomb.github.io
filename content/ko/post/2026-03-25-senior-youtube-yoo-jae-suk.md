@@ -6,6 +6,7 @@ series: ["Mother-AI"]
 tags: ["울엄빠 유튜브 사전", "유재석", "핑계고", "효도템"]
 pinned: true
 author: "Arthur G."
+slug: "senior-youtube-yoo-jae-suk"
 description: "글씨가 작아서 유튜브 검색이 어려운 부모님을 위한 효도용 바로가기. 큰 버튼만 누르면 유재석 핑계고가 바로 재생됩니다."
 ---
 

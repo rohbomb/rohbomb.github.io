@@ -5,6 +5,7 @@ categories: ["Productivity"]
 series: ["Productivity-Hacks"]
 tags: ["IT생산성", "구독료방어", "로컬AI", "무료TTS", "안티그래비티"]
 author: "Arthur G."
+slug: "it-productivity-local-ai-guide"
 cover:
   image: "/images/local_ai_free_cover.png"
   alt: "로컬 서버와 AI 노드가 부유하는 일러스트"
