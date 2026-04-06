@@ -1,8 +1,8 @@
 <!-- ============================================================
-     🎧 TTS 오디오 리더 (Web Speech API)
+     TTS 오디오 리더 (Web Speech API)
      - 100% 무과금, 브라우저 네이티브 API
      - .post-content 영역만 읽음
-     - html lang 속성으로 EN/KO 자동 분기
+     - 상단 듣기 버튼(#perplexity-listen-btn)에 연결
      ============================================================ -->
 
 {{ if and .IsPage (default true .Site.Params.tts.enabled) }}
@@ -10,7 +10,6 @@
 (function() {
   'use strict';
 
-  // DOM 로드 후 실행
   document.addEventListener('DOMContentLoaded', function() {
     var postContent = document.querySelector('.post-content');
     if (!postContent || !window.speechSynthesis) return;
@@ -22,97 +21,51 @@
     var TTS_CHUNK_SIZE = {{ default 180 .Site.Params.tts.chunk_size }};
     var TTS_KEEPALIVE_MS = {{ default 10000 .Site.Params.tts.keepalive_ms }};
 
-    // --- 버튼 생성 ---
-    var container = document.createElement('div');
-    container.className = 'tts-container';
+    // --- 상단 듣기 버튼 찾기 (single.html에서 미리 렌더링됨) ---
+    var btn = document.getElementById('perplexity-listen-btn');
+    if (!btn) return; // 버튼 없으면 종료 (리스트 페이지 등)
 
-    var btn = document.createElement('button');
-    btn.className = 'tts-btn';
-    btn.setAttribute('aria-label', 'Read article aloud');
-    btn.innerHTML = '<span class="tts-icon">🎧</span><span class="tts-label">이 글 듣기</span>';
-
-    var progressBar = document.createElement('div');
-    progressBar.className = 'tts-progress';
-    var progressFill = document.createElement('div');
-    progressFill.className = 'tts-progress-fill';
-    progressBar.appendChild(progressFill);
-
-    container.appendChild(btn);
-    container.appendChild(progressBar);
-
-    // .post-header 다음 또는 .post-content 직전에 삽입
-    var postHeader = document.querySelector('.post-header');
-    if (postHeader && postHeader.nextSibling) {
-      postHeader.parentNode.insertBefore(container, postHeader.nextSibling);
-    } else {
-      postContent.parentNode.insertBefore(container, postContent);
-    }
+    var labelEl = btn.querySelector('span');
 
     // --- 언어 자동 감지 ---
     var htmlLang = document.documentElement.lang || 'en';
     var lang = htmlLang.startsWith('ko') ? 'ko-KR' : 'en-US';
     var isKorean = lang === 'ko-KR';
 
-    // 라벨 다국어
-    var LABEL_PLAY = isKorean ? '이 글 듣기' : 'Listen to this article';
+    var LABEL_PLAY = isKorean ? '듣기' : 'Listen';
     var LABEL_PAUSE = isKorean ? '일시정지' : 'Pause';
     var LABEL_RESUME = isKorean ? '이어 듣기' : 'Resume';
-    var LABEL_STOP = isKorean ? '중지' : 'Stop';
 
-    btn.querySelector('.tts-label').textContent = LABEL_PLAY;
-
-    // --- 보이스 셀렉터 ---
-    var voiceSelect = document.createElement('select');
-    voiceSelect.className = 'tts-voice-select';
-    voiceSelect.title = isKorean ? '목소리 선택' : 'Select voice';
-    container.appendChild(voiceSelect);
-
+    // --- 보이스 목록 ---
     var availableVoices = [];
     function populateVoices() {
       var voices = window.speechSynthesis.getVoices();
-      // 현재 언어 관련 목소리만 필터링
       var filtered = voices.filter(function(v) {
         return v.lang.startsWith(isKorean ? 'ko' : 'en');
       });
-      if (filtered.length === 0) filtered = voices; // 없으면 전체 표시
+      if (filtered.length === 0) filtered = voices;
       availableVoices = filtered;
-      voiceSelect.innerHTML = '';
-      filtered.forEach(function(v, i) {
-        var opt = document.createElement('option');
-        opt.value = i;
-        opt.textContent = v.name.replace(/Microsoft |Google /, '');
-        voiceSelect.appendChild(opt);
-      });
     }
     populateVoices();
     if (window.speechSynthesis.onvoiceschanged !== undefined) {
       window.speechSynthesis.onvoiceschanged = populateVoices;
     }
 
-    // --- 텍스트 추출 (전체 callout 포함 포괄적 방식) ---
+    // --- 텍스트 추출 ---
     function extractText() {
       var text = '';
-      // 제외할 요소들 (이미지 캡션, 원문링크, photo credit 등)
-      var EXCLUDE = ['small', 'figure', 'figcaption', 'script', 'style', 'noscript',
-                     'nav', 'header', 'footer', '.tts-container', '.post-meta',
-                     '.share-buttons', '.breadcrumbs'];
-
-      // post-content 내 모든 텍스트 포함 요소를 DOM 순서대로 순회
       var walker = document.createTreeWalker(
         postContent,
         NodeFilter.SHOW_ELEMENT,
         {
           acceptNode: function(node) {
-            // 제외 태그 체크
             var tag = node.tagName.toLowerCase();
             if (['script','style','noscript','figure','figcaption','small'].includes(tag)) {
               return NodeFilter.FILTER_REJECT;
             }
-            // TTS 버튼 자신도 제외
             if (node.classList && node.classList.contains('tts-container')) {
               return NodeFilter.FILTER_REJECT;
             }
-            // 텍스트를 직접 담는 요소만 ACCEPT
             var TARGET_TAGS = ['p','h1','h2','h3','h4','h5','li','blockquote','dt','dd','td','th'];
             if (TARGET_TAGS.includes(tag)) {
               return NodeFilter.FILTER_ACCEPT;
@@ -126,13 +79,9 @@
       var node;
       var seen = new Set();
       while ((node = walker.nextNode())) {
-        // 이미 읽은 텍스트 중복 방지 (중첩 구조 대응)
         var t = node.textContent.trim();
-        // 이미지 캡션 패턴 제외 (Photo by ... on Pexels)
         if (!t || t.length < 3 || seen.has(t)) continue;
         if (/^Photo by .+ on Pexels/.test(t)) continue;
-        if (/^원문 링크/.test(t)) continue;
-        if (/^보러가기$/.test(t)) continue;
         seen.add(t);
         text += t + '. ';
       }
@@ -140,12 +89,10 @@
     }
 
     // --- 상태 관리 ---
-    var state = 'idle'; // idle | playing | paused
-    var utterances = [];
+    var state = 'idle';
     var currentIndex = 0;
     var totalChunks = 0;
 
-    // 텍스트 청크 분리 (Web Speech API 문자열 길이 제한 대응)
     function splitText(text, maxLen) {
       var chunks = [];
       while (text.length > 0) {
@@ -164,31 +111,15 @@
 
     function updateUI(newState) {
       state = newState;
-      var icon = btn.querySelector('.tts-icon');
-      var label = btn.querySelector('.tts-label');
-
       if (state === 'playing') {
-        icon.textContent = '⏸️';
-        label.textContent = LABEL_PAUSE;
+        labelEl.textContent = LABEL_PAUSE;
         btn.classList.add('tts-active');
-        progressBar.style.display = 'block';
       } else if (state === 'paused') {
-        icon.textContent = '▶️';
-        label.textContent = LABEL_RESUME;
+        labelEl.textContent = LABEL_RESUME;
         btn.classList.add('tts-active');
       } else {
-        icon.textContent = '🎧';
-        label.textContent = LABEL_PLAY;
+        labelEl.textContent = LABEL_PLAY;
         btn.classList.remove('tts-active');
-        progressBar.style.display = 'none';
-        progressFill.style.width = '0%';
-      }
-    }
-
-    function updateProgress() {
-      if (totalChunks > 0) {
-        var pct = Math.round(((currentIndex + 1) / totalChunks) * 100);
-        progressFill.style.width = pct + '%';
       }
     }
 
@@ -203,15 +134,12 @@
       utter.lang = lang;
       utter.rate = isKorean ? TTS_RATE_KO : TTS_RATE_EN;
       utter.pitch = TTS_PITCH;
-      // 선택된 보이스 적용
-      var selectedIdx = parseInt(voiceSelect.value, 10);
-      if (availableVoices[selectedIdx]) {
-        utter.voice = availableVoices[selectedIdx];
+      if (availableVoices.length > 0) {
+        utter.voice = availableVoices[0];
       }
 
       utter.onend = function() {
         currentIndex++;
-        updateProgress();
         speakChunks(chunks);
       };
 
@@ -234,7 +162,6 @@
       totalChunks = chunks.length;
 
       updateUI('playing');
-      updateProgress();
       speakChunks(chunks);
     }
 
@@ -257,7 +184,7 @@
       }
     });
 
-    // 너무 오래 멈춰있으면 자동 정지 (브라우저 타임아웃 방어)
+    // 너무 오래 멈춰있으면 자동 킵얼라이브 (브라우저 타임아웃 방어)
     var keepAlive;
     function startKeepAlive() {
       keepAlive = setInterval(function() {

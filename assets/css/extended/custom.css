@@ -507,7 +507,7 @@ body .posts-grid .first-entry .entry-cover img {
 }
 
 /* ============================================================
-   📚 Perplexity Style Single Layout (싱글 포스트)
+   Perplexity Style Single Layout (싱글 포스트)
    ============================================================ */
 .perplexity-style .entry-cover {
     width: 100%;
@@ -518,7 +518,7 @@ body .posts-grid .first-entry .entry-cover img {
 
 .perplexity-style .entry-cover img {
     width: 100%;
-    max-height: 480px;      /* 높이 제한으로 와이드하게 연출 */
+    max-height: 480px;
     object-fit: cover;
     object-position: center;
     display: block;
@@ -541,7 +541,8 @@ body .posts-grid .first-entry .entry-cover img {
 
 .meta-left {
     display: flex;
-    gap: 40px;
+    align-items: center;
+    gap: 32px;
     font-size: 0.95rem;
 }
 
@@ -557,31 +558,80 @@ body .posts-grid .first-entry .entry-cover img {
     font-weight: 700;
 }
 
+/* ----- 듣기 버튼 (좌측 메타 영역, 콤팩트) ----- */
+.pplx-listen-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border-main);
+    border-radius: 8px;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.pplx-listen-btn:hover {
+    border-color: var(--point-gold);
+    color: var(--point-gold);
+    background: rgba(245, 166, 35, 0.08);
+}
+
+.pplx-listen-btn.tts-active {
+    border-color: var(--point-gold);
+    color: var(--point-gold);
+}
+
+.pplx-listen-btn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+/* ----- 우측: SNS 공유 버튼 (80% 사이즈, 통일된 radius) ----- */
 .meta-right {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 8px;
 }
 
 .meta-right .share-buttons {
     display: flex;
-    gap: 8px;
+    gap: 6px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
+}
+
+.meta-right .share-buttons li {
+    margin: 0;
+    padding: 0;
 }
 
 .meta-right .share-buttons a {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 38px;
-    height: 38px;
+    width: 34px;
+    height: 34px;
     border-radius: 8px !important;
     background: transparent !important;
     border: 1px solid var(--border-main) !important;
     color: var(--text-muted) !important;
     transition: all 0.2s ease;
+    padding: 0 !important;
+}
+
+.meta-right .share-buttons a svg {
+    width: 18px !important;
+    height: 18px !important;
 }
 
 .meta-right .share-buttons a:hover {
@@ -604,6 +654,11 @@ body .posts-grid .first-entry .entry-cover img {
     margin-top: 0;
 }
 
+/* 기존 post-header의 골드 상단바 비활성화 (Perplexity 스타일에서는 불필요) */
+.perplexity-style .post-header-perplexity {
+    border-top: none;
+}
+
 /* Footer Legal Links */
 .footer-legal-links a {
     color: var(--text-muted);
@@ -611,4 +666,5 @@ body .posts-grid .first-entry .entry-cover img {
 }
 .footer-legal-links a:hover {
     color: var(--text-main);
-}
+}
+
