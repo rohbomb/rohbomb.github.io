@@ -5,6 +5,7 @@ categories: ["Productivity"]
 series: ["Productivity-Hacks"]
 tags: ["IT Productivity", "Cut Subscriptions", "Local AI", "Free TTS", "AntiGravity"]
 author: "Arthur G."
+slug: "it-productivity-local-ai-guide"
 cover:
   image: "/images/local_ai_free_cover.png"
   alt: "Illustration of an abstract local server with floating AI nodes"
