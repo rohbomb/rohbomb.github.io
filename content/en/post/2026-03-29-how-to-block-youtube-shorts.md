@@ -11,6 +11,8 @@ tags:
  - Focus
  - Unhook
 author: "Arthur G."
+slug: "how-to-block-youtube-shorts"
+translationKey: "youtube-shorts-guide"
 cover:
  image: "/images/focus_thumbnail.png"
  alt: "A glowing brain focused on a laptop screen, blocking out distracting apps"

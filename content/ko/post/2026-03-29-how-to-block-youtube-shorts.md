@@ -6,6 +6,7 @@ series: ["Productivity-Hacks"]
 tags: ["디지털디톡스", "유튜브숏츠차단", "도파민관리", "IT생산성", "아서G"]
 author: "Arthur G."
 slug: "how-to-block-youtube-shorts"
+translationKey: "youtube-shorts-guide"
 cover:
   image: "/images/focus_thumbnail.png"
   alt: "노트북 화면에 집중하고 있는 뇌 일러스트"

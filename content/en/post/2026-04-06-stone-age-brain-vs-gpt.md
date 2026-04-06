@@ -5,6 +5,8 @@ categories: ["Productivity"]
 series: ["Productivity-Hacks"]
 tags: ["IT Productivity", "AI Overload", "Burnout", "GPT", "Claude", "Gemini", "ArthurG"]
 author: "Arthur G."
+slug: "stone-age-brain-vs-gpt"
+translationKey: "stone-age-brain"
 cover:
   image: "/images/cover_stone_age_brain.png"
   alt: "Illustration showing the contrast between a Stone Age brain and modern AI data"

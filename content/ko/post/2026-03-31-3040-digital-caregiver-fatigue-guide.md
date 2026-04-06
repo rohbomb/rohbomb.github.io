@@ -7,6 +7,7 @@ tags: ["디지털부양", "부모님폰구축", "3040스트레스", "노년층IT
 pinned: true
 author: "Arthur G."
 slug: "3040-digital-caregiver-fatigue-guide"
+translationKey: "3040-digital-caregiver"
 cover:
   image: "/images/digital_caregiver_stress.png"
   alt: "디지털 피로도를 겪고 있는 장년층의 스마트폰 인터페이스 일러스트"
