@@ -1,0 +1,106 @@
+{{- define "main" }}
+
+<article class="post-single perplexity-style">
+  
+  <!-- 1. 커버 이미지 (최상단 파노라마 배치) -->
+  {{- $isHidden := (.Param "cover.hiddenInSingle") | default (.Param "cover.hidden") | default false }}
+  {{- partial "cover.html" (dict "cxt" . "IsSingle" true "isHidden" $isHidden) }}
+
+  <!-- 2. 퍼플렉시티 스타일 메타 헤더 묶음 (작성자/날짜 ↔ 듣기/공유버튼) -->
+  <header class="post-header-perplexity">
+    {{ partial "breadcrumbs.html" . }}
+    
+    <div class="perplexity-meta-bar">
+      <!-- 좌측: 메타 정보 -->
+      <div class="meta-left">
+        <div class="meta-author">
+          <span class="meta-label">Written by</span><br/>
+          <strong>{{ if .Params.author }}{{ .Params.author }}{{ else }}{{ site.Params.author }}{{ end }}</strong>
+        </div>
+        <div class="meta-date">
+          <span class="meta-label">게시됨</span><br/>
+          <strong>{{ .Date.Format "2006. 1. 2." }}</strong>
+        </div>
+      </div>
+      
+      <!-- 우측: 모듈 (공유, 듣기 등) -->
+      <div class="meta-right">
+        <!-- 듣기 버튼 (자바스크립트 연동을 위해 id 부여, tts-btn 클래스 활용) -->
+        <button id="perplexity-listen-btn" class="tts-btn" aria-label="이 글 듣기">
+          <span class="tts-icon">🔊</span>
+          <span class="tts-label">듣기</span>
+        </button>
+        
+        {{- if (and site.Params.ShowShareButtons (ne .Params.disableShare true)) }}
+        <div class="share-buttons">
+          <!-- X (Twitter) -->
+          <a target="_blank" rel="noopener noreferrer" aria-label="share on X"
+              href="https://x.com/intent/tweet/?text={{ .Title }}&amp;url={{ .Permalink }}">
+              <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="24px" width="24px" fill="currentColor">
+                  <path
+                      d="M512 62.554a211.53 211.53 0 0 1-60.446 16.57c21.848-13.084 38.614-33.826 46.526-58.552v-0.002a210.978 210.978 0 0 1-66.726 25.508 105.106 105.106 0 0 0-76.84-33.242c-58.056 0-105.132 47.072-105.13 105.12 0 8.232 0.932 16.258 2.73 23.956-87.352-4.38-164.79-46.222-216.55-109.84-9.046 15.518-14.234 33.568-14.232 52.822 0 36.46 18.556 68.648 46.74 87.498-15.02-0.478-29.138-4.606-41.488-11.45v1.326c0 44.336 31.542 81.334 73.38 89.728-8.814 2.4-18.098 3.682-27.652 3.68-6.758 0-13.33-0.658-19.742-1.892 11.644 36.35 45.424 62.796 85.54 63.534-31.288 24.512-70.7 39.124-113.35 39.126-8.48 0-16.852-0.496-25.074-1.48C38.01 445.694 84.776 464 135 464c161.99 0 250.56-134.19 250.56-250.56 0-3.818-0.086-7.62-0.256-11.412h0.002C402.502 189.62 417.818 174.55 429.352 157.65a104.91 104.91 0 0 1-30.134 8.246c10.822-6.486 19.146-16.732 23.056-29.072z" />
+              </svg>
+          </a>
+          <!-- LinkedIn -->
+          <a target="_blank" rel="noopener noreferrer" aria-label="share on LinkedIn"
+              href="https://www.linkedin.com/shareArticle?mini=true&amp;url={{ .Permalink }}&amp;title={{ .Title }}&amp;summary={{ .Title }}&amp;source={{ .Permalink }}">
+              <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="24px" width="24px" fill="currentColor">
+                  <path
+                      d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+              </svg>
+          </a>
+        </div>
+        {{- end }}
+      </div>
+    </div>
+    
+    <hr class="header-divider">
+
+    <h1 class="post-title entry-hint-parent">
+      {{ .Title }}
+      {{- if .Draft }}
+      <span class="entry-hint" title="Draft">
+        <svg xmlns="http://www.w3.org/2000/svg" height="35" viewBox="0 -960 960 960" fill="currentColor">
+          <path d="M160-410v-60h300v60H160Zm0-165v-60h470v60H160Zm0-165v-60h470v60H160Zm360 580v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q9 9 13 20t4 22q0 11-4.5 22.5T862.09-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z" />
+        </svg>
+      </span>
+      {{- end }}
+    </h1>
+    
+    {{- if .Description }}
+    <div class="post-description">
+      {{ .Description }}
+    </div>
+    {{- end }}
+  </header>
+
+  {{- if (.Param "ShowToc") }}
+  {{- partial "toc.html" . }}
+  {{- end }}
+
+  {{- if .Content }}
+  <div class="post-content">
+    {{- if not (.Param "disableAnchoredHeadings") }}
+    {{- partial "anchored_headings.html" .Content -}}
+    {{- else }}{{ .Content }}{{ end }}
+  </div>
+  {{- end }}
+
+  <footer class="post-footer">
+    {{- $tags := .Language.Params.Taxonomies.tag | default "tags" }}
+    <ul class="post-tags">
+      {{- range ($.GetTerms $tags) }}
+      <li><a href="{{ .Permalink }}">{{ .LinkTitle }}</a></li>
+      {{- end }}
+    </ul>
+    {{- if (.Param "ShowPostNavLinks") }}
+    {{- partial "post_nav_links.html" . }}
+    {{- end }}
+  </footer>
+
+  {{- if (.Param "comments") }}
+  {{- partial "comments.html" . }}
+  {{- end }}
+</article>
+
+{{- end }}{{/* end main */}}

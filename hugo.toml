@@ -80,14 +80,6 @@ buildExpired = false
       name = "소개"
       url = "/about/"
       weight = 40
-    [[languages.ko.menu.main]]
-      name = "개인정보처리방침"
-      url = "/ko/privacy/"
-      weight = 50
-    [[languages.ko.menu.main]]
-      name = "이용약관"
-      url = "/ko/terms/"
-      weight = 60
 
 [params]
   env = "production"
