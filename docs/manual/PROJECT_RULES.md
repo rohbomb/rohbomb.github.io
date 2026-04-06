@@ -93,6 +93,13 @@
 2. **Content**: **'Cold & Insightful Observation'**.
    - YMYL Compliance 엄수. Neutral Tone(객관적 분석) 유지.
 
+## 🖼️ 이미지 가이드라인 (260406 추가)
+
+1. **인공지능 이미지 생성 (Cover/Intro)**:
+   - **가로세로 비율**: 반드시 **16:9 (Wide)** 비율로 생성한다. 정사각형 생성 후 크롭 시 구도가 망가지는 것을 방지하기 위함.
+   - **프롬프트 필수 키워드**: `No text`, `16:9 aspect ratio`, `premium tech editorial style`, `Bloomberg/HBR style`.
+   - **색상**: 다크 모드에 최적화된 배경이나 포인트 컬러(골드/앰버) 사용 권장.
+
 ## 🏆 핵심 기술 (Tech Stack)
 - **Backbone**: 겉멋에 치중해 기본을 망각하지 않는다.
 - **필수 요건**: JSON-LD 구조화 데이터, Core Web Vitals 만점 유지, 모바일 퍼스트.

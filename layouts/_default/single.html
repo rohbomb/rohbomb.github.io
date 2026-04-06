@@ -14,17 +14,17 @@
       <!-- 좌측: 메타 정보 + 듣기 버튼 -->
       <div class="meta-left">
         <div class="meta-author">
-          <span class="meta-label">Written by</span><br/>
+          <span class="meta-label">{{ i18n "written_by" | default "Written by" }}</span><br/>
           <strong>{{ if .Params.author }}{{ .Params.author }}{{ else }}{{ site.Params.author }}{{ end }}</strong>
         </div>
         <div class="meta-date">
-          <span class="meta-label">게시됨</span><br/>
-          <strong>{{ .Date.Format "2006. 1. 2." }}</strong>
+          <span class="meta-label">{{ i18n "posted_on" | default "Posted on" }}</span><br/>
+          <strong>{{ if eq .Lang "ko" }}{{ .Date.Format "2006. 1. 2." }}{{ else }}{{ .Date.Format "January 2, 2006" }}{{ end }}</strong>
         </div>
-        <!-- 듣기 버튼 (좌측 메타 영역에 배치) -->
-        <button id="perplexity-listen-btn" class="pplx-listen-btn" aria-label="이 글 듣기">
+        <!-- 듣기 버튼 (i18n 적용) -->
+        <button id="perplexity-listen-btn" class="pplx-listen-btn" aria-label="{{ i18n "listen" | default "Listen" }}">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
-          <span>듣기</span>
+          <span>{{ i18n "listen" | default "Listen" }}</span>
         </button>
       </div>
       
