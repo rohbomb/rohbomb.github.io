@@ -10,8 +10,13 @@
     {{- end }}
 
     <span class="footer-legal-links">
+        {{- if eq .Lang "ko" }}
         <a href="/ko/privacy/">개인정보처리방침</a> &middot;
         <a href="/ko/terms/">이용약관</a>
+        {{- else }}
+        <a href="/en/privacy/">Privacy Policy</a> &middot;
+        <a href="/en/terms/">Terms of Use</a>
+        {{- end }}
     </span>
     {{- print " · "}}
 

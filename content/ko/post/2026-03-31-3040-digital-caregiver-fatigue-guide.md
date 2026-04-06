@@ -4,8 +4,12 @@ date: 2026-03-31T15:00:00+09:00
 categories: ["Senior-Tech 101"]
 series: ["Mother-AI"]
 tags: ["디지털부양", "부모님폰구축", "3040스트레스", "노년층IT", "효도템"]
-pinned: true
 author: "Arthur G."
+cover:
+  image: "/images/digital_caregiver_stress.png"
+  alt: "디지털 피로도를 겪고 있는 장년층의 스마트폰 인터페이스 일러스트"
+  hiddenInList: false
+  hiddenInSingle: false
 description: "본가에 갈 때마다 부모님 스마트폰을 고쳐드려야 하나요? 노인과 미성년 사이에 낀 3040 세대의 '디지털 부양' 스트레스를 줄여주는 IT 세팅 허브."
 ---
 

@@ -4,8 +4,12 @@ date: 2026-03-31T16:00:00+09:00
 categories: ["Productivity"]
 series: ["Productivity-Hacks"]
 tags: ["IT생산성", "구독료방어", "로컬AI", "무료TTS", "안티그래비티"]
-pinned: true
 author: "Arthur G."
+cover:
+  image: "/images/local_ai_free_cover.png"
+  alt: "로컬 서버와 AI 노드가 부유하는 일러스트"
+  hiddenInList: false
+  hiddenInSingle: false
 description: "매달 나가는 미드저니, 일레븐랩스 구독료가 부담되시나요? 집 구석의 안 쓰는 그래픽카드를 활용해 평생 무료로 이미지와 TTS를 무한 생성하는 로컬 AI(Local LLM) 생존 비법을 공개합니다."
 ---
 
