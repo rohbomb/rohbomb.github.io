@@ -4,6 +4,7 @@ date: 2026-04-06T14:20:00+09:00
 categories: ["Productivity"]
 series: ["Productivity-Hacks"]
 tags: ["IT생산성", "AI과부하", "번아웃", "GPT", "Claude", "Gemini", "아서G"]
+pinned: true
 author: "Arthur G."
 slug: "stone-age-brain-vs-gpt"
 cover:
