@@ -77,16 +77,23 @@ buildExpired = false
       url = "/tags/"
       weight = 30
     [[languages.ko.menu.main]]
-      identifier = "about"
       name = "소개"
       url = "/about/"
       weight = 40
+    [[languages.ko.menu.main]]
+      name = "개인정보처리방침"
+      url = "/ko/privacy/"
+      weight = 50
+    [[languages.ko.menu.main]]
+      name = "이용약관"
+      url = "/ko/terms/"
+      weight = 60
 
 [params]
   env = "production"
   description = "울엄빠를 위한 IT 백과사전 & 외국인을 위한 K-테크 생존 가이드, TIKKLES입니다."
   titleSeparator = " ·"
-  author = "Analyst Bear"
+  author = "Arthur G."
   DateFormat = "2006-01-02 15:04"
   defaultTheme = "dark"
   disableThemeToggle = true
