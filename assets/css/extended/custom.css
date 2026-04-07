@@ -592,6 +592,87 @@ body .posts-grid .first-entry .entry-cover img {
     flex-shrink: 0;
 }
 
+/* ----- 한/영 전환 버튼 (듣기 버튼과 통일 스타일) ----- */
+.pplx-lang-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border-main);
+    border-radius: 8px;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    text-decoration: none;
+    position: relative;
+    z-index: 10;
+}
+
+.pplx-lang-btn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    transition: transform 0.4s ease;
+}
+
+.pplx-lang-btn .pplx-lang-tooltip {
+    position: absolute;
+    bottom: 125%; /* 버튼 위로 띄움 */
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: var(--bg-dark-block);
+    border: 1px solid var(--point-gold);
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--point-gold);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* 툴팁 화살표 추가 */
+.pplx-lang-btn .pplx-lang-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: var(--point-gold) transparent transparent transparent;
+}
+
+.pplx-lang-btn:hover {
+    border-color: var(--point-gold);
+    color: var(--point-gold);
+    background: rgba(245, 166, 35, 0.12);
+    transform: translateY(-2px);
+}
+
+.pplx-lang-btn:hover svg {
+    transform: rotate(20deg);
+}
+
+.pplx-lang-btn:hover .pplx-lang-tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* 모바일: 툴팁 대신 label만 노출 */
+@media (max-width: 768px) {
+    .pplx-lang-btn .pplx-lang-tooltip {
+        display: none;
+    }
+}
+
 /* ----- 우측: SNS 공유 버튼 (80% 사이즈, 통일된 radius) ----- */
 .meta-right {
     display: flex;

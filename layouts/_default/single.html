@@ -26,6 +26,16 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
           <span>{{ i18n "listen" | default "Listen" }}</span>
         </button>
+        <!-- 한/영 전환 버튼 (번역본이 있을 때만 노출) -->
+        {{ if .IsTranslated }}
+          {{ range .Translations }}
+          <a href="{{ .Permalink }}" class="pplx-lang-btn" aria-label="{{ i18n "switch_lang" }}" title="{{ i18n "switch_lang" }}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            <span class="pplx-lang-label">{{ i18n "switch_lang_label" }}</span>
+            <span class="pplx-lang-tooltip">{{ i18n "switch_lang" }}</span>
+          </a>
+          {{ end }}
+        {{ end }}
       </div>
       
       <!-- 우측: SNS 공유 버튼 (PaperMod 내장 share_icons 전체 사용) -->
