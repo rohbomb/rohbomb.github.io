@@ -53,6 +53,11 @@ buildExpired = false
       name = "About Us"
       url = "/about/"
       weight = 40
+    [[languages.en.menu.main]]
+      identifier = "search"
+      name = "Search"
+      url = "/search/"
+      weight = 50
 
   [languages.ko]
     languageName = "한국어"
@@ -82,6 +87,14 @@ buildExpired = false
       name = "소개"
       url = "/about/"
       weight = 40
+    [[languages.ko.menu.main]]
+      identifier = "search"
+      name = "검색"
+      url = "/search/"
+      weight = 50
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
 
 [params]
   env = "production"

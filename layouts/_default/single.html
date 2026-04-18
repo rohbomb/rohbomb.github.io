@@ -36,6 +36,11 @@
           </a>
           {{ end }}
         {{ end }}
+        <!-- URL 공유 버튼 (명확한 텍스트 라벨 포함) -->
+        <button class="pplx-share-btn" aria-label="{{ i18n "copy_link" | default "Share" }}" onclick="copyPageURL(this)" title="Copy Link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+          <span>{{ if eq .Lang "ko" }}공유{{ else }}Share{{ end }}</span>
+        </button>
       </div>
       
       <!-- 우측: SNS 공유 버튼 (PaperMod 내장 share_icons 전체 사용) -->
@@ -96,3 +101,31 @@
 </article>
 
 {{- end }}{{/* end main */}}
+
+<script>
+function copyPageURL(el) {
+    var url = window.location.href;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function() {
+            showCopyToast();
+        });
+    } else {
+        var ta = document.createElement('textarea');
+        ta.value = url;
+        ta.style.position = 'fixed';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        showCopyToast();
+    }
+}
+function showCopyToast() {
+    var t = document.createElement('span');
+    t.textContent = '{{ if eq .Lang "ko" }}링크가 복사되었습니다!{{ else }}Link copied!{{ end }}';
+    t.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:8px 18px;border-radius:8px;font-size:14px;z-index:9999;opacity:0;transition:opacity .3s;';
+    document.body.appendChild(t);
+    requestAnimationFrame(function(){ t.style.opacity = '1'; });
+    setTimeout(function(){ t.style.opacity = '0'; setTimeout(function(){ t.remove(); }, 300); }, 1500);
+}
+</script>
