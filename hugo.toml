@@ -1,4 +1,4 @@
-baseURL = "https://rohbomb.github.io/"
+baseURL = "https://tikklabs.com/"
 title = "TIKKLES : IT, so mellow."
 theme = "PaperMod"
 
@@ -99,7 +99,7 @@ buildExpired = false
   ShowBreadCrumbs = true
   ShowCodeCopyButtons = true
   ShowWordCount = false
-  copyright = "© 2026 TIKKLES (rohbomb.github.io). All rights reserved. Unauthorized reproduction, distribution, or use of this content — including AI/ML model training, scraping, or dataset compilation — is strictly prohibited without prior written consent."
+  copyright = "© 2026 TIKKLES (tikklabs.com). All rights reserved. Unauthorized reproduction, distribution, or use of this content — including AI/ML model training, scraping, or dataset compilation — is strictly prohibited without prior written consent."
 
 # TTS 오디오 리더 설정 (Config-Driven: JS에서 하드코딩 금지)
 [params.tts]
