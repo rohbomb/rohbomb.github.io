@@ -32,29 +32,14 @@ This blog exists to close that gap --- a little at a time. Whether you're a seni
 
 ---
 
-## What This Series Will Cover
+## Future Topics We’ll Explore Together
 
-*Posts are added as they're published. Check back as the list grows.*
+This series is a living resource, with new guides added regularly as we explore these essential topics together:
 
-### Smartphone Basics for Seniors --- Getting Started
-- Step-by-step guides for first-time app users
-- Messaging apps: how to unsend, what notifications mean, privacy settings
-- Spotting scams and robocalls before it's too late
-
-### Getting Around --- Maps, Transit, and Booking Tickets
-- Using Google Maps and transit apps from scratch
-- Booking trains, buses, events, and sports games on a phone
-- Apps worth installing before you actually need them
-
-### Bills, Banking, and Government Services
-- Setting up paperless billing and actually paying it
-- Navigating government portals and health insurance apps
-- What to watch out for when setting up banking apps for a parent
-
-### AI Tools --- What They Are and What to Do When They're Wrong
-- Introducing ChatGPT and Claude to a parent who's never heard of either
-- Why AI sometimes says wrong things --- explained without the jargon
-- Practical ways AI can genuinely help older adults day to day
+- **Smartphone Basics for Seniors**: Moving beyond simple settings to real-world confidence.
+- **Getting Around**: Mastering ride-hailing and transit apps in an age of digital-only ticketing.
+- **Daily Essentials**: Navigating digital banking and essential government services without the stress.
+- **AI for Everyone**: Introducing ChatGPT and other AI tools to your parents in plain, simple English.
 
 ---
 
