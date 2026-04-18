@@ -1,7 +1,7 @@
 {{- define "main" }}
 
 <article class="post-single perplexity-style">
-  
+
   <!-- 1. 커버 이미지 (최상단 파노라마 배치) -->
   {{- $isHidden := (.Param "cover.hiddenInSingle") | default (.Param "cover.hidden") | default false }}
   {{- partial "cover.html" (dict "cxt" . "IsSingle" true "isHidden" $isHidden) }}
@@ -9,40 +9,56 @@
   <!-- 2. 퍼플렉시티 스타일 메타 헤더 (작성자/날짜/듣기 ↔ SNS공유) -->
   <header class="post-header-perplexity">
     {{ partial "breadcrumbs.html" . }}
-    
+
     <div class="perplexity-meta-bar">
       <!-- 좌측: 메타 정보 + 듣기 버튼 -->
       <div class="meta-left">
         <div class="meta-author">
-          <span class="meta-label">{{ i18n "written_by" | default "Written by" }}</span><br/>
+          <span class="meta-label">{{ i18n "written_by" | default "Written by" }}</span><br />
           <strong>{{ if .Params.author }}{{ .Params.author }}{{ else }}{{ site.Params.author }}{{ end }}</strong>
         </div>
         <div class="meta-date">
-          <span class="meta-label">{{ i18n "posted_on" | default "Posted on" }}</span><br/>
-          <strong>{{ if eq .Lang "ko" }}{{ .Date.Format "2006. 1. 2." }}{{ else }}{{ .Date.Format "January 2, 2006" }}{{ end }}</strong>
+          <span class="meta-label">{{ i18n "posted_on" | default "Posted on" }}</span><br />
+          <strong>{{ if eq .Lang "ko" }}{{ .Date.Format "2006. 1. 2." }}{{ else }}{{ .Date.Format "January 2, 2006" }}{{
+            end }}</strong>
         </div>
         <!-- 듣기 버튼 (i18n 적용) -->
-        <button id="perplexity-listen-btn" class="pplx-listen-btn" aria-label="{{ i18n "listen" | default "Listen" }}">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+        <button id="perplexity-listen-btn" class="pplx-listen-btn" aria-label="{{ i18n " listen" | default "Listen" }}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+          </svg>
           <span>{{ i18n "listen" | default "Listen" }}</span>
         </button>
         <!-- 한/영 전환 버튼 (번역본이 있을 때만 노출) -->
         {{ if .IsTranslated }}
-          {{ range .Translations }}
-          <a href="{{ .Permalink }}" class="pplx-lang-btn" aria-label="{{ i18n "switch_lang" }}" title="{{ i18n "switch_lang" }}">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-            <span class="pplx-lang-label">{{ i18n "switch_lang_label" }}</span>
-            <span class="pplx-lang-tooltip">{{ i18n "switch_lang" }}</span>
-          </a>
-          {{ end }}
+        {{ range .Translations }}
+        <a href="{{ .Permalink }}" class="pplx-lang-btn" aria-label="{{ i18n "switch_lang" }}" title="{{ i18n "switch_lang" }}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="2" y1="12" x2="22" y2="12" />
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+          </svg>
+          <span class="pplx-lang-label">{{ i18n "switch_lang_label" }}</span>
+          <span class="pplx-lang-tooltip">{{ i18n "switch_lang" }}</span>
+        </a>
+        {{ end }}
         {{ end }}
         <!-- URL 공유 버튼 (명확한 텍스트 라벨 포함) -->
-        <button class="pplx-share-btn" aria-label="{{ i18n "copy_link" | default "Share" }}" onclick="copyPageURL(this)" title="Copy Link">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+        <button class="pplx-share-btn" aria-label="{{ i18n " copy_link" | default "Share" }}"
+          onclick="copyPageURL(this)" title="Copy Link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+          </svg>
           <span>{{ if eq .Lang "ko" }}공유{{ else }}Share{{ end }}</span>
         </button>
       </div>
-      
+
       <!-- 우측: SNS 공유 버튼 (PaperMod 내장 share_icons 전체 사용) -->
       <div class="meta-right">
         {{- if (and site.Params.ShowShareButtons (ne .Params.disableShare true)) }}
@@ -50,7 +66,7 @@
         {{- end }}
       </div>
     </div>
-    
+
     <hr class="header-divider">
 
     <h1 class="post-title entry-hint-parent">
@@ -58,12 +74,13 @@
       {{- if .Draft }}
       <span class="entry-hint" title="Draft">
         <svg xmlns="http://www.w3.org/2000/svg" height="35" viewBox="0 -960 960 960" fill="currentColor">
-          <path d="M160-410v-60h300v60H160Zm0-165v-60h470v60H160Zm0-165v-60h470v60H160Zm360 580v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q9 9 13 20t4 22q0 11-4.5 22.5T862.09-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z" />
+          <path
+            d="M160-410v-60h300v60H160Zm0-165v-60h470v60H160Zm0-165v-60h470v60H160Zm360 580v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q9 9 13 20t4 22q0 11-4.5 22.5T862.09-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z" />
         </svg>
       </span>
       {{- end }}
     </h1>
-    
+
     {{- if .Description }}
     <div class="post-description">
       {{ .Description }}
@@ -103,29 +120,29 @@
 {{- end }}{{/* end main */}}
 
 <script>
-function copyPageURL(el) {
+  function copyPageURL(el) {
     var url = window.location.href;
     if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(url).then(function() {
-            showCopyToast();
-        });
-    } else {
-        var ta = document.createElement('textarea');
-        ta.value = url;
-        ta.style.position = 'fixed';
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
+      navigator.clipboard.writeText(url).then(function () {
         showCopyToast();
+      });
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = url;
+      ta.style.position = 'fixed';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showCopyToast();
     }
-}
-function showCopyToast() {
+  }
+  function showCopyToast() {
     var t = document.createElement('span');
     t.textContent = '{{ if eq .Lang "ko" }}링크가 복사되었습니다!{{ else }}Link copied!{{ end }}';
     t.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:8px 18px;border-radius:8px;font-size:14px;z-index:9999;opacity:0;transition:opacity .3s;';
     document.body.appendChild(t);
-    requestAnimationFrame(function(){ t.style.opacity = '1'; });
-    setTimeout(function(){ t.style.opacity = '0'; setTimeout(function(){ t.remove(); }, 300); }, 1500);
-}
+    requestAnimationFrame(function () { t.style.opacity = '1'; });
+    setTimeout(function () { t.style.opacity = '0'; setTimeout(function () { t.remove(); }, 300); }, 1500);
+  }
 </script>
