@@ -60,7 +60,7 @@ This blog exists to close that gap --- a little at a time. Whether you're a seni
 
 ## Why I Started Writing This
 
-<img src="/images/digital_divide_taxi.png" alt="senior struggling to hail a taxi while younger person uses ride-hailing app on smartphone" style="width:100%; border-radius:12px; margin-bottom:8px;">
+<img src="/images/digital_divide_taxi.png" alt="senior struggling to hail a taxi while younger person uses ride-hailing app on smartphone" style="width:100%; max-height:400px; object-fit:cover; border-radius:12px; margin-bottom:8px;">
 <p style="text-align:center; font-style:italic; color:#9E9E9E; font-size:0.9rem; margin-top:0;">Two generations, two completely different experiences of the same moment.</p>
 
 > *"Honey, I accidentally sent that message --- can I delete it?"*

@@ -56,7 +56,7 @@ description: "부모님 스마트폰 사용법부터 배달앱, 예매, AI까지
 
 혹시 남 얘기 같지 않으신가요?
 
-<img src="/images/5060-digital-divide-taxi.png" alt="심야 지하철역 앞에서 스마트폰으로 택시를 부르는 젊은이와 손을 들어 택시를 잡으려는 어르신" style="width:100%; border-radius:12px; margin-bottom:8px;">
+<img src="/images/5060-digital-divide-taxi.jpg" alt="심야 지하철역 앞에서 스마트폰으로 택시를 부르는 젊은이와 손을 들어 택시를 잡으려는 어르신" style="width:100%; max-height:400px; object-fit:cover; border-radius:12px; margin-bottom:8px;">
 <p style="text-align:center; font-style:italic; color:#9E9E9E; font-size:0.9rem; margin-top:0;">같은 시간, 같은 장소, 완전히 다른 경험.</p>
 
 스마트폰이 대중화된 그 순간부터, 배달앱, 택시앱, 키오스크가 세상을 점령하기 시작한 그 순간부터 --- 이 사회는 디지털에 익숙한 사람과 그렇지 않은 사람을 조용히 갈라놓기 시작했습니다. '편리함'을 내세웠지만, 그 편리함이 모두에게 해당하는 이야기는 아니었습니다.
