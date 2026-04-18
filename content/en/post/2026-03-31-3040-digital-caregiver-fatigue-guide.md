@@ -17,8 +17,6 @@ cover:
 description: "Helping adult children support aging parents with technology — practical guides covering smartphones, apps, online booking, and AI tools."
 ---
 
-# Helping Your Parents Navigate the Digital World — A Practical Guide for Adult Children
-
 **Does your mom know how to order food online on her own?**
 
 ---
