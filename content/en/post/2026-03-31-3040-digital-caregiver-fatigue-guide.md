@@ -54,7 +54,7 @@ This series is a living resource, with new guides added regularly as we explore 
 
 Sound familiar?
 
-Utility bills moved online almost overnight. Concert and sports venues stopped selling tickets at the door. An older neighbor of mine missed a game he'd followed for decades because he couldn't figure out how to book online. He'd been a fan for years. The venue just assumed everyone had it figured out.
+Many essential services have been rapidly digitized, shifting online almost overnight. Concert and sports venues stopped selling tickets at the door. An older neighbor of mine missed a game he'd followed for decades because he couldn't figure out how to book online. He'd been a fan for years. The venue just assumed everyone had it figured out.
 
 For seniors living alone --- far from family, without someone nearby to ask --- this isn't a minor inconvenience. It's isolation.
 
