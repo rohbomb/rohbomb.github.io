@@ -62,7 +62,3 @@ I started noticing how many people in my generation were quietly carrying the sa
 
 This isn't a perfect guide. I'm still learning too. But if you landed here after one too many confused phone calls from a parent, I hope something here saves you both a little frustration.
 
----
-
-**Does any of this sound familiar?**
-Drop a comment below. What's the trickiest thing you've had to explain to a parent? Your experience might become the next post in this series.
