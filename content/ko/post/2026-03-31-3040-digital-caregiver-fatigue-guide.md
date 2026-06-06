@@ -1,5 +1,6 @@
 ---
 title: "부모님 스마트폰 사용법 완전 정복 | 5060 디지털 격차 가이드"
+draft: true
 date: 2026-03-31T15:00:00+09:00
 lastmod: 2026-04-19T05:00:00+09:00
 categories: ["Senior-Tech 101"]

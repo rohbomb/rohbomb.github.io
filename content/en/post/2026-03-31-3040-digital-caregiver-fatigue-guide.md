@@ -1,5 +1,6 @@
 ---
 title: "How to Help Aging Parents With Technology — A Practical Guide for Adult Children"
+draft: true
 date: 2026-03-31T15:00:00+09:00
 lastmod: 2026-04-19T05:00:00+09:00
 categories: ["Senior-Tech 101"]
