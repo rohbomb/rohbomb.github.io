@@ -20,7 +20,6 @@ cover:
  relative: false
 showToc: true
 TocOpen: false
-pinned: true
 ---
 
 In an era where algorithmic content is weaponized to hijack human attention, your ability to focus is your most valuable asset. The modern dopamine economy thrives on endless swiping, specifically through aggressive short-form video features like **YouTube Shorts** and infinite feeds.

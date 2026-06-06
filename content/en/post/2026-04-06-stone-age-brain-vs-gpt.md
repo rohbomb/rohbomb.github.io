@@ -4,6 +4,7 @@ date: 2026-04-06T14:20:00+09:00
 categories: ["Productivity"]
 series: ["Productivity-Hacks"]
 tags: ["IT Productivity", "AI Overload", "Burnout", "GPT", "Claude", "Gemini", "ArthurG"]
+pinned: true
 author: "Arthur G."
 slug: "stone-age-brain-vs-gpt"
 translationKey: "stone-age-brain"
