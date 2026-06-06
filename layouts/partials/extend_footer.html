@@ -15,10 +15,8 @@
       if (!postContent || !window.speechSynthesis) return;
 
       // --- Config-Driven 설정 (hugo.toml [params.tts]에서 주입) ---
-      var TTS_RATE_KO = {{ default 1.1 .Site.Params.tts.rate_ko }
-    };
-    var TTS_RATE_EN = {{ default 1.0 .Site.Params.tts.rate_en }
-  };
+      var TTS_RATE_KO = {{ default 1.1 .Site.Params.tts.rate_ko }};
+      var TTS_RATE_EN = {{ default 1.0 .Site.Params.tts.rate_en }};
   var TTS_PITCH = {{ default 1.0 .Site.Params.tts.pitch }};
   var TTS_CHUNK_SIZE = {{ default 180 .Site.Params.tts.chunk_size }};
   var TTS_KEEPALIVE_MS = {{ default 10000 .Site.Params.tts.keepalive_ms }};
