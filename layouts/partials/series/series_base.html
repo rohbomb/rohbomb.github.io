@@ -1,0 +1,41 @@
+{{/* (Edited by Win-AG웅) */}}
+{{ if .Params.series }}
+  <summary
+    class="py-1 text-lg font-semibold cursor-pointer bg-primary-200 text-neutral-800 -ms-5 ps-5 dark:bg-primary-800 dark:text-neutral-100">
+    {{ index .Params.series 0 }} -
+    {{ i18n "article.part_of_series" }}
+  </summary>
+  {{ $seriesName := strings.ToLower (index .Params.series 0) }}
+  {{ $posts := sort (index .Site.Taxonomies.series $seriesName) "Params.series_order" }}
+  {{ $currentOrder := $.Page.Params.series_order | default 1 }}
+  
+  {{ range $post := $posts }}
+    {{ $postOrder := $post.Params.series_order | default 1 }}
+    {{ $diff := sub $postOrder $currentOrder }}
+    {{ if and (ge $diff -2) (le $diff 2) }}
+      {{ if eq $post.Permalink $.Page.Permalink }}
+        <div
+          class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+          {{ i18n "article.part" }} {{ $post.Params.series_order }}:
+          {{ i18n "article.this_article" }}
+        </div>
+      {{ else }}
+        <div
+          class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+          <a href="{{ $post.RelPermalink }}">
+            {{ i18n "article.part" }} {{ $post.Params.series_order }}:
+            {{ $post.Params.title }}
+          </a>
+        </div>
+      {{ end }}
+    {{ end }}
+  {{ end }}
+  
+  {{ if gt (len $posts) 5 }}
+    <div class="py-2 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600 font-semibold">
+      <a href="{{ "series/" | relLangURL }}{{ $seriesName }}/" class="text-primary-500 hover:text-primary-600">
+        {{ i18n "article.view_full_series" }}
+      </a>
+    </div>
+  {{ end }}
+{{ end }}

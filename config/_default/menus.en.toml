@@ -1,0 +1,20 @@
+# (Edited by Win-AG웅)
+[[main]]
+  name = "Posts"
+  url = "/post/"
+  weight = 10
+
+[[main]]
+  name = "Tags"
+  url = "/tags/"
+  weight = 20
+
+[[main]]
+  name = "About"
+  url = "/about/"
+  weight = 30
+
+[[main]]
+  name = "Contact"
+  url = "/contact/"
+  weight = 40

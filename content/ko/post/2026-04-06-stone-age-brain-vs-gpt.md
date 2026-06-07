@@ -5,7 +5,7 @@ categories: ["Productivity"]
 series: ["Productivity-Hacks"]
 tags: ["IT생산성", "AI과부하", "번아웃", "GPT", "Claude", "Gemini", "아서G"]
 pinned: true
-author: "Arthur G."
+authors: ["arthurg"]
 slug: "stone-age-brain-vs-gpt"
 translationKey: "stone-age-brain"
 cover:

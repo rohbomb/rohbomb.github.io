@@ -1,0 +1,71 @@
+{{/* (Edited by Win-AG웅) */}}
+<!-- ============================================================
+     한국어 접속자 안내 토스트 (글로벌 진입 대응)
+     ============================================================ -->
+{{- if eq .Lang "en" -}}
+{{ $koUrl := "/ko/" }}
+{{ if .IsTranslated }}
+  {{ range .Translations }}
+    {{ if eq .Language.Lang "ko" }}
+      {{ $koUrl = .RelPermalink }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+<style>
+  #kr-toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #1A1A1A;
+    color: #F5F0E8;
+    border: 2px solid #F5A623;
+    padding: 16px 24px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    z-index: 9999;
+    font-family: sans-serif;
+    display: none;
+    align-items: center;
+    gap: 20px;
+    animation: slideUpToast 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes slideUpToast { from { transform: translateY(100px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  #kr-toast p { margin: 0; font-size: 1.05rem; font-weight: 700; letter-spacing: -0.02em; }
+  .toast-btns { display: flex; gap: 8px; }
+  .toast-btn { 
+    padding: 8px 14px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-weight: 700; border: none; transition: 0.2s;
+  }
+  .toast-go { background: #F5A623; color: #fff; text-decoration: none; }
+  .toast-go:hover { opacity: 0.9; }
+  .toast-close { background: rgba(255,255,255,0.08); color: #9E9E9E; }
+  .toast-close:hover { background: rgba(255,255,255,0.15); color: #fff; }
+  @media (max-width: 600px) {
+    #kr-toast { bottom: 20px; right: 20px; left: 20px; flex-direction: column; text-align: center; gap: 12px; }
+    .toast-btns { width: 100%; }
+    .toast-btn { flex: 1; text-align: center; }
+  }
+</style>
+<div id="kr-toast">
+  <p>한국어로 보시겠어요?</p>
+  <div class="toast-btns">
+    <a href="{{ $koUrl }}" class="toast-btn toast-go">이동할게요</a>
+    <button id="kr-toast-close" class="toast-btn toast-close">닫기</button>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var userLang = navigator.language || navigator.userLanguage;
+    if (userLang.includes('ko') && !sessionStorage.getItem('krToastClosed')) {
+      var toast = document.getElementById('kr-toast');
+      var closeBtn = document.getElementById('kr-toast-close');
+      if(toast && closeBtn) {
+        toast.style.display = 'flex';
+        closeBtn.addEventListener('click', function() {
+          toast.style.display = 'none';
+          sessionStorage.setItem('krToastClosed', 'true');
+        });
+      }
+    }
+  });
+</script>
+{{- end -}}

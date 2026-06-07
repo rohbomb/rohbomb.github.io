@@ -1,0 +1,20 @@
+# (Edited by Win-AG웅)
+[[main]]
+  name = "포스트"
+  url = "/ko/post/"
+  weight = 10
+
+[[main]]
+  name = "태그"
+  url = "/ko/tags/"
+  weight = 20
+
+[[main]]
+  name = "소개"
+  url = "/ko/about/"
+  weight = 30
+
+[[main]]
+  name = "Contact"
+  url = "/ko/contact/"
+  weight = 40
