@@ -2,7 +2,7 @@
 locale = "en"
 label = "English"
 weight = 1
-title = "Blowfish"
+title = "TIKKLES : IT, so mellow."
 contentDir = "content/en"
 
 [params]
@@ -11,7 +11,7 @@ contentDir = "content/en"
   rtl = false
   dateFormat = "2 January 2006"
   logo = ""
-  description = "A powerful, lightweight theme for Hugo."
+  description = "IT productivity & local AI technology journal"
 
 [params.author]
   name = "Arthur G."
